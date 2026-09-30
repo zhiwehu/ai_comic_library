@@ -2,6 +2,7 @@
 import Base from '../../layouts/Base.astro';
 import ChapterList from '../ChapterList.astro';
 import Giscus from '../Giscus.astro';
+import Pic from '../Pic.astro';
 import { bookDesc, bookTitle } from '../../lib/books';
 import { fmtDate, t, type Lang } from '../../lib/i18n';
 import type { BookView } from '../../lib/books';
@@ -23,7 +24,7 @@ const title = bookTitle(book, lang);
         {
           book.coverUrl && (
             <div class="cover-box">
-              <img src={book.coverUrl} alt={title} fetchpriority="high" />
+              <Pic src={book.coverUrl} alt={title} loading="eager" fetchpriority="high" />
             </div>
           )
         }

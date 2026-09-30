@@ -23,7 +23,9 @@ const {
   chrome = true,
 } = Astro.props;
 
-const ogImageAbs = ogImage ? new URL(ogImage, Astro.site).href : null;
+const ogImageAbs = ogImage
+  ? new URL(ogImage.replace(/\.webp$/, '.jpg'), Astro.site).href // OG 平台对 webp 支持参差，统一给 jpg
+  : null;
 
 /** 语言切换目标：zh ↔ en（同一路径） */
 const path = Astro.url.pathname;

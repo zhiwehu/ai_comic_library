@@ -83,7 +83,16 @@ const flipH = Math.round(flipW / ratio);
       {
         pages.map((url: string, i: number) => (
           <div class="scroll-page" data-idx={i}>
-            <img src={url} alt={t(lang, 'reader.pageAlt', { n: i + 1 })} loading="lazy" decoding="async" draggable={false} />
+            <picture>
+              <source srcset={url} type="image/webp" />
+              <img
+                src={url.replace(/\.webp$/, '.jpg')}
+                alt={t(lang, 'reader.pageAlt', { n: i + 1 })}
+                loading="lazy"
+                decoding="async"
+                draggable={false}
+              />
+            </picture>
           </div>
         ))
       }
@@ -95,7 +104,12 @@ const flipH = Math.round(flipW / ratio);
         {
           pages.map((url: string, i: number) => (
             <div class="pf-page">
-              <img data-src={url} alt={t(lang, 'reader.pageAlt', { n: i + 1 })} draggable={false} />
+              <img
+                data-src={url}
+                data-jpg={url.replace(/\.webp$/, '.jpg')}
+                alt={t(lang, 'reader.pageAlt', { n: i + 1 })}
+                draggable={false}
+              />
             </div>
           ))
         }
@@ -109,7 +123,7 @@ const flipH = Math.round(flipW / ratio);
         {
           pages.map((url: string, i: number) => (
             <button type="button" data-page={i + 1} aria-label={t(lang, 'reader.jumpAlt', { n: i + 1 })}>
-              <img data-src={url} alt="" loading="lazy" />
+              <img data-src={url} data-jpg={url.replace(/\.webp$/, '.jpg')} alt="" loading="lazy" />
               <span>{i + 1}</span>
             </button>
           ))
@@ -201,12 +215,25 @@ const flipH = Math.round(flipW / ratio);
     if (Number(slider.value) !== p) slider.value = String(p);
   };
 
+  /** WebP 支持一次性检测；不支持（Safari ≤13 / 老 WebView）则取同名 JPEG */
+  const WEBP_OK = document
+    .createElement('canvas')
+    .toDataURL('image/webp')
+    .startsWith('data:image/webp');
+  const srcFor = (url: string) => (WEBP_OK ? url : (url.replace(/\.webp$/, '.jpg') ?? url));
+
+  /** 激活一张懒加载图：按能力取 webp 或 jpg，只下载一种 */
+  function activate(img: HTMLImageElement) {
+    const raw = img.dataset.src;
+    if (raw && !img.src) img.src = srcFor(raw);
+  }
+
   function preloadFlip(cur: number) {
     const from = Math.max(0, cur - 2);
     const to = Math.min(count - 1, cur + 3);
     for (let i = from; i <= to; i++) {
       const img = flipImgs[i];
-      if (img?.dataset.src && !img.src) img.src = img.dataset.src;
+      if (img?.dataset.src && !img.src) activate(img);
     }
   }
 
@@ -373,7 +400,7 @@ const flipH = Math.round(flipW / ratio);
     thumbs.hidden = false;
     thumbs.querySelectorAll('img').forEach((im) => {
       const el = im as HTMLImageElement;
-      if (el.dataset.src && !el.src) el.src = el.dataset.src;
+      if (el.dataset.src && !el.src) activate(el);
     });
   });
   document.getElementById('btn-thumbs-close')!.addEventListener('click', () => (thumbs.hidden = true));

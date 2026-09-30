@@ -34,15 +34,14 @@ export interface BookView {
   isSingle: boolean;
 }
 
-const PAGE_RE = /\.(webp|png|jpe?g)$/i;
-
-/** 列出某章页面 URL（build 时读盘；URL 由 books-sync 伺服） */
+/** 列出某章页面 URL（build 时读盘；URL 由 books-sync 伺服）。
+ *  只收 .webp：.jpg 是降级副本（<picture> 的 fallback），不是独立一页。 */
 export function listPageUrls(bookSlug: string, chapterSlug: string): string[] {
   const dir = path.join(process.cwd(), 'books', bookSlug, chapterSlug, 'pages');
   try {
     return fs
       .readdirSync(dir)
-      .filter((f) => PAGE_RE.test(f))
+      .filter((f) => f.toLowerCase().endsWith('.webp'))
       .sort()
       .map((f) => `/books/${bookSlug}/${chapterSlug}/pages/${f}`);
   } catch {

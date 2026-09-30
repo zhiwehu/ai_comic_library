@@ -95,13 +95,18 @@ function pickImages(fromDir) {
   return { images, coverFile };
 }
 
-async function transcodeTo(input, outPath, { dry }) {
+async function transcodeTo(input, outPath, { dry, jpgFallback = false }) {
   const img = sharp(input);
   const meta = await img.metadata();
-  let pipe = img.webp({ quality: 80 });
-  if ((meta.width ?? 0) > MAX_WIDTH) pipe = sharp(input).resize({ width: MAX_WIDTH }).webp({ quality: 80 });
+  const needsResize = (meta.width ?? 0) > MAX_WIDTH;
+  let pipe = needsResize ? sharp(input).resize({ width: MAX_WIDTH }) : img;
   if (dry) return { width: meta.width, height: meta.height };
-  await pipe.toFile(outPath);
+  await pipe.webp({ quality: 80 }).toFile(outPath);
+  if (jpgFallback) {
+    // Safari ≤13 / 老 WebView / 部分 OG 平台不支持 WebP，产出同名 JPEG 副本
+    let jpg = needsResize ? sharp(input).resize({ width: MAX_WIDTH }) : sharp(input);
+    await jpg.jpeg({ quality: 82 }).toFile(outPath.replace(/\.webp$/, '.jpg'));
+  }
   const out = await sharp(outPath).metadata();
   return { width: out.width, height: out.height };
 }
@@ -137,7 +142,7 @@ async function main() {
   const written = [];
   for (let i = 0; i < images.length; i++) {
     const outPath = path.join(pagesDir, `${String(i + 1).padStart(3, '0')}.webp`);
-    await transcodeTo(images[i], outPath, { dry });
+    await transcodeTo(images[i], outPath, { dry, jpgFallback: true });
     if (!dry) totalBytes += fs.statSync(outPath).size;
     written.push(outPath);
   }
@@ -205,7 +210,7 @@ async function main() {
   // ---- 封面 ----
   if (coverInput) {
     const coverOut = path.join(bookDir, 'cover.webp');
-    await transcodeTo(coverInput, coverOut, { dry });
+    await transcodeTo(coverInput, coverOut, { dry, jpgFallback: true });
     console.log(`• 封面 → ${path.relative(process.cwd(), coverOut)}${!args.cover && coverFile ? '（自动识别 *-cover）' : ''}`);
   }
 

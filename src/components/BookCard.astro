@@ -2,6 +2,7 @@
 import type { BookView } from '../lib/books';
 import { bookTitle } from '../lib/books';
 import { t, type Lang } from '../lib/i18n';
+import Pic from './Pic.astro';
 
 interface Props {
   book: BookView;
@@ -19,7 +20,7 @@ const extent =
 <a class="book" href={lang === 'en' ? `/en/book/${book.slug}/` : `/book/${book.slug}/`} aria-label={bookTitle(book, lang)}>
   {no && <span class="book-no" aria-hidden="true">No.{no}</span>}
   <div class="book-cover">
-    {book.coverUrl && <img src={book.coverUrl} alt={bookTitle(book, lang)} loading="lazy" decoding="async" />}
+    {book.coverUrl && <Pic src={book.coverUrl} alt={bookTitle(book, lang)} loading="lazy" />}
     <span class="book-veil" aria-hidden="true">
       <span class="veil-title">{bookTitle(book, lang)}</span>
       <span class="veil-meta">{t(lang, `type.${book.type}`)} · {extent}</span>

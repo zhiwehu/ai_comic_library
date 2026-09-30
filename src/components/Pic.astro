@@ -1,0 +1,23 @@
+---
+/**
+ * WebP + JPEG 降级图：
+ *   现代浏览器 → <source> 取 .webp
+ *   Safari ≤13 / 老 WebView → <img> 的同名 .jpg（发布/回填时已生成孪生）
+ */
+interface Props {
+  src: string;
+  alt?: string;
+  loading?: 'lazy' | 'eager';
+  fetchpriority?: 'high' | 'low' | 'auto';
+  draggable?: boolean;
+  decoding?: 'async' | 'sync' | 'auto';
+  class?: string;
+}
+const { src, alt = '', loading = 'lazy', draggable, decoding = 'async', ...rest } = Astro.props;
+const jpg = src.replace(/\.webp$/, '.jpg');
+---
+
+<picture>
+  <source srcset={src} type="image/webp" />
+  <img src={jpg} alt={alt} loading={loading} decoding={decoding} draggable={draggable} {...rest} />
+</picture>
