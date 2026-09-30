@@ -32,6 +32,8 @@
 html {
   color-scheme: dark;
   scroll-behavior: smooth;
+  background: var(--ink); /* overscroll / 横向回弹不露白 */
+  overflow-x: clip; /* 兜死装饰元素（幽灵字/跑马灯/搁板）可能引起的横向滚动 */
 }
 
 body {
@@ -43,6 +45,7 @@ body {
   line-height: 1.75;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+  overflow-x: clip;
 }
 
 /* 全站纸纹噪点 */
