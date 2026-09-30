@@ -11,10 +11,12 @@ const books = defineCollection({
   loader: glob({ pattern: '*/book.yml', base: './books' }),
   schema: z.object({
     title: z.string(),
+    title_en: z.string().optional(),
     type: z.enum(['series', 'short', 'picture-book']).default('short'),
     status: z.enum(['ongoing', 'completed']).default('ongoing'),
     language: z.string().default('zh'),
     description: z.string().default(''),
+    description_en: z.string().optional(),
     cover: z.string().optional(),
     tags: z.array(z.string()).default([]),
   }),

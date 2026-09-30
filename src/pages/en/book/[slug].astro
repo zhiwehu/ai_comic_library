@@ -1,6 +1,6 @@
 ---
-import BookDetail from '../../components/pages/BookDetail.astro';
-import { getShelf } from '../../lib/books';
+import BookDetail from '../../../components/pages/BookDetail.astro';
+import { getShelf } from '../../../lib/books';
 
 export async function getStaticPaths() {
   const shelf = await getShelf();
@@ -10,4 +10,4 @@ export async function getStaticPaths() {
 const { book } = Astro.props;
 ---
 
-<BookDetail lang="zh" book={book} />
+<BookDetail lang="en" book={book} />

@@ -5,3 +5,5 @@ language: zh
 description: "乐天点下 Run，屏幕只回了一行 Out of Memory。跟着乐天和阿哲、小雅、可可一起走进大模型的内部世界：参数之城、量化流水线、显存工作台、KV Cache 档案室——把「什么模型能在什么机器上跑起来」这件事，用漫画讲明白。"
 cover: cover.webp
 tags: ["AI Infra", "大模型", "显存", "科普漫画"]
+title_en: "Why Won't the Model Run? — Understanding AI Infra in Comics"
+description_en: "Letian hits Run and the screen only answers: Out of Memory. Follow Letian, Azhe, Xiaoya and Keke into the inner world of large models — the city of parameters, the quantization pipeline, the VRAM workbench, the KV Cache archive — and learn, in comics, what actually decides whether a model can run."

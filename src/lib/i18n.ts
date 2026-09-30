@@ -1,0 +1,145 @@
+export type Lang = 'zh' | 'en';
+export const LANGS: Lang[] = ['zh', 'en'];
+export const DEFAULT_LANG: Lang = 'zh';
+
+/** 站内链接：en 语言加 /en 前缀 */
+export function href(lang: Lang, path: string): string {
+  const p = path.startsWith('/') ? path : `/${path}`;
+  return lang === DEFAULT_LANG ? p : `/en${p === '/' ? '/' : p}`;
+}
+
+type Dict = Record<string, string>;
+const zh: Dict = {
+  'site.name': '漫画图书馆',
+  'site.latin': 'THE COMIC LIBRARY',
+  'site.desc': '为 AI 创作的漫画与绘本而建的作品图书馆：书架、目录与翻页阅读器。',
+  'nav.shelf': '书架',
+  'nav.rss': 'RSS',
+  'switch.to': 'EN',
+  'switch.label': 'Switch to English',
+  'footer.motto': '本馆作品由 AI 辅助创作，流程可复现',
+  'footer.fine': '深夜书房，灯给你留着',
+  'footer.rss': 'RSS 订阅',
+  'hero.kicker': '册在架',
+  'hero.title': '深夜书房',
+  'hero.rail': '本馆作品由 AI 辅助创作 · 流程可复现',
+  'hero.now': '最新上架',
+  'hero.open': '翻 开 这 本 书',
+  'hero.continue': '继续上次 · 读到第 {p} 页',
+  'hero.empty': '书房还空着',
+  'hero.emptyHint': '用 pnpm run publish 上架第一本书。',
+  'shelf.title': '藏书架',
+  'shelf.volumes': 'VOLUMES',
+  'shelf.sub': '按最近更新排列',
+  'type.series': '连载系列',
+  'type.short': '短篇漫画',
+  'type.picture-book': '绘本',
+  'status.ongoing': '连载中',
+  'status.completed': '已完结',
+  'card.updated': '更新至第 {n} 话',
+  'card.chapters': '{n} 话',
+  'card.pages': '{n} 页',
+  'card.open': '翻开 →',
+  'detail.crumb': '← 书架',
+  'detail.updated': '更新至第 {n} 话',
+  'detail.toc': '目录 · 共 {n} 话',
+  'detail.latest': '最新',
+  'detail.progress': '读到 {a}/{b} 页 · 继续',
+  'detail.singleNote': '这是一本一次读完的书，共 {n} 页。',
+  'detail.start': '开 始 阅 读',
+  'detail.continue': '继 续 阅 读 · 第 {p} 页',
+  'detail.readLatest': '读 最 新 一 话',
+  'detail.giscus': '读后感',
+  'detail.giscusTodo': '评论组件（giscus）将在 GitHub public 仓库建立后自动启用 —— 见 kickoff §9。',
+  'reader.back': '← 目录',
+  'reader.thumbs': '缩略图',
+  'reader.modeFlip': '翻页模式',
+  'reader.modeScroll': '滚动模式',
+  'reader.full': '全屏',
+  'reader.prev': '上一话',
+  'reader.next': '下一话',
+  'reader.endNext': '下一话：{t} →',
+  'reader.endDone': '← 返回书架',
+  'reader.endKicker': '本章完',
+  'reader.endLastKicker': '已到最后一页',
+  'reader.backHome': '返回目录',
+  'reader.toastRestore': '已回到上次读到的第 {p} 页',
+  'reader.undo': '从头看',
+  'reader.pageAlt': '第 {n} 页',
+  'reader.jumpAlt': '跳到第 {n} 页',
+};
+
+const en: Dict = {
+  'site.name': 'The Comic Library',
+  'site.latin': 'THE COMIC LIBRARY',
+  'site.desc': 'A library for AI-made comics and picture books: shelves, contents and a page-flip reader.',
+  'nav.shelf': 'Shelf',
+  'nav.rss': 'RSS',
+  'switch.to': '中文',
+  'switch.label': '切换到中文',
+  'footer.motto': 'Every work here is AI-assisted, with a reproducible pipeline.',
+  'footer.fine': 'The midnight study keeps a lamp on for you.',
+  'footer.rss': 'RSS feed',
+  'hero.kicker': 'volumes on the shelf',
+  'hero.title': 'The Midnight Study',
+  'hero.rail': 'AI-assisted works · reproducible pipeline',
+  'hero.now': 'NEW ARRIVAL',
+  'hero.open': 'OPEN THIS BOOK',
+  'hero.continue': 'Continue · page {p}',
+  'hero.empty': 'The study is empty',
+  'hero.emptyHint': 'Publish the first book with pnpm run publish.',
+  'shelf.title': 'The Collection',
+  'shelf.volumes': 'VOLUMES',
+  'shelf.sub': 'recently updated first',
+  'type.series': 'Series',
+  'type.short': 'Short',
+  'type.picture-book': 'Picture Book',
+  'status.ongoing': 'Ongoing',
+  'status.completed': 'Completed',
+  'card.updated': 'Updated to ch. {n}',
+  'card.chapters': '{n} chapters',
+  'card.pages': '{n} pages',
+  'card.open': 'Open →',
+  'detail.crumb': '← Shelf',
+  'detail.updated': 'Updated to ch. {n}',
+  'detail.toc': 'Contents · {n} chapters',
+  'detail.latest': 'Latest',
+  'detail.progress': 'Page {a} of {b} · Continue',
+  'detail.singleNote': 'A single-sitting read of {n} pages.',
+  'detail.start': 'START READING',
+  'detail.continue': 'CONTINUE · PAGE {p}',
+  'detail.readLatest': 'READ LATEST',
+  'detail.giscus': 'Comments',
+  'detail.giscusTodo': 'Comments (giscus) go live once the public GitHub repo is connected — see kickoff §9.',
+  'reader.back': '← Contents',
+  'reader.thumbs': 'Grid',
+  'reader.modeFlip': 'Flip mode',
+  'reader.modeScroll': 'Scroll mode',
+  'reader.full': 'Fullscreen',
+  'reader.prev': 'Prev',
+  'reader.next': 'Next',
+  'reader.endNext': 'Next: {t} →',
+  'reader.endDone': '← Back to shelf',
+  'reader.endKicker': 'End of chapter',
+  'reader.endLastKicker': 'Last page',
+  'reader.backHome': 'Back to contents',
+  'reader.toastRestore': 'Resumed at page {p}',
+  'reader.undo': 'Start over',
+  'reader.pageAlt': 'Page {n}',
+  'reader.jumpAlt': 'Jump to page {n}',
+};
+
+const DICTS: Record<Lang, Dict> = { zh, en };
+
+export function t(lang: Lang, key: string, vars?: Record<string, string | number>): string {
+  let s = DICTS[lang][key] ?? DICTS.zh[key] ?? key;
+  if (vars) for (const [k, v] of Object.entries(vars)) s = s.replaceAll(`{${k}}`, String(v));
+  return s;
+}
+
+export function fmtDate(lang: Lang, d: Date): string {
+  const y = d.getFullYear();
+  const m = String(d.getMonth() + 1).padStart(2, '0');
+  const day = String(d.getDate()).padStart(2, '0');
+  return lang === 'en' ? `${y}-${m}-${day}` : `${y}·${m}·${day}`;
+}

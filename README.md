@@ -42,17 +42,27 @@ pnpm run publish --from /path/to/book_export --book some-picture-book --type pic
 
 ```
 books/<slug>/                 # ★ 唯一内容目录，全部由发布脚本写入（扁平，无类别子目录）
-  book.yml                    # 书的元数据（type 只是标签，不分目录）
+  book.yml                    # 元数据（可带 title_en / description_en 供英文站使用）
   cover.webp                  # 可选，缺省回退第一章第一页
   <chapter>/chapter.yml       # 章元数据（短篇/绘本即单章 01）
   <chapter>/pages/001.webp…   # 页图，文件名字典序 = 阅读顺序
 src/
   content.config.ts           # books / chapters 两个 collection
   lib/books.ts                # 书架/章节视图模型
-  pages/                      # index（深夜书房书架）/ book/[slug]（目录）/ read/[book]/[chapter]（阅读器）
+  lib/i18n.ts                 # 中英字典 + href() 链接助手
+  pages/                      # 中文路由：/（首页）/book/… /read/…
+  pages/en/                   # 英文路由：/en/…（同一套组件，lang="en"）
+  components/pages/           # HomePage / BookDetail / Reader（按 lang 出文案）
   components/                 # BookCard / ChapterList / Giscus
 scripts/publish.mjs           # 上架脚本
 ```
+
+## 双语
+
+- 中文 `/`、英文 `/en/`，顶栏一键互切；`book.yml` 里可选补 `title_en` / `description_en`
+- 章节标题目前只有中文（来自 `chapter.yml` 的 `title`）；给某章补英文时加 `title_en` 字段即可在英文站显示
+- 阅读进度与语言无关：中文页读一半，英文页打开接着读
+
 
 ## 阅读器
 

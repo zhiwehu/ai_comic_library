@@ -111,6 +111,7 @@ h1, h2, h3 {
   .brand-latin { display: none; }
   .site-head { padding-block: 16px 12px; }
 }
+:lang(en) .brand-latin { display: none; }
 .site-head nav a:hover { color: var(--lamp); }
 
 /* ---- 页脚 ---- */

@@ -1,32 +1,38 @@
 ---
 import type { BookView } from '../lib/books';
-import { TYPE_LABEL } from '../lib/books';
+import { bookTitle } from '../lib/books';
+import { t, type Lang } from '../lib/i18n';
 
 interface Props {
   book: BookView;
   index?: number;
+  lang?: Lang;
 }
-const { book, index } = Astro.props;
+const { book, index, lang = 'zh' } = Astro.props;
 const no = index !== undefined ? String(index).padStart(2, '0') : null;
+const extent =
+  book.type === 'series'
+    ? t(lang, 'card.chapters', { n: book.chapters.length })
+    : t(lang, 'card.pages', { n: book.latest.pages.length });
 ---
 
-<a class="book" href={`/book/${book.slug}/`} aria-label={book.title}>
+<a class="book" href={lang === 'en' ? `/en/book/${book.slug}/` : `/book/${book.slug}/`} aria-label={bookTitle(book, lang)}>
   {no && <span class="book-no" aria-hidden="true">No.{no}</span>}
   <div class="book-cover">
-    {book.coverUrl && <img src={book.coverUrl} alt={book.title} loading="lazy" decoding="async" />}
+    {book.coverUrl && <img src={book.coverUrl} alt={bookTitle(book, lang)} loading="lazy" decoding="async" />}
     <span class="book-veil" aria-hidden="true">
-      <span class="veil-title">{book.title}</span>
-      <span class="veil-meta">{TYPE_LABEL[book.type]}{book.type === 'series' ? ` · ${book.chapters.length} 话` : ` · ${book.latest.pages.length} 页`}</span>
-      <span class="veil-cta">翻开 →</span>
+      <span class="veil-title">{bookTitle(book, lang)}</span>
+      <span class="veil-meta">{t(lang, `type.${book.type}`)} · {extent}</span>
+      <span class="veil-cta">{t(lang, 'card.open')}</span>
     </span>
   </div>
   <div class="book-plate">
-    <span class="book-title">{book.title}</span>
+    <span class="book-title">{bookTitle(book, lang)}</span>
     <span class="book-meta">
-      <span class="tag">{TYPE_LABEL[book.type]}</span>
+      <span class="tag">{t(lang, `type.${book.type}`)}</span>
       {
         book.type === 'series' && (
-          <span class="book-upd">更新至第 {book.latest.number} 话</span>
+          <span class="book-upd">{t(lang, 'card.updated', { n: book.latest.number })}</span>
         )
       }
     </span>
@@ -79,7 +85,6 @@ const no = index !== undefined ? String(index).padStart(2, '0') : null;
     transform-origin: 50% 100%;
     transition: transform 0.35s cubic-bezier(0.2, 0.7, 0.3, 1), box-shadow 0.35s ease;
   }
-  /* 书脊内陷阴影 */
   .book-cover::before {
     content: '';
     position: absolute;
@@ -101,7 +106,6 @@ const no = index !== undefined ? String(index).padStart(2, '0') : null;
       0 10px 44px rgba(232, 180, 90, 0.16),
       inset 0 0 0 1px rgba(236, 227, 208, 0.1);
   }
-  /* hover 显影信息幕 */
   .book-veil {
     position: absolute;
     inset: auto 0 0 0;

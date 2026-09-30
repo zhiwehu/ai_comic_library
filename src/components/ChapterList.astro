@@ -1,11 +1,12 @@
 ---
 import type { BookView } from '../lib/books';
-import { fmtDate } from '../lib/books';
+import { fmtDate, t, type Lang } from '../lib/i18n';
 
 interface Props {
   book: BookView;
+  lang?: Lang;
 }
-const { book } = Astro.props;
+const { book, lang = 'zh' } = Astro.props;
 const isLatestNumber = (n: number) => n === book.latest.number;
 ---
 
@@ -15,18 +16,19 @@ const isLatestNumber = (n: number) => n === book.latest.number;
       <li>
         <a
           class="chapter-row"
-          href={`/read/${book.slug}/${ch.slug}/`}
+          href={lang === 'en' ? `/en/read/${book.slug}/${ch.slug}/` : `/read/${book.slug}/${ch.slug}/`}
           data-ch-key={`${book.slug}:${ch.slug}`}
           data-ch-pages={ch.pages.length}
+          data-ch-progress-format={t(lang, 'detail.progress')}
         >
           <span class="ch-no" aria-hidden="true">
-            {ch.number === 0 ? '序' : String(ch.number).padStart(2, '0')}
+            {ch.number === 0 ? lang === 'en' ? '00' : '序' : String(ch.number).padStart(2, '0')}
           </span>
           <span class="ch-title">{ch.title}</span>
           <span class="ch-side">
-            <span class="chip-progress ch-progress" hidden></span>
-            {isLatestNumber(ch.number) && <span class="tag tag-lamp">最新</span>}
-            <time datetime={ch.date.toISOString().slice(0, 10)}>{fmtDate(ch.date)}</time>
+            <span class="chip-progress ch-progress" hidden />
+            {isLatestNumber(ch.number) && <span class="tag tag-lamp">{t(lang, 'detail.latest')}</span>}
+            <time datetime={ch.date.toISOString().slice(0, 10)}>{fmtDate(lang, ch.date)}</time>
           </span>
         </a>
       </li>
@@ -44,7 +46,7 @@ const isLatestNumber = (n: number) => n === book.latest.number;
     if (saved > 0 && saved < total) {
       const chip = row.querySelector<HTMLElement>('.ch-progress');
       if (chip) {
-        chip.textContent = `读到 ${saved}/${total} 页 · 继续`;
+        chip.textContent = row.dataset.chProgressFormat!.replace('{a}', String(saved)).replace('{b}', String(total));
         chip.hidden = false;
       }
     }

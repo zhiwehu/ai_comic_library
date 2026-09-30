@@ -1,6 +1,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { getCollection, type CollectionEntry } from 'astro:content';
+import type { Lang } from './i18n';
 
 export type BookEntry = CollectionEntry<'books'>;
 export type ChapterEntry = CollectionEntry<'chapters'>;
@@ -17,10 +18,12 @@ export interface ChapterView {
 export interface BookView {
   slug: string;
   title: string;
+  titleEn: string | null;
   type: 'series' | 'short' | 'picture-book';
   status: 'ongoing' | 'completed';
   language: string;
   description: string;
+  descriptionEn: string | null;
   tags: string[];
   coverUrl: string | null;
   chapters: ChapterView[];
@@ -93,10 +96,12 @@ export async function getShelf(): Promise<BookView[]> {
     shelf.push({
       slug,
       title: book.data.title,
+      titleEn: book.data.title_en ?? null,
       type: book.data.type,
       status: book.data.status,
       language: book.data.language,
       description: book.data.description,
+      descriptionEn: book.data.description_en ?? null,
       tags: book.data.tags,
       coverUrl,
       chapters,
@@ -125,6 +130,10 @@ export const TYPE_LABEL: Record<BookView['type'], string> = {
   'picture-book': '绘本',
 };
 
-export function fmtDate(d: Date): string {
-  return `${d.getFullYear()}·${String(d.getMonth() + 1).padStart(2, '0')}·${String(d.getDate()).padStart(2, '0')}`;
+/** 书名/简介：en 优先用 _en 字段，缺省回落中文 */
+export function bookTitle(book: BookView, lang: Lang): string {
+  return lang === 'en' && book.titleEn ? book.titleEn : book.title;
+}
+export function bookDesc(book: BookView, lang: Lang): string {
+  return lang === 'en' && book.descriptionEn ? book.descriptionEn : book.description;
 }

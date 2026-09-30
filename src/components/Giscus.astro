@@ -1,16 +1,18 @@
 ---
 import { GISCUS } from '../site.config';
+import { t, type Lang } from '../lib/i18n';
 
 interface Props {
   /** 用 book slug 做 giscus 的 term，评论按书隔离 */
   term: string;
+  lang?: Lang;
 }
-const { term } = Astro.props;
+const { term, lang = 'zh' } = Astro.props;
 const enabled = Boolean(GISCUS.repo && GISCUS.repoId && GISCUS.categoryId);
 ---
 
 <section class="giscus-block">
-  <h2 class="giscus-title">读后感</h2>
+  <h2 class="giscus-title">{t(lang, 'detail.giscus')}</h2>
   {
     enabled ? (
       <script
@@ -27,15 +29,13 @@ const enabled = Boolean(GISCUS.repo && GISCUS.repoId && GISCUS.categoryId);
         data-emit-metadata="0"
         data-input-position="top"
         data-theme="dark_dimmed"
-        data-lang="zh-CN"
+        data-lang={lang === 'en' ? 'en' : 'zh-CN'}
         data-loading="lazy"
         crossorigin="anonymous"
         async
       />
     ) : (
-      <p class="giscus-placeholder">
-        评论组件（giscus）将在 GitHub public 仓库建立后自动启用 —— 见 kickoff §9。
-      </p>
+      <p class="giscus-placeholder">{t(lang, 'detail.giscusTodo')}</p>
     )
   }
 </section>
@@ -48,6 +48,7 @@ const enabled = Boolean(GISCUS.repo && GISCUS.repoId && GISCUS.categoryId);
     color: var(--paper-dim);
     margin: 0 0 18px;
   }
+  :global([lang='en']) .giscus-title { letter-spacing: 0.06em; }
   .giscus-placeholder {
     border: 1px dashed var(--line);
     border-radius: 4px;

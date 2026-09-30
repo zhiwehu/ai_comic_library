@@ -1,9 +1,11 @@
 ---
 import '../styles/global.css';
 import { SITE } from '../site.config';
+import { t, type Lang } from '../lib/i18n';
 
 interface Props {
   title: string;
+  lang?: Lang;
   description?: string;
   ogImage?: string | null;
   ogType?: string;
@@ -13,7 +15,8 @@ interface Props {
 
 const {
   title,
-  description = '为 AI 创作的漫画与绘本而建的作品图书馆：书架、目录与翻页阅读器。',
+  lang = 'zh',
+  description = t(lang, 'site.desc'),
   ogImage = null,
   ogType = 'website',
   bodyClass = '',
@@ -21,20 +24,33 @@ const {
 } = Astro.props;
 
 const ogImageAbs = ogImage ? new URL(ogImage, Astro.site).href : null;
+
+/** 语言切换目标：zh ↔ en（同一路径） */
+const path = Astro.url.pathname;
+const altPath =
+  lang === 'zh'
+    ? path === '/'
+      ? '/en/'
+      : `/en${path}`
+    : path.replace(/^\/en(?=\/|$)/, '') || '/';
+
+const htmlLang = lang === 'en' ? 'en' : 'zh-CN';
 ---
 
 <!doctype html>
-<html lang="zh-CN">
+<html lang={htmlLang}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-    <title>{title} · {SITE.name}</title>
+    <title>{title} · {t(lang, 'site.name')}</title>
     <meta name="description" content={description} />
     <meta name="theme-color" content="#0b0b0f" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="sitemap" href="/sitemap-index.xml" />
-    <link rel="alternate" type="application/rss+xml" title={SITE.name} href="/rss.xml" />
-    <meta property="og:site_name" content={SITE.name} />
+    <link rel="alternate" type="application/rss+xml" title={t(lang, 'site.name')} href="/rss.xml" />
+    <link rel="alternate" hreflang="zh" href={new URL(lang === 'zh' ? path : altPath, Astro.site)} />
+    <link rel="alternate" hreflang="en" href={new URL(lang === 'en' ? path : altPath, Astro.site)} />
+    <meta property="og:site_name" content={t(lang, 'site.name')} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content={ogType} />
@@ -46,14 +62,17 @@ const ogImageAbs = ogImage ? new URL(ogImage, Astro.site).href : null;
     {
       chrome && (
         <header class="site-head wrap">
-          <a class="brand" href="/">
+          <a class="brand" href={lang === 'en' ? '/en/' : '/'}>
             <span class="brand-seal" aria-hidden="true">书</span>
-            <span class="brand-name">{SITE.name}</span>
+            <span class="brand-name">{t(lang, 'site.name')}</span>
             <span class="brand-latin">{SITE.latinName}</span>
           </a>
           <nav>
-            <a href="/">书架</a>
-            <a href="/rss.xml">RSS</a>
+            <a href={lang === 'en' ? '/en/' : '/'}>{t(lang, 'nav.shelf')}</a>
+            <a href="/rss.xml">{t(lang, 'nav.rss')}</a>
+            <a class="lang-switch" href={altPath} aria-label={t(lang, 'switch.label')}>
+              {t(lang, 'switch.to')}
+            </a>
           </nav>
         </header>
       )
@@ -65,9 +84,9 @@ const ogImageAbs = ogImage ? new URL(ogImage, Astro.site).href : null;
       chrome && (
         <footer class="site-foot">
           <div class="wrap">
-            <p class="motto">{SITE.tagline}</p>
+            <p class="motto">{t(lang, 'footer.motto')}</p>
             <p class="fine">
-              {SITE.domain} · <a href="/rss.xml">RSS 订阅</a> · 深夜书房，灯给你留着
+              {SITE.domain} · <a href="/rss.xml">{t(lang, 'footer.rss')}</a> · {t(lang, 'footer.fine')}
             </p>
           </div>
         </footer>

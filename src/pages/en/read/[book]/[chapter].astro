@@ -1,6 +1,6 @@
 ---
-import Reader from '../../../components/pages/Reader.astro';
-import { getShelf, chapterNav } from '../../../lib/books';
+import Reader from '../../../../components/pages/Reader.astro';
+import { getShelf, chapterNav } from '../../../../lib/books';
 
 export async function getStaticPaths() {
   const shelf = await getShelf();
@@ -15,4 +15,4 @@ export async function getStaticPaths() {
 const { book, chapter } = Astro.props;
 ---
 
-<Reader lang="zh" book={book} chapter={chapter} />
+<Reader lang="en" book={book} chapter={chapter} />
