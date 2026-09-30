@@ -11,8 +11,12 @@
   </defs>
   <rect width="32" height="32" rx="9" fill="url(#bg)"/>
   <rect x=".5" y=".5" width="31" height="31" rx="8.5" fill="none" stroke="#f6cf86" stroke-opacity=".3"/>
+  <!-- 书口暖光 -->
   <ellipse cx="16" cy="15.5" rx="7.5" ry="9.5" fill="#f6cf86" opacity="0.07"/>
+  <!-- 左页（前景） -->
   <path d="M15.3 8.6 C13.4 7.2 10.8 6.6 8 7 L8 21.8 C10.8 21.4 13.4 22 15.3 23.4 Z" fill="url(#au)"/>
+  <!-- 右页（后层，半透） -->
   <path d="M16.7 8.6 C18.6 7.2 21.2 6.6 24 7 L24 21.8 C21.2 21.4 18.6 22 16.7 23.4 Z" fill="url(#au)" opacity=".5"/>
+  <!-- 书脊阴影 -->
   <rect x="15.55" y="8.4" width=".9" height="15.2" rx=".45" fill="#0e0e13" opacity=".55"/>
 </svg>
