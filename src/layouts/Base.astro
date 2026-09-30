@@ -115,7 +115,17 @@ const htmlLang = lang === 'en' ? 'en' : 'zh-CN';
           <div class="wrap">
             <p class="motto">{t(lang, 'footer.motto')}</p>
             <p class="fine">
-              {SITE.domain} · <a href="/rss.xml">{t(lang, 'footer.rss')}</a> · {t(lang, 'footer.fine')}
+              {SITE.domain} · <a href="/rss.xml">{t(lang, 'footer.rss')}</a> · {t(lang, 'footer.fine')} · 由
+              <a
+                class="aiti-credit"
+                href="https://www.getaiti.com"
+                target="_blank"
+                rel="noopener"
+                title="AITi · getaiti.com"
+              >
+                <img src="/getaiti-logo.png" alt="AITi" loading="lazy" />
+              </a>
+              出品
             </p>
           </div>
         </footer>

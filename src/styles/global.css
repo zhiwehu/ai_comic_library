@@ -218,6 +218,23 @@ h1, h2, h3 {
 }
 .site-foot .fine a:hover { color: var(--lamp); }
 
+/* ---- AITi 出品署名 ---- */
+.aiti-credit {
+  display: inline-block;
+  margin: 0 2px;
+}
+.aiti-credit img {
+  display: inline-block;
+  height: 14px;
+  width: auto;
+  vertical-align: -2px;
+  opacity: 0.75;
+  transition: opacity 0.2s ease;
+}
+.aiti-credit:hover img { opacity: 1; }
+/* logo 原稿是深蓝字：深色主题下反相成浅色，色相旋转 180° 保住绿色点缀 */
+[data-theme='dark'] .aiti-credit img { filter: invert(0.92) hue-rotate(180deg); }
+
 /* ---- 按钮 ---- */
 .btn {
   display: inline-block;
