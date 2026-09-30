@@ -36,4 +36,12 @@ function booksSync() {
 export default defineConfig({
   site: 'https://comics.getaiti.com',
   integrations: [sitemap(), booksSync()],
+  vite: {
+    server: {
+      headers: {
+        // 开发模式禁止一切缓存：改了代码浏览器立刻可见，不再有旧模块 504/白条问题
+        'Cache-Control': 'no-store',
+      },
+    },
+  },
 });

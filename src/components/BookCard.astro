@@ -44,8 +44,26 @@ const extent =
   .book {
     position: relative;
     display: block;
-    padding-bottom: 46px;
-    /* 木质搁板：每本书脚下一段，横向相接成整块板 */
+    padding-bottom: 44px;
+  }
+  /* 悬浮接触阴影：书"放"在看不见的台面上 */
+  .book::after {
+    content: '';
+    position: absolute;
+    left: 7%;
+    right: 7%;
+    bottom: 36px;
+    height: 15px;
+    border-radius: 50%;
+    background: radial-gradient(ellipse at center, var(--ground) 0%, transparent 68%);
+    filter: blur(2px);
+    z-index: 0;
+    transition: opacity 0.35s ease, transform 0.35s ease;
+  }
+  .book:hover::after,
+  .book:focus-visible::after {
+    opacity: 0.65;
+    transform: scaleX(1.06);
   }
   .book-no {
     display: block;
@@ -57,22 +75,9 @@ const extent =
     transition: color 0.3s ease;
   }
   .book:hover .book-no, .book:focus-visible .book-no { color: var(--lamp); }
-  .book::after {
-    content: '';
-    position: absolute;
-    left: -12px;
-    right: -12px;
-    bottom: 30px;
-    height: 14px;
-    border-radius: 7px;
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0.03) 60%), var(--glass-bg);
-    border: 1px solid var(--glass-border);
-    box-shadow:
-      inset 0 1px 0 var(--glass-spec),
-      0 8px 20px var(--glass-shadow);
-  }
   .book-cover {
     position: relative;
+    z-index: 1;
     aspect-ratio: 3 / 4;
     overflow: hidden;
     border-radius: 3px 7px 7px 3px;

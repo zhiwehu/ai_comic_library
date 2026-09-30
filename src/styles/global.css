@@ -48,6 +48,7 @@
   --glass-shadow: rgba(0, 0, 0, 0.4);
   --ambient-1: rgba(232, 180, 90, 0.05);
   --ambient-2: rgba(96, 122, 150, 0.05);
+  --ground: rgba(0, 0, 0, 0.6);
 
   --font-display: 'Songti SC', 'STSongti-SC', 'STSong', 'Noto Serif CJK SC',
     'Source Han Serif SC', 'SimSun', serif;
@@ -96,6 +97,7 @@
   --glass-shadow: rgba(120, 95, 55, 0.16);
   --ambient-1: rgba(196, 140, 38, 0.1);
   --ambient-2: rgba(140, 165, 140, 0.12);
+  --ground: rgba(88, 70, 40, 0.35);
 }
 
 :root { color-scheme: var(--color-scheme); }
