@@ -1,10 +1,12 @@
 /* ============================================================
-   漫画图书馆 · 深夜书房
-   深色书房基调：墨色纸色、台灯暖光、木质书架。
+   漫画图书馆
+   书房基调：墨色纸色、台灯暖光、木质书架。
+   深色（夜晚书房）/ 浅色（白天书房）双主题，跟随系统 + 可手动切换。
    不引 webfont：标题走宋体系统栈，正文黑体系统栈。
    ============================================================ */
 
-:root {
+:root,
+[data-theme='dark'] {
   --ink: #0b0b0f;
   --ink-2: #111116;
   --ink-3: #1a1a21;
@@ -20,6 +22,24 @@
   --seal: #c3272b;
   --page-shadow: 0 18px 50px rgba(0, 0, 0, 0.55);
 
+  /* 语义层：组件里不要写死颜色，引用这些 */
+  --card-bg: #15151b;
+  --frame-line: rgba(236, 227, 208, 0.07);
+  --ghost-stroke: rgba(236, 227, 208, 0.06);
+  --scrim: rgba(4, 4, 7, 0.9);
+  --overlay: rgba(5, 5, 9, 0.95);
+  --panel: rgba(14, 14, 20, 0.95);
+  --reader-bg: #08080c;
+  --glow-1: rgba(232, 180, 90, 0.16);
+  --glow-2: rgba(232, 180, 90, 0.045);
+  --glow-3: rgba(74, 55, 36, 0.28);
+  --mega-1: #f7efdd;
+  --mega-2: #cbbd9f;
+  --mega-3: #8f8368;
+  --mega-glow: rgba(232, 180, 90, 0.12);
+  --grain-o: 0.045;
+  --color-scheme: dark;
+
   --font-display: 'Songti SC', 'STSongti-SC', 'STSong', 'Noto Serif CJK SC',
     'Source Han Serif SC', 'SimSun', serif;
   --font-body: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB',
@@ -27,10 +47,44 @@
   --font-latin: 'Palatino', 'Palatino Linotype', 'Book Antiqua', Georgia, serif;
 }
 
+[data-theme='light'] {
+  --ink: #f1eadb;
+  --ink-2: #e8dfcc;
+  --ink-3: #d9cdb4;
+  --paper: #2b2417;
+  --paper-dim: #6f6450;
+  --paper-faint: #9c9179;
+  --lamp: #a4711a;
+  --lamp-bright: #c8912c;
+  --lamp-soft: rgba(164, 113, 26, 0.13);
+  --line: rgba(43, 36, 23, 0.16);
+  --wood-hi: #5a4630;
+  --wood-lo: #3a2c1c;
+  --page-shadow: 0 18px 44px rgba(88, 70, 40, 0.28);
+
+  --card-bg: #fffdf4;
+  --frame-line: rgba(43, 36, 23, 0.12);
+  --ghost-stroke: rgba(43, 36, 23, 0.09);
+  --scrim: rgba(249, 244, 233, 0.92);
+  --overlay: rgba(247, 241, 229, 0.96);
+  --panel: rgba(250, 246, 236, 0.97);
+  --reader-bg: #ece4d2;
+  --glow-1: rgba(196, 140, 38, 0.13);
+  --glow-2: rgba(196, 140, 38, 0.04);
+  --glow-3: rgba(140, 110, 60, 0.16);
+  --mega-1: #574722;
+  --mega-2: #332a12;
+  --mega-3: #1e1808;
+  --mega-glow: rgba(164, 113, 26, 0.14);
+  --grain-o: 0.05;
+  --color-scheme: light;
+}
+
+:root { color-scheme: var(--color-scheme); }
+
 * { box-sizing: border-box; }
 
 html {
-  color-scheme: dark;
   scroll-behavior: smooth;
   background: var(--ink); /* overscroll / 横向回弹不露白 */
   overflow-x: clip; /* 兜死装饰元素（幽灵字/跑马灯/搁板）可能引起的横向滚动 */
@@ -46,6 +100,7 @@ body {
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
   overflow-x: clip;
+  transition: background 0.35s ease, color 0.35s ease;
 }
 
 /* 全站纸纹噪点 */
@@ -55,7 +110,7 @@ body::after {
   inset: 0;
   z-index: 999;
   pointer-events: none;
-  opacity: 0.045;
+  opacity: var(--grain-o);
   mix-blend-mode: overlay;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
 }
@@ -71,7 +126,31 @@ h1, h2, h3 {
   letter-spacing: 0.04em;
 }
 
-::selection { background: rgba(232, 180, 90, 0.32); color: #fff8ea; }
+::selection { background: rgba(232, 180, 90, 0.32); }
+[data-theme='light'] ::selection { background: rgba(164, 113, 26, 0.25); }
+
+/* ---- 主题切换 ---- */
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: none;
+  color: var(--paper-dim);
+  font-size: 14px;
+  cursor: pointer;
+  transition: color 0.25s ease, border-color 0.25s ease, transform 0.25s ease;
+}
+.theme-toggle:hover { color: var(--lamp); border-color: var(--lamp); transform: rotate(15deg); }
+.theme-toggle .icon-sun { display: none; }
+.theme-toggle .icon-moon { display: block; }
+[data-theme='light'] .theme-toggle .icon-sun { display: block; }
+[data-theme='light'] .theme-toggle .icon-moon { display: none; }
+
 
 .wrap { max-width: 1120px; margin-inline: auto; padding-inline: clamp(16px, 4vw, 36px); }
 

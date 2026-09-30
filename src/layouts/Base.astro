@@ -47,6 +47,23 @@ const htmlLang = lang === 'en' ? 'en' : 'zh-CN';
     <title>{title} · {t(lang, 'site.name')}</title>
     <meta name="description" content={description} />
     <meta name="theme-color" content="#0b0b0f" />
+    <!-- 主题：优先用户选择，否则跟随系统；内联执行避免闪屏 -->
+    <script is:inline>
+      (function () {
+        try {
+          var saved = localStorage.getItem('cl:theme');
+          var theme =
+            saved === 'light' || saved === 'dark'
+              ? saved
+              : matchMedia('(prefers-color-scheme: light)').matches
+                ? 'light'
+                : 'dark';
+          document.documentElement.dataset.theme = theme;
+        } catch (e) {
+          document.documentElement.dataset.theme = 'dark';
+        }
+      })();
+    </script>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="sitemap" href="/sitemap-index.xml" />
     <link rel="alternate" type="application/rss+xml" title={t(lang, 'site.name')} href="/rss.xml" />
@@ -72,6 +89,16 @@ const htmlLang = lang === 'en' ? 'en' : 'zh-CN';
           <nav>
             <a href={lang === 'en' ? '/en/' : '/'}>{t(lang, 'nav.shelf')}</a>
             <a href="/rss.xml">{t(lang, 'nav.rss')}</a>
+            <button
+              class="theme-toggle"
+              id="theme-toggle"
+              type="button"
+              aria-label={t(lang, 'theme.toggle')}
+              title={t(lang, 'theme.toggle')}
+            >
+              <span class="icon-moon" aria-hidden="true">☾</span>
+              <span class="icon-sun" aria-hidden="true">☀</span>
+            </button>
             <a class="lang-switch" href={altPath} aria-label={t(lang, 'switch.label')}>
               {t(lang, 'switch.to')}
             </a>
@@ -96,3 +123,19 @@ const htmlLang = lang === 'en' ? 'en' : 'zh-CN';
     }
   </body>
 </html>
+
+<script>
+  // 主题切换：写 localStorage + 换 data-theme，无刷新过渡
+  function bindThemeToggle(btn: HTMLElement | null) {
+    btn?.addEventListener('click', () => {
+      const next = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
+      document.documentElement.dataset.theme = next;
+      try {
+        localStorage.setItem('cl:theme', next);
+      } catch {}
+      document.querySelector('meta[name="theme-color"]')
+        ?.setAttribute('content', next === 'light' ? '#f1eadb' : '#0b0b0f');
+    });
+  }
+  bindThemeToggle(document.getElementById('theme-toggle'));
+</script>

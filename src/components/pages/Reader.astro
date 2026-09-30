@@ -70,6 +70,7 @@ const flipH = Math.round(flipW / ratio);
           <button class="cr-btn" id="btn-thumbs" type="button">{t(lang, 'reader.thumbs')}</button>
           <button class="cr-btn" id="btn-mode" type="button">{t(lang, 'reader.modeScroll')}</button>
           <button class="cr-btn" id="btn-full" type="button">{t(lang, 'reader.full')}</button>
+          <button class="cr-btn" id="btn-theme" type="button" aria-label={t(lang, 'theme.toggle')}><span class="icon-moon" aria-hidden="true">☾</span><span class="icon-sun" aria-hidden="true">☀</span></button>
         </span>
       </div>
       <div class="chrome-bottom">
@@ -427,6 +428,14 @@ const flipH = Math.round(flipW / ratio);
     }
   });
 
+  document.getElementById('btn-theme')!.addEventListener('click', () => {
+    const next = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
+    document.documentElement.dataset.theme = next;
+    try {
+      localStorage.setItem('cl:theme', next);
+    } catch {}
+  });
+
   /* ---------- chrome 自动隐藏 ---------- */
   let hideTimer: ReturnType<typeof setTimeout>;
   const wake = () => {
@@ -441,7 +450,7 @@ const flipH = Math.round(flipW / ratio);
 </script>
 
 <style>
-  body.reader-page { background: #08080c; overflow: hidden; }
+  body.reader-page { background: var(--reader-bg); overflow: hidden; }
 
   #reader { position: fixed; inset: 0; }
 
@@ -461,13 +470,13 @@ const flipH = Math.round(flipW / ratio);
     top: 0;
     padding: 10px 14px;
     padding-top: max(10px, env(safe-area-inset-top));
-    background: linear-gradient(180deg, rgba(4, 4, 7, 0.9), rgba(4, 4, 7, 0));
+    background: linear-gradient(180deg, var(--scrim), transparent);
   }
   .chrome-bottom {
     bottom: 0;
     padding: 8px 16px;
     padding-bottom: max(8px, env(safe-area-inset-bottom));
-    background: linear-gradient(0deg, rgba(4, 4, 7, 0.9), rgba(4, 4, 7, 0));
+    background: linear-gradient(0deg, var(--scrim), transparent);
   }
   .cr-btn {
     border: none;
@@ -481,6 +490,9 @@ const flipH = Math.round(flipW / ratio);
     transition: color 0.2s ease;
   }
   .cr-btn:hover { color: var(--lamp); }
+  #btn-theme .icon-sun { display: none; }
+  [data-theme='light'] #btn-theme .icon-sun { display: inline; }
+  [data-theme='light'] #btn-theme .icon-moon { display: none; }
   .cr-title {
     flex: 1;
     font-size: 13px;
@@ -527,7 +539,7 @@ const flipH = Math.round(flipW / ratio);
     max-width: min(94vw, 740px);
     max-height: 100%;
     border-radius: 2px;
-    box-shadow: 0 14px 46px rgba(0, 0, 0, 0.62);
+    box-shadow: var(--page-shadow);
     background: #15151b;
   }
 
@@ -555,7 +567,7 @@ const flipH = Math.round(flipW / ratio);
     position: fixed;
     inset: 0;
     z-index: 60;
-    background: rgba(5, 5, 9, 0.95);
+    background: var(--overlay);
     overflow-y: auto;
     padding: 64px 4vw 44px;
   }
@@ -574,7 +586,7 @@ const flipH = Math.round(flipW / ratio);
     border: 1px solid var(--line);
     border-radius: 3px;
     overflow: hidden;
-    background: #15151b;
+    background: var(--card-bg);
     cursor: pointer;
     transition: border-color 0.2s ease, transform 0.2s ease;
   }
@@ -629,7 +641,7 @@ const flipH = Math.round(flipW / ratio);
     display: flex;
     gap: 14px;
     align-items: center;
-    background: rgba(14, 14, 20, 0.95);
+    background: var(--panel);
     border: 1px solid var(--line);
     border-radius: 4px;
     padding: 10px 18px;

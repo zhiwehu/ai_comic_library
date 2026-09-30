@@ -1,6 +1,6 @@
 # 漫画图书馆（comic-library）
 
-为 AI 创作的漫画与绘本而建的**作品图书馆**：书架、目录、逼近实体书体验的翻页阅读器。
+为 AI 创作的漫画与绘本而建的**作品图书馆**：书架、目录、逼近实体书体验的翻页阅读器。中英双语，深浅色主题可切换。
 公众号连载的完整阅读入口与永久存档。规格见 [kickoff.md](./kickoff.md)（含 §14 修订记录）。
 
 - 线上：`comics.getaiti.com`（Cloudflare Pages 主 + Vercel 备，见 kickoff §9）
