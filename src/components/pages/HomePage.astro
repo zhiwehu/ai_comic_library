@@ -143,6 +143,7 @@ const ticker = shelf.map((b) => bookTitle(b, lang)).join('　✦　');
   /* ================= 首屏 · 满幕开卷 ================= */
   .hero {
     position: relative;
+    min-height: 100vh; /* 老引擎回退（旧 WebView 不识别 svh） */
     min-height: 100svh;
     display: flex;
     flex-direction: column;
