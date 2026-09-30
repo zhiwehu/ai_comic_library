@@ -13,6 +13,10 @@ const { prev, next } = chapterNav(book, chapter.slug);
 const pages = chapter.pages;
 const count = pages.length;
 const base = lang === 'en' ? '/en' : '';
+const ratio = chapter.ratio && chapter.ratio > 0 ? chapter.ratio : 8 / 9;
+/** StPageFlip 页盒基准尺寸按真实比例取整 */
+const flipW = Math.round(ratio >= 1 ? 900 : 800);
+const flipH = Math.round(flipW / ratio);
 ---
 
 <Base
@@ -26,6 +30,8 @@ const base = lang === 'en' ? '/en' : '';
 >
   <div
     id="reader"
+    style={`--page-aspect:${ratio.toFixed(4)}`}
+    data-page-aspect={ratio.toFixed(4)}
     data-book={book.slug}
     data-chapter={chapter.slug}
     data-count={count}
@@ -173,6 +179,11 @@ const base = lang === 'en' ? '/en' : '';
   const saved = Math.min(Math.max(Number(localStorage.getItem(key) ?? 1) || 1, 1), count);
   let mode: 'flip' | 'scroll' = localStorage.getItem('cl:mode') === 'scroll' ? 'scroll' : 'flip';
 
+  // 页盒基准尺寸按真实页宽高比现算（与服务端 --page-aspect 同源）
+  const pageAspectCfg = Number(root.dataset.pageAspect) || 8 / 9;
+  const flipW = Math.round(pageAspectCfg >= 1 ? 900 : 800);
+  const flipH = Math.round(flipW / pageAspectCfg);
+
   let pf: PageFlip | null = null;
   let flipImgs: HTMLImageElement[] = [];
   let sections: HTMLElement[] = [];
@@ -236,7 +247,7 @@ const base = lang === 'en' ? '/en' : '';
     const pad = { x: 20, y: 116 };
     const availW = stage.width - pad.x;
     const availH = stage.height - pad.y;
-    const pageAspect = 8 / 9;
+    const pageAspect = Number(root.dataset.pageAspect) || 8 / 9;
     const pageW =
       orientation === 'portrait'
         ? Math.min(availW, availH * pageAspect)
@@ -251,13 +262,13 @@ const base = lang === 'en' ? '/en' : '';
     modeBtn.textContent = STR.modeScroll;
 
     pf = new PageFlip(flipbook, {
-      width: 800,
-      height: 900,
+      width: flipW,
+      height: flipH,
       size: 'stretch',
       minWidth: 320,
-      maxWidth: 900,
+      maxWidth: Math.round(flipW * 1.15),
       minHeight: 360,
-      maxHeight: 1012,
+      maxHeight: Math.round(flipH * 1.15),
       usePortrait: true,
       showCover: false,
       mobileScrollSupport: true,
@@ -503,11 +514,11 @@ const base = lang === 'en' ? '/en' : '';
   }
   .flip-stage[hidden] { display: none; }
   #flipbook { max-width: 100%; }
-  .pf-page { background: #15151b; }
+  .pf-page { background: #0d0d12; }
   .pf-page img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain; /* 页盒比例=页面真实比例时无黑边；异常页不裁切 */
     pointer-events: none;
     user-select: none;
     -webkit-user-drag: none;
@@ -532,7 +543,7 @@ const base = lang === 'en' ? '/en' : '';
   .thumbs-grid button {
     position: relative;
     padding: 0;
-    aspect-ratio: 8 / 9;
+    aspect-ratio: var(--page-aspect, 8 / 9);
     border: 1px solid var(--line);
     border-radius: 3px;
     overflow: hidden;
@@ -585,7 +596,7 @@ const base = lang === 'en' ? '/en' : '';
   #toast {
     position: fixed;
     left: 50%;
-    bottom: 110px;
+    bottom: 190px;
     transform: translateX(-50%);
     z-index: 70;
     display: flex;

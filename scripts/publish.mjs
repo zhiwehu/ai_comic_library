@@ -144,15 +144,33 @@ async function main() {
 
   // ---- chapter.yml ----
   const chapterYml = path.join(chapterDir, 'chapter.yml');
+  const firstPageMeta = dry ? null : await sharp(written[0]).metadata();
   if (!fs.existsSync(chapterYml)) {
     const body = [
       `title: ${quote(title)}`,
       `number: ${Number.isFinite(number) ? number : 1}`,
       `date: ${date}`,
+      ...(firstPageMeta?.width ? [`width: ${firstPageMeta.width}`, `height: ${firstPageMeta.height}`] : []),
       '',
     ].join('\n');
     if (dry) console.log(`[dry] 将生成 ${chapterYml}\n${body}`);
     else { fs.mkdirSync(chapterDir, { recursive: true }); fs.writeFileSync(chapterYml, body); }
+  } else if (firstPageMeta?.width) {
+    // 已有 yml：回填真实页宽高（阅读器按真实比例渲染，避免裁切）
+    const text = fs.readFileSync(chapterYml, 'utf-8');
+    let updated = text;
+    for (const [k, v] of [['width', firstPageMeta.width], ['height', firstPageMeta.height]]) {
+      updated = /^width:/m.test(updated) && k === 'width'
+        ? updated.replace(/^width:.*$/m, `width: ${v}`)
+        : /^height:/m.test(updated) && k === 'height'
+          ? updated.replace(/^height:.*$/m, `height: ${v}`)
+          : k === 'width' && !/^width:/m.test(updated)
+            ? updated.replace(/\n*$/, '\n') + `width: ${v}\n`
+            : k === 'height' && !/^height:/m.test(updated)
+              ? updated.replace(/\n*$/, '\n') + `height: ${v}\n`
+              : updated;
+    }
+    if (!dry) fs.writeFileSync(chapterYml, updated);
   } else {
     console.log(`• chapter.yml 已存在，保持不动：${path.relative(process.cwd(), chapterYml)}`);
   }

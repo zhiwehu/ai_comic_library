@@ -13,6 +13,8 @@ export interface ChapterView {
   number: number;
   date: Date;
   pages: string[];
+  /** 页面宽高比（w/h），缺省 8:9；来自 chapter.yml 的 width/height */
+  ratio: number;
 }
 
 export interface BookView {
@@ -55,6 +57,8 @@ function toChapterView(entry: ChapterEntry): ChapterView {
   const parts = entry.id.split('/');
   const bookSlug = parts[0];
   const slug = parts.slice(1, -1).join('/');
+  const w = entry.data.width ?? 800;
+  const h = entry.data.height ?? 900;
   return {
     slug,
     bookSlug,
@@ -62,6 +66,7 @@ function toChapterView(entry: ChapterEntry): ChapterView {
     number: entry.data.number,
     date: entry.data.date,
     pages: listPageUrls(bookSlug, slug),
+    ratio: h > 0 ? w / h : 8 / 9,
   };
 }
 

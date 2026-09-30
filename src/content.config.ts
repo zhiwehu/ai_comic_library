@@ -28,6 +28,8 @@ const chapters = defineCollection({
     title: z.string(),
     number: z.number(),
     date: z.coerce.date(),
+    width: z.number().optional(),
+    height: z.number().optional(),
   }),
 });
 

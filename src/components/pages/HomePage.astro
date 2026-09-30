@@ -38,7 +38,7 @@ const ticker = shelf.map((b) => bookTitle(b, lang)).join('　✦　');
           </div>
 
           <div class="stage">
-            <div class="book3d" id="book3d">
+            <div class="book3d" id="book3d" style={`--ob-aspect:${(ch.ratio || 8 / 9).toFixed(4)}`}>
               <div class="ob ob-left">
                 <span class="edge edge-l" aria-hidden="true" />
                 <img src={leftPage} alt="" fetchpriority="high" />
@@ -269,7 +269,7 @@ const ticker = shelf.map((b) => bookTitle(b, lang)).join('　✦　');
   .ob {
     position: relative;
     width: 50%;
-    aspect-ratio: 8 / 9;
+    aspect-ratio: var(--ob-aspect, 8 / 9);
     background: #17171d;
     overflow: hidden;
   }
