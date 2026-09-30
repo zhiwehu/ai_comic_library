@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://comics.getaiti.com/sitemap-index.xml

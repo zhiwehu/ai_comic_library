@@ -1,0 +1,28 @@
+{
+  "name": "comic-library",
+  "type": "module",
+  "version": "0.1.0",
+  "private": true,
+  "description": "AI 漫画/绘本作品图书馆 —— 书架、目录与翻页阅读器",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "check": "astro check",
+    "publish": "node scripts/publish.mjs"
+  },
+  "dependencies": {
+    "@astrojs/rss": "^4.0.12",
+    "@astrojs/sitemap": "^3.4.1",
+    "astro": "^5.12.0",
+    "page-flip": "^2.0.7"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.4",
+    "sharp": "^0.34.2",
+    "typescript": "^5.8.3"
+  }
+}
