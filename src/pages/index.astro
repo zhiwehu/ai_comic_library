@@ -1,67 +1,97 @@
 ---
 import Base from '../layouts/Base.astro';
 import BookCard from '../components/BookCard.astro';
-import { getShelf, TYPE_LABEL, fmtDate } from '../lib/books';
+import { getShelf, fmtDate } from '../lib/books';
+import { SITE } from '../site.config';
 
 const shelf = await getShelf();
 const featured = shelf[0] ?? null;
 const ch = featured?.latest ?? null;
 const leftPage = ch?.pages[0];
 const rightPage = ch?.pages[1] ?? ch?.pages[0];
+const ticker = shelf.map((b) => b.title).join('　✦　');
 ---
 
-<Base title="书架 · 深夜书房" ogImage={featured?.coverUrl ?? null}>
+<Base title="深夜书房" ogImage={featured?.coverUrl ?? null}>
   {
     featured && ch && leftPage ? (
-      <section class="hero">
-        <div class="motes" aria-hidden="true">
-          <i /><i /><i /><i /><i />
-        </div>
-        <div class="wrap hero-inner">
-          <p class="hero-kicker">
-            最新上架 · 《{featured.title}》 · {TYPE_LABEL[featured.type]} · {fmtDate(ch.date)}
+      <section class="hero" id="hero">
+        <span class="ghost" aria-hidden="true">LIBRARY</span>
+        <div class="hero-lamp" aria-hidden="true" />
+        <aside class="hero-rail" aria-hidden="true">
+          <span class="vert">本馆作品由 AI 辅助创作 · 流程可复现</span>
+        </aside>
+
+        <div class="hero-center">
+          <p class="kicker">
+            {SITE.latinName} · EST. 2026 · {shelf.length} 册在架
           </p>
-          <div class="open-book">
-            <div class="ob-page ob-left">
-              <img src={leftPage} alt="" fetchpriority="high" />
-            </div>
-            {rightPage && (
-              <div class="ob-page ob-right">
-                <img src={rightPage} alt="" />
-              </div>
-            )}
-            <div class="ob-gutter" aria-hidden="true" />
+          <div class="mega-wrap">
+            <h1 class="mega">深夜书房</h1>
+            <span class="seal" aria-hidden="true">藏</span>
           </div>
-          <h1 class="hero-title">{ch.title}</h1>
-          <div class="hero-actions">
+
+          <div class="stage">
+            <div class="book3d" id="book3d">
+              <div class="ob ob-left">
+                <span class="edge edge-l" aria-hidden="true" />
+                <img src={leftPage} alt="" fetchpriority="high" />
+              </div>
+              {rightPage && (
+                <div class="ob ob-right">
+                  <span class="edge edge-r" aria-hidden="true" />
+                  <img src={rightPage} alt="" />
+                </div>
+              )}
+              <span class="gutter" aria-hidden="true" />
+              <span class="sweep" aria-hidden="true" />
+            </div>
+          </div>
+
+          <p class="now-reading">
+            <span class="dot" aria-hidden="true" /> 最新上架　《{featured.title}》· {ch.title} · {fmtDate(ch.date)}
+          </p>
+          <div class="cta-row">
             <a class="btn btn-lamp" href={`/read/${featured.slug}/${ch.slug}/`}>
               翻 开 这 本 书
             </a>
             <a class="btn btn-ghost" id="continue-link" hidden href="#" />
           </div>
         </div>
+
+        <div class="ticker" aria-hidden="true">
+          <div class="ticker-track">
+            <span>{ticker}　✦　</span>
+            <span>{ticker}　✦　</span>
+          </div>
+        </div>
       </section>
     ) : (
       <section class="hero hero-empty wrap">
-        <h1 class="hero-title">书房还空着</h1>
-        <p class="hero-kicker">用 <code>pnpm run publish</code> 上架第一本书。</p>
+        <h1 class="mega">书房还空着</h1>
+        <p class="kicker">用 <code>pnpm run publish</code> 上架第一本书。</p>
       </section>
     )
   }
 
   <section class="shelf wrap" id="shelf">
     <header class="shelf-head">
-      <h2>藏书架</h2>
-      <p class="shelf-sub">共 {shelf.length} 本 · 按最近更新排列</p>
+      <div class="shelf-title-wrap">
+        <h2 class="shelf-title">藏书架</h2>
+        <span class="seal seal-sm" aria-hidden="true">录</span>
+      </div>
+      <p class="shelf-count">
+        <b class="shelf-n">{shelf.length}</b> VOLUMES<span class="shelf-sub">按最近更新排列</span>
+      </p>
     </header>
     <div class="shelf-grid">
-      {shelf.map((b) => <BookCard book={b} />)}
+      {shelf.map((b, i) => <BookCard book={b} index={i + 1} />)}
     </div>
   </section>
 </Base>
 
 <script>
-  // 「继续上次」：cl:last 记录最近阅读的书:章
+  // 「继续上次」
   const link = document.getElementById('continue-link') as HTMLAnchorElement | null;
   const last = localStorage.getItem('cl:last');
   if (link && last) {
@@ -75,172 +105,322 @@ const rightPage = ch?.pages[1] ?? ch?.pages[0];
       link.hidden = false;
     }
   }
+
+  // 开卷 3D：鼠标视差（触屏/减动效自动关闭）
+  const hero = document.getElementById('hero');
+  const book = document.getElementById('book3d');
+  const fine = matchMedia('(pointer: fine)').matches;
+  const calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (hero && book && fine && !calm) {
+    let raf = 0;
+    hero.addEventListener('pointermove', (e) => {
+      if (raf) return;
+      raf = requestAnimationFrame(() => {
+        raf = 0;
+        const r = hero.getBoundingClientRect();
+        const dx = (e.clientX - r.left) / r.width - 0.5;
+        const dy = (e.clientY - r.top) / r.height - 0.5;
+        book.style.setProperty('--ry', `${(dx * 10).toFixed(2)}deg`);
+        book.style.setProperty('--rx', `${(6 - dy * 8).toFixed(2)}deg`);
+      });
+    });
+    hero.addEventListener('pointerleave', () => {
+      book.style.setProperty('--ry', '0deg');
+      book.style.setProperty('--rx', '6deg');
+    });
+  }
 </script>
 
 <style>
-  /* ---------- 首屏：开卷 ---------- */
+  /* ================= 首屏 · 满幕开卷 ================= */
   .hero {
     position: relative;
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     overflow: hidden;
-    padding-block: clamp(40px, 7vw, 80px) clamp(48px, 8vw, 92px);
+    padding-block: clamp(56px, 8vh, 96px) clamp(72px, 10vh, 110px);
     border-bottom: 1px solid var(--line);
   }
-  /* 台灯光晕 */
-  .hero::before {
-    content: '';
+  .hero-lamp {
     position: absolute;
-    inset: -50% -20% auto;
-    height: 150%;
+    inset: 0;
     pointer-events: none;
     background:
-      radial-gradient(600px 440px at 74% -80px, rgba(232, 180, 90, 0.17), rgba(232, 180, 90, 0.045) 46%, transparent 70%),
-      radial-gradient(420px 340px at 18% -40px, rgba(232, 180, 90, 0.07), transparent 65%);
+      radial-gradient(720px 480px at 50% 12%, rgba(232, 180, 90, 0.16), rgba(232, 180, 90, 0.04) 46%, transparent 72%),
+      radial-gradient(1100px 560px at 50% 118%, rgba(74, 55, 36, 0.28), transparent 60%);
   }
-  .hero-inner { position: relative; text-align: center; }
+  .ghost {
+    position: absolute;
+    top: 2%;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: var(--font-latin);
+    font-size: clamp(120px, 21vw, 320px);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(236, 227, 208, 0.06);
+    white-space: nowrap;
+    user-select: none;
+    pointer-events: none;
+  }
+  .hero-rail {
+    position: absolute;
+    right: clamp(14px, 3vw, 40px);
+    top: 50%;
+    transform: translateY(-50%);
+    writing-mode: vertical-rl;
+    font-family: var(--font-display);
+    font-size: 12.5px;
+    letter-spacing: 0.42em;
+    color: var(--paper-faint);
+    user-select: none;
+  }
+  @media (max-width: 1080px) { .hero-rail { display: none; } }
 
-  .hero-kicker {
-    margin: 0 0 26px;
-    font-size: 13px;
-    letter-spacing: 0.22em;
+  .hero-center { position: relative; text-align: center; }
+
+  .kicker {
+    margin: 0 0 clamp(10px, 2vh, 22px);
+    font-family: var(--font-latin);
+    font-size: 12.5px;
+    letter-spacing: 0.34em;
+    text-transform: uppercase;
     color: var(--paper-dim);
     animation: rise 0.9s 0.05s ease both;
   }
-  .hero-kicker code {
-    font-family: var(--font-latin);
-    color: var(--lamp);
+  .kicker code { color: var(--lamp); }
+
+  .mega-wrap { position: relative; display: inline-block; }
+  .mega {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: clamp(52px, 9.5vw, 128px);
+    font-weight: 700;
+    line-height: 1.04;
+    letter-spacing: 0.12em;
+    text-indent: 0.12em; /* 视觉配平字距 */
+    background: linear-gradient(180deg, #f7efdd 30%, #cbbd9f 78%, #8f8368);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    text-shadow: 0 24px 70px rgba(232, 180, 90, 0.12);
+    animation: rise 1s 0.12s ease both;
+  }
+  .seal {
+    position: absolute;
+    right: clamp(-30px, -2vw, -14px);
+    top: -12px;
+    display: grid;
+    place-items: center;
+    width: clamp(40px, 4.4vw, 60px);
+    height: clamp(40px, 4.4vw, 60px);
+    border-radius: 8px;
+    background: linear-gradient(160deg, #d43a30, var(--seal));
+    color: #f7ead6;
+    font-family: var(--font-display);
+    font-size: clamp(20px, 2.2vw, 30px);
+    transform: rotate(7deg);
+    box-shadow: inset 0 0 0 2px rgba(247, 234, 214, 0.32), 0 10px 26px rgba(195, 39, 43, 0.32);
+    animation: stamp 0.5s 0.75s cubic-bezier(0.2, 1.4, 0.4, 1) both;
+  }
+  .seal-sm {
+    position: static;
+    width: 30px;
+    height: 30px;
+    font-size: 15px;
+    transform: rotate(-4deg);
+    animation: none;
   }
 
-  .open-book {
+  /* ---- 3D 开卷 ---- */
+  .stage {
+    perspective: 1600px;
+    margin-top: clamp(-14px, -1vw, -6px);
+    animation: rise 1s 0.2s ease both;
+  }
+  .book3d {
     position: relative;
     display: flex;
-    width: min(88vw, 760px);
+    width: min(88vw, 860px);
     margin-inline: auto;
-    transform: perspective(1900px) rotateX(3.2deg);
-    filter: drop-shadow(0 34px 54px rgba(0, 0, 0, 0.62));
-    animation: settle 1.1s 0.15s cubic-bezier(0.2, 0.75, 0.3, 1) both;
+    transform-style: preserve-3d;
+    transform: rotateX(var(--rx, 6deg)) rotateY(var(--ry, 0deg));
+    transition: transform 0.35s cubic-bezier(0.2, 0.7, 0.3, 1);
+    animation: floaty 7s ease-in-out infinite;
+    filter: drop-shadow(0 44px 70px rgba(0, 0, 0, 0.66)) drop-shadow(0 10px 34px rgba(232, 180, 90, 0.1));
   }
-  .ob-page {
+  .ob {
+    position: relative;
     width: 50%;
     aspect-ratio: 8 / 9;
     background: #17171d;
     overflow: hidden;
   }
-  .ob-page img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
+  .ob img { width: 100%; height: 100%; object-fit: cover; }
   .ob-left {
-    border-radius: 5px 0 0 7px;
-    box-shadow: inset -22px 0 30px -22px rgba(0, 0, 0, 0.75);
+    border-radius: 6px 0 0 8px;
+    box-shadow: inset -26px 0 34px -24px rgba(0, 0, 0, 0.8);
     transform-origin: right center;
-    animation: unfold-l 1.15s 0.15s cubic-bezier(0.2, 0.75, 0.3, 1) both;
+    animation: unfold-l 1.2s 0.25s cubic-bezier(0.2, 0.75, 0.3, 1) both;
   }
   .ob-right {
-    border-radius: 0 5px 7px 0;
-    box-shadow: inset 22px 0 30px -22px rgba(0, 0, 0, 0.75);
+    border-radius: 0 6px 8px 0;
+    box-shadow: inset 26px 0 34px -24px rgba(0, 0, 0, 0.8);
     transform-origin: left center;
-    animation: unfold-r 1.15s 0.3s cubic-bezier(0.2, 0.75, 0.3, 1) both;
+    animation: unfold-r 1.2s 0.4s cubic-bezier(0.2, 0.75, 0.3, 1) both;
   }
-  .ob-gutter {
+  /* 书口纸页层叠 */
+  .edge {
+    position: absolute;
+    top: 3px;
+    bottom: 3px;
+    width: 5px;
+    z-index: 2;
+    pointer-events: none;
+    background: repeating-linear-gradient(90deg, #e8dcc2 0 1px, #a99a7c 1px 2.5px);
+    opacity: 0.85;
+  }
+  .edge-l { left: 0; border-radius: 3px 0 0 3px; }
+  .edge-r { right: 0; border-radius: 0 3px 3px 0; }
+
+  .gutter {
     position: absolute;
     left: 50%;
     top: 0;
     bottom: 0;
-    width: 44px;
+    width: 48px;
     transform: translateX(-50%);
-    background: linear-gradient(
-      90deg,
-      transparent,
-      rgba(0, 0, 0, 0.5) 46%,
-      rgba(0, 0, 0, 0.62) 50%,
-      rgba(0, 0, 0, 0.5) 54%,
-      transparent
-    );
+    background: linear-gradient(90deg, transparent, rgba(0, 0, 0, 0.52) 46%, rgba(0, 0, 0, 0.66) 50%, rgba(0, 0, 0, 0.52) 54%, transparent);
     pointer-events: none;
   }
-
-  .hero-title {
-    margin: 34px auto 20px;
-    font-size: clamp(21px, 3.4vw, 30px);
-    letter-spacing: 0.1em;
-    animation: rise 0.9s 0.45s ease both;
+  .sweep {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(105deg, transparent 42%, rgba(255, 241, 205, 0.11) 50%, transparent 58%);
+    background-size: 260% 100%;
+    mix-blend-mode: screen;
+    animation: sweep 7.5s ease-in-out infinite;
   }
-  .hero-actions {
+
+  .now-reading {
+    margin: clamp(22px, 3.4vh, 34px) auto 16px;
+    font-size: 14px;
+    letter-spacing: 0.14em;
+    color: var(--paper-dim);
+    animation: rise 0.9s 0.55s ease both;
+  }
+  .dot {
+    display: inline-block;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--lamp);
+    box-shadow: 0 0 12px rgba(232, 180, 90, 0.9);
+    margin-right: 6px;
+    animation: pulse 2.4s ease-in-out infinite;
+  }
+  .cta-row {
     display: flex;
     gap: 14px;
     justify-content: center;
     flex-wrap: wrap;
-    animation: rise 0.9s 0.6s ease both;
+    animation: rise 0.9s 0.68s ease both;
   }
 
-  /* 灯尘 */
-  .motes i {
+  /* ---- 跑马灯 · 新书通报 ---- */
+  .ticker {
     position: absolute;
-    width: 5px;
-    height: 5px;
-    border-radius: 50%;
-    background: rgba(246, 207, 134, 0.55);
-    filter: blur(1px);
-    opacity: 0;
-    animation: drift 16s linear infinite;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-top: 1px solid var(--line);
+    padding-block: 12px;
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+    mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
   }
-  .motes i:nth-child(1) { left: 14%; top: 68%; animation-delay: 0s; }
-  .motes i:nth-child(2) { left: 30%; top: 78%; animation-delay: -6s; animation-duration: 19s; }
-  .motes i:nth-child(3) { left: 62%; top: 60%; animation-delay: -3s; animation-duration: 14s; }
-  .motes i:nth-child(4) { left: 80%; top: 80%; animation-delay: -9s; animation-duration: 21s; }
-  .motes i:nth-child(5) { left: 48%; top: 72%; animation-delay: -12s; animation-duration: 17s; }
+  .ticker-track {
+    display: flex;
+    width: max-content;
+    animation: ticker 46s linear infinite;
+    font-family: var(--font-display);
+    font-size: 13.5px;
+    letter-spacing: 0.22em;
+    color: var(--paper-faint);
+    white-space: nowrap;
+  }
+  .ticker:hover .ticker-track { animation-play-state: paused; }
 
-  @keyframes drift {
-    0% { transform: translate(0, 10px); opacity: 0; }
-    18% { opacity: 0.5; }
-    85% { opacity: 0.12; }
-    100% { transform: translate(8px, -52px); opacity: 0; }
-  }
+  @keyframes ticker { to { transform: translateX(-50%); } }
+  @keyframes sweep { 0%, 55%, 100% { background-position: 130% 0; } 25% { background-position: -30% 0; } }
+  @keyframes floaty { 0%, 100% { translate: 0 0; } 50% { translate: 0 -8px; } }
+  @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.35; } }
   @keyframes rise {
-    from { opacity: 0; transform: translateY(14px); }
+    from { opacity: 0; transform: translateY(16px); }
     to { opacity: 1; transform: translateY(0); }
   }
-  @keyframes settle {
-    from { opacity: 0; transform: perspective(1900px) rotateX(3.2deg) translateY(18px); }
-    to { opacity: 1; transform: perspective(1900px) rotateX(3.2deg) translateY(0); }
+  @keyframes stamp {
+    from { opacity: 0; transform: rotate(7deg) scale(1.7); }
+    to { opacity: 1; transform: rotate(7deg) scale(1); }
   }
-  @keyframes unfold-l {
-    from { transform: rotateY(-26deg); }
-    to { transform: rotateY(0); }
-  }
-  @keyframes unfold-r {
-    from { transform: rotateY(26deg); }
-    to { transform: rotateY(0); }
-  }
+  @keyframes unfold-l { from { transform: rotateY(-24deg); } to { transform: rotateY(0); } }
+  @keyframes unfold-r { from { transform: rotateY(24deg); } to { transform: rotateY(0); } }
 
-  /* ---------- 藏书架 ---------- */
-  .shelf { padding-top: clamp(44px, 7vw, 84px); }
+  /* ================= 藏书架 ================= */
+  .shelf { padding-top: clamp(52px, 8vw, 96px); }
   .shelf-head {
     display: flex;
-    align-items: baseline;
+    align-items: flex-end;
     justify-content: space-between;
     gap: 16px;
-    margin-bottom: clamp(30px, 5vw, 52px);
+    margin-bottom: clamp(34px, 5vw, 58px);
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 20px;
   }
-  .shelf-head h2 {
+  .shelf-title-wrap { position: relative; display: flex; align-items: flex-start; gap: 12px; }
+  .shelf-title {
     margin: 0;
-    font-size: 22px;
-    letter-spacing: 0.24em;
+    font-size: clamp(30px, 4.6vw, 52px);
+    letter-spacing: 0.26em;
+    line-height: 1;
   }
-  .shelf-sub {
+  .shelf-count {
     margin: 0;
-    font-size: 13px;
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    font-family: var(--font-latin);
+    font-size: 12px;
+    letter-spacing: 0.3em;
     color: var(--paper-faint);
-    letter-spacing: 0.1em;
   }
+  .shelf-n {
+    font-size: clamp(38px, 5vw, 60px);
+    font-weight: 700;
+    color: var(--paper);
+    letter-spacing: 0.04em;
+  }
+  .shelf-sub { letter-spacing: 0.18em; }
+
   .shelf-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(138px, 1fr));
     column-gap: 24px;
-    row-gap: 54px;
+    row-gap: 58px;
   }
   @media (max-width: 480px) {
     .shelf-grid { grid-template-columns: repeat(auto-fill, minmax(118px, 1fr)); column-gap: 18px; }
+    .ticker-track { font-size: 12px; }
+  }
+  @media (max-width: 560px) {
+    .kicker { font-size: 11px; letter-spacing: 0.16em; }
+    .mega { font-size: clamp(38px, 11.5vw, 52px); letter-spacing: 0.08em; text-indent: 0.08em; }
+    .stage { margin-top: 14px; }
+    .now-reading { font-size: 12.5px; letter-spacing: 0.04em; }
+    .seal { width: 34px; height: 34px; font-size: 17px; right: -8px; top: -16px; }
   }
 </style>

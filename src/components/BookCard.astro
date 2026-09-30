@@ -4,13 +4,21 @@ import { TYPE_LABEL } from '../lib/books';
 
 interface Props {
   book: BookView;
+  index?: number;
 }
-const { book } = Astro.props;
+const { book, index } = Astro.props;
+const no = index !== undefined ? String(index).padStart(2, '0') : null;
 ---
 
 <a class="book" href={`/book/${book.slug}/`} aria-label={book.title}>
+  {no && <span class="book-no" aria-hidden="true">No.{no}</span>}
   <div class="book-cover">
     {book.coverUrl && <img src={book.coverUrl} alt={book.title} loading="lazy" decoding="async" />}
+    <span class="book-veil" aria-hidden="true">
+      <span class="veil-title">{book.title}</span>
+      <span class="veil-meta">{TYPE_LABEL[book.type]}{book.type === 'series' ? ` · ${book.chapters.length} 话` : ` · ${book.latest.pages.length} 页`}</span>
+      <span class="veil-cta">翻开 →</span>
+    </span>
   </div>
   <div class="book-plate">
     <span class="book-title">{book.title}</span>
@@ -32,6 +40,16 @@ const { book } = Astro.props;
     padding-bottom: 46px;
     /* 木质搁板：每本书脚下一段，横向相接成整块板 */
   }
+  .book-no {
+    display: block;
+    margin-bottom: 8px;
+    font-family: var(--font-latin);
+    font-size: 12px;
+    letter-spacing: 0.22em;
+    color: var(--paper-faint);
+    transition: color 0.3s ease;
+  }
+  .book:hover .book-no, .book:focus-visible .book-no { color: var(--lamp); }
   .book::after {
     content: '';
     position: absolute;
@@ -77,11 +95,42 @@ const { book } = Astro.props;
   }
   .book:hover .book-cover,
   .book:focus-visible .book-cover {
-    transform: perspective(680px) rotateX(7deg) translateY(-5px);
+    transform: perspective(680px) rotateX(7deg) translateY(-7px) scale(1.02);
     box-shadow:
-      0 26px 48px rgba(0, 0, 0, 0.65),
-      0 8px 40px rgba(232, 180, 90, 0.13),
-      inset 0 0 0 1px rgba(236, 227, 208, 0.08);
+      0 30px 54px rgba(0, 0, 0, 0.68),
+      0 10px 44px rgba(232, 180, 90, 0.16),
+      inset 0 0 0 1px rgba(236, 227, 208, 0.1);
+  }
+  /* hover 显影信息幕 */
+  .book-veil {
+    position: absolute;
+    inset: auto 0 0 0;
+    z-index: 2;
+    display: grid;
+    gap: 3px;
+    padding: 34px 12px 11px;
+    background: linear-gradient(180deg, transparent, rgba(5, 5, 9, 0.55) 30%, rgba(5, 5, 9, 0.92));
+    opacity: 0;
+    translate: 0 8px;
+    transition: opacity 0.3s ease, translate 0.3s ease;
+    text-align: left;
+  }
+  .book:hover .book-veil, .book:focus-visible .book-veil { opacity: 1; translate: 0 0; }
+  .veil-title {
+    font-family: var(--font-display);
+    font-size: 14.5px;
+    letter-spacing: 0.05em;
+    color: var(--paper);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .veil-meta { font-size: 11.5px; letter-spacing: 0.12em; color: var(--paper-dim); }
+  .veil-cta {
+    margin-top: 3px;
+    font-size: 12px;
+    letter-spacing: 0.24em;
+    color: var(--lamp);
   }
   .book-plate {
     display: grid;
@@ -96,7 +145,9 @@ const { book } = Astro.props;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    transition: color 0.3s ease;
   }
+  .book:hover .book-title { color: var(--lamp); }
   .book-meta {
     display: flex;
     align-items: center;

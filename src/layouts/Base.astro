@@ -47,6 +47,7 @@ const ogImageAbs = ogImage ? new URL(ogImage, Astro.site).href : null;
       chrome && (
         <header class="site-head wrap">
           <a class="brand" href="/">
+            <span class="brand-seal" aria-hidden="true">书</span>
             <span class="brand-name">{SITE.name}</span>
             <span class="brand-latin">{SITE.latinName}</span>
           </a>
