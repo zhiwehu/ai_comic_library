@@ -19,13 +19,16 @@ const extent =
 
 <a class="book" href={lang === 'en' ? `/en/book/${book.slug}/` : `/book/${book.slug}/`} aria-label={bookTitle(book, lang)}>
   {no && <span class="book-no" aria-hidden="true">No.{no}</span>}
-  <div class="book-cover">
-    {book.coverUrl && <Pic src={book.coverUrl} alt={bookTitle(book, lang)} loading="lazy" />}
-    <span class="book-veil" aria-hidden="true">
-      <span class="veil-title">{bookTitle(book, lang)}</span>
-      <span class="veil-meta">{t(lang, `type.${book.type}`)} · {extent}</span>
-      <span class="veil-cta">{t(lang, 'card.open')}</span>
-    </span>
+  <div class="book-stage">
+    <span class="book-ground" aria-hidden="true" />
+    <div class="book-cover">
+      {book.coverUrl && <Pic src={book.coverUrl} alt={bookTitle(book, lang)} loading="lazy" />}
+      <span class="book-veil" aria-hidden="true">
+        <span class="veil-title">{bookTitle(book, lang)}</span>
+        <span class="veil-meta">{t(lang, `type.${book.type}`)} · {extent}</span>
+        <span class="veil-cta">{t(lang, 'card.open')}</span>
+      </span>
+    </div>
   </div>
   <div class="book-plate">
     <span class="book-title">{bookTitle(book, lang)}</span>
@@ -46,24 +49,25 @@ const extent =
     display: block;
     padding-bottom: 44px;
   }
-  /* 悬浮接触阴影：书"放"在看不见的台面上 */
-  .book::after {
-    content: '';
+  /* 舞台：封面 + 接触阴影绑定在一起，阴影永远在封面正下方 */
+  .book-stage {
+    position: relative;
+  }
+  .book-ground {
     position: absolute;
     left: 7%;
     right: 7%;
-    bottom: 36px;
+    bottom: -9px;
     height: 15px;
     border-radius: 50%;
     background: radial-gradient(ellipse at center, var(--ground) 0%, transparent 68%);
     filter: blur(2px);
-    z-index: 0;
     transition: opacity 0.35s ease, transform 0.35s ease;
   }
-  .book:hover::after,
-  .book:focus-visible::after {
-    opacity: 0.65;
-    transform: scaleX(1.06);
+  .book:hover .book-ground,
+  .book:focus-visible .book-ground {
+    opacity: 0.6;
+    transform: scaleX(1.07);
   }
   .book-no {
     display: block;
