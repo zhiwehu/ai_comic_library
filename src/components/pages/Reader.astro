@@ -276,10 +276,13 @@ const flipH = Math.round(flipW / ratio);
     const availW = stage.width - pad.x;
     const availH = stage.height - pad.y;
     const pageAspect = Number(root.dataset.pageAspect) || 8 / 9;
-    const pageW =
+    let pageW =
       orientation === 'portrait'
         ? Math.min(availW, availH * pageAspect)
         : Math.min(availW / 2, availH * pageAspect);
+    // StPageFlip 以 blockWidth < 2*minWidth 判定 portrait：页宽落进死区会在单/双页间抖动，
+    // 推过阈值保证宽屏永远走对开
+    if (pageW >= 560 && pageW < 680) pageW = 680;
     flipbook.style.width = `${Math.floor(pageW * (orientation === 'portrait' ? 1 : 2))}px`;
     window.dispatchEvent(new Event('resize'));
   }
@@ -293,7 +296,7 @@ const flipH = Math.round(flipW / ratio);
       width: flipW,
       height: flipH,
       size: 'stretch',
-      minWidth: 320,
+      minWidth: 280,
       maxWidth: Math.round(flipW * 1.15),
       minHeight: 360,
       maxHeight: Math.round(flipH * 1.15),
@@ -465,18 +468,31 @@ const flipH = Math.round(flipW / ratio);
   }
   .chrome.chrome-on { opacity: 1; pointer-events: auto; }
   .chrome-top,
-  .chrome-bottom { position: absolute; left: 0; right: 0; display: flex; align-items: center; gap: 14px; }
+  .chrome-bottom {
+    position: absolute;
+    left: 10px;
+    right: 10px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    border: 1px solid var(--glass-border);
+    border-radius: 18px;
+    background: linear-gradient(120deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.012) 50%), var(--glass-bg);
+    -webkit-backdrop-filter: blur(24px) saturate(1.6);
+    backdrop-filter: blur(24px) saturate(1.6);
+    box-shadow:
+      inset 0 1px 0 var(--glass-spec),
+      0 12px 34px var(--glass-shadow);
+  }
   .chrome-top {
-    top: 0;
-    padding: 10px 14px;
-    padding-top: max(10px, env(safe-area-inset-top));
-    background: linear-gradient(180deg, var(--scrim), transparent);
+    top: 10px;
+    padding: 8px 12px;
+    padding-top: max(8px, env(safe-area-inset-top));
   }
   .chrome-bottom {
-    bottom: 0;
+    bottom: 10px;
     padding: 8px 16px;
     padding-bottom: max(8px, env(safe-area-inset-bottom));
-    background: linear-gradient(0deg, var(--scrim), transparent);
   }
   .cr-btn {
     border: none;
@@ -568,6 +584,8 @@ const flipH = Math.round(flipW / ratio);
     inset: 0;
     z-index: 60;
     background: var(--overlay);
+    -webkit-backdrop-filter: blur(24px) saturate(1.4);
+    backdrop-filter: blur(24px) saturate(1.4);
     overflow-y: auto;
     padding: 64px 4vw 44px;
   }
@@ -620,7 +638,7 @@ const flipH = Math.round(flipW / ratio);
     background: linear-gradient(180deg, var(--lamp-bright), var(--lamp));
     color: #2a1d07;
     padding: 13px 30px;
-    border-radius: 4px;
+    border-radius: 999px;
     font-weight: 600;
     letter-spacing: 0.06em;
     box-shadow: 0 10px 34px rgba(232, 180, 90, 0.33);
@@ -641,11 +659,14 @@ const flipH = Math.round(flipW / ratio);
     display: flex;
     gap: 14px;
     align-items: center;
-    background: var(--panel);
-    border: 1px solid var(--line);
-    border-radius: 4px;
-    padding: 10px 18px;
+    background: linear-gradient(120deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.01)), var(--glass-bg-strong);
+    -webkit-backdrop-filter: blur(18px) saturate(1.5);
+    backdrop-filter: blur(18px) saturate(1.5);
+    border: 1px solid var(--glass-border);
+    border-radius: 999px;
+    padding: 10px 20px;
     font-size: 13px;
+    box-shadow: inset 0 1px 0 var(--glass-spec), 0 10px 30px var(--glass-shadow);
   }
   #toast button {
     border: none;

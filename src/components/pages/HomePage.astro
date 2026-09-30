@@ -347,13 +347,16 @@ const ticker = shelf.map((b) => bookTitle(b, lang)).join('　✦　');
     animation: rise 0.9s 0.68s ease both;
   }
 
-  /* ---- 跑马灯 ---- */
+  /* ---- 跑马灯：玻璃条 ---- */
   .ticker {
     position: absolute;
     left: 0;
     right: 0;
     bottom: 0;
-    border-top: 1px solid var(--line);
+    border-block: 1px solid var(--glass-border);
+    background: linear-gradient(120deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.01)), var(--glass-bg);
+    -webkit-backdrop-filter: blur(16px) saturate(1.4);
+    backdrop-filter: blur(16px) saturate(1.4);
     padding-block: 12px;
     overflow: hidden;
     -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);

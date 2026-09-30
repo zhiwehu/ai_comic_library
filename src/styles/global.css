@@ -40,6 +40,15 @@
   --grain-o: 0.045;
   --color-scheme: dark;
 
+  /* Liquid Glass 材质 */
+  --glass-bg: rgba(28, 28, 36, 0.52);
+  --glass-bg-strong: rgba(24, 24, 32, 0.72);
+  --glass-border: rgba(255, 255, 255, 0.12);
+  --glass-spec: rgba(255, 255, 255, 0.16);
+  --glass-shadow: rgba(0, 0, 0, 0.4);
+  --ambient-1: rgba(232, 180, 90, 0.05);
+  --ambient-2: rgba(96, 122, 150, 0.05);
+
   --font-display: 'Songti SC', 'STSongti-SC', 'STSong', 'Noto Serif CJK SC',
     'Source Han Serif SC', 'SimSun', serif;
   --font-body: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB',
@@ -78,6 +87,15 @@
   --mega-glow: rgba(164, 113, 26, 0.14);
   --grain-o: 0.05;
   --color-scheme: light;
+
+  /* Liquid Glass 材质 */
+  --glass-bg: rgba(255, 255, 255, 0.55);
+  --glass-bg-strong: rgba(255, 255, 255, 0.72);
+  --glass-border: rgba(255, 255, 255, 0.75);
+  --glass-spec: rgba(255, 255, 255, 0.95);
+  --glass-shadow: rgba(120, 95, 55, 0.16);
+  --ambient-1: rgba(196, 140, 38, 0.1);
+  --ambient-2: rgba(140, 165, 140, 0.12);
 }
 
 :root { color-scheme: var(--color-scheme); }
@@ -86,13 +104,17 @@
 
 html {
   scroll-behavior: smooth;
-  background: var(--ink); /* overscroll / 横向回弹不露白 */
+  /* 环境光晕：给玻璃材质提供折射底色 */
+  background:
+    radial-gradient(1100px 700px at 88% -8%, var(--ambient-1), transparent 60%),
+    radial-gradient(900px 620px at -10% 108%, var(--ambient-2), transparent 55%),
+    var(--ink);
   overflow-x: clip; /* 兜死装饰元素（幽灵字/跑马灯/搁板）可能引起的横向滚动 */
 }
 
 body {
   margin: 0;
-  background: var(--ink);
+  background: transparent;
   color: var(--paper);
   font-family: var(--font-body);
   font-size: 16px;
@@ -129,7 +151,7 @@ h1, h2, h3 {
 ::selection { background: rgba(232, 180, 90, 0.32); }
 [data-theme='light'] ::selection { background: rgba(164, 113, 26, 0.25); }
 
-/* ---- 主题切换 ---- */
+/* ---- 主题切换：玻璃圆钮 ---- */
 .theme-toggle {
   display: inline-flex;
   align-items: center;
@@ -137,13 +159,16 @@ h1, h2, h3 {
   width: 30px;
   height: 30px;
   padding: 0;
-  border: 1px solid var(--line);
-  border-radius: 6px;
-  background: none;
+  border: 1px solid var(--glass-border);
+  border-radius: 999px;
+  background: var(--glass-bg);
+  -webkit-backdrop-filter: blur(10px) saturate(1.3);
+  backdrop-filter: blur(10px) saturate(1.3);
+  box-shadow: inset 0 1px 0 var(--glass-spec);
   color: var(--paper-dim);
   font-size: 14px;
   cursor: pointer;
-  transition: color 0.25s ease, border-color 0.25s ease, transform 0.25s ease;
+  transition: color 0.25s ease, transform 0.25s ease;
 }
 .theme-toggle:hover { color: var(--lamp); border-color: var(--lamp); transform: rotate(15deg); }
 .theme-toggle .icon-sun { display: none; }
@@ -154,13 +179,28 @@ h1, h2, h3 {
 
 .wrap { max-width: 1120px; margin-inline: auto; padding-inline: clamp(16px, 4vw, 36px); }
 
-/* ---- 顶栏 ---- */
+/* ---- 顶栏：悬浮玻璃条 ---- */
 .site-head {
+  position: sticky;
+  top: 12px;
+  z-index: 90;
   display: flex;
-  align-items: baseline;
+  align-items: center;
   justify-content: space-between;
-  padding-block: 20px 16px;
-  border-bottom: 1px solid var(--line);
+  gap: 12px;
+  margin-top: 12px;
+  padding-block: 10px;
+  padding-inline: clamp(16px, 3vw, 28px);
+  border: 1px solid var(--glass-border);
+  border-radius: 20px;
+  background:
+    linear-gradient(120deg, rgba(255, 255, 255, 0.055), rgba(255, 255, 255, 0.012) 45%),
+    var(--glass-bg);
+  -webkit-backdrop-filter: blur(22px) saturate(1.6);
+  backdrop-filter: blur(22px) saturate(1.6);
+  box-shadow:
+    inset 0 1px 0 var(--glass-spec),
+    0 12px 36px var(--glass-shadow);
 }
 .brand { display: flex; align-items: center; gap: 12px; }
 .brand-seal {
@@ -197,11 +237,20 @@ h1, h2, h3 {
 :lang(en) .brand-latin { display: none; }
 .site-head nav a:hover { color: var(--lamp); }
 
-/* ---- 页脚 ---- */
+/* ---- 页脚：悬浮玻璃面板 ---- */
 .site-foot {
-  margin-top: clamp(64px, 10vw, 120px);
-  border-top: 1px solid var(--line);
-  padding-block: 34px 44px;
+  margin: clamp(56px, 8vw, 96px) clamp(12px, 3vw, 28px) 20px;
+  border: 1px solid var(--glass-border);
+  border-radius: 24px;
+  background:
+    linear-gradient(160deg, rgba(255, 255, 255, 0.05), transparent 40%),
+    var(--glass-bg);
+  -webkit-backdrop-filter: blur(18px) saturate(1.5);
+  backdrop-filter: blur(18px) saturate(1.5);
+  box-shadow:
+    inset 0 1px 0 var(--glass-spec),
+    0 10px 30px var(--glass-shadow);
+  padding-block: 26px 30px;
   text-align: center;
 }
 .site-foot .motto {
@@ -235,38 +284,55 @@ h1, h2, h3 {
 /* logo 原稿是深蓝字：深色主题下反相成浅色，色相旋转 180° 保住绿色点缀 */
 [data-theme='dark'] .aiti-credit img { filter: invert(0.92) hue-rotate(180deg); }
 
-/* ---- 按钮 ---- */
+/* ---- 按钮：液态玻璃 ---- */
 .btn {
   display: inline-block;
   padding: 11px 26px;
-  border: 1px solid var(--line);
-  border-radius: 3px;
+  border: 1px solid var(--glass-border);
+  border-radius: 999px;
   font-size: 14px;
   letter-spacing: 0.14em;
   color: var(--paper);
-  transition: transform 0.25s ease, border-color 0.25s ease, background 0.25s ease, color 0.25s ease;
+  background: linear-gradient(120deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.015)), var(--glass-bg);
+  -webkit-backdrop-filter: blur(14px) saturate(1.4);
+  backdrop-filter: blur(14px) saturate(1.4);
+  box-shadow:
+    inset 0 1px 0 var(--glass-spec),
+    0 4px 16px var(--glass-shadow);
+  transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
 }
-.btn:hover { transform: translateY(-1px); }
+.btn:hover {
+  transform: translateY(-1px);
+  border-color: var(--paper-dim);
+  box-shadow:
+    inset 0 1px 0 var(--glass-spec),
+    0 8px 24px var(--glass-shadow);
+}
 .btn-lamp {
   background: linear-gradient(180deg, var(--lamp-bright), var(--lamp));
   border-color: var(--lamp);
   color: #2a1d07;
   font-weight: 600;
-  box-shadow: 0 6px 22px rgba(232, 180, 90, 0.22);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.42),
+    0 8px 26px rgba(232, 180, 90, 0.3);
 }
-.btn-lamp:hover { box-shadow: 0 10px 30px rgba(232, 180, 90, 0.3); }
+.btn-lamp:hover { box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5), 0 12px 32px rgba(232, 180, 90, 0.38); }
 .btn-ghost:hover { border-color: var(--paper-dim); }
 
-/* ---- 小标签 ---- */
+/* ---- 小标签：玻璃芯片 ---- */
 .tag {
   display: inline-block;
   padding: 2px 10px;
-  border: 1px solid var(--line);
-  border-radius: 2px;
+  border: 1px solid var(--glass-border);
+  border-radius: 999px;
   font-size: 12px;
   letter-spacing: 0.1em;
   color: var(--paper-dim);
   white-space: nowrap;
+  background: var(--glass-bg);
+  -webkit-backdrop-filter: blur(10px) saturate(1.3);
+  backdrop-filter: blur(10px) saturate(1.3);
 }
 .tag-lamp { border-color: rgba(232, 180, 90, 0.4); color: var(--lamp); }
 
