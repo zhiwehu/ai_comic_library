@@ -1,0 +1,95 @@
+---
+import type { BookView } from '../lib/books';
+import { fmtDate } from '../lib/books';
+
+interface Props {
+  book: BookView;
+}
+const { book } = Astro.props;
+const isLatestNumber = (n: number) => n === book.latest.number;
+---
+
+<ol class="chapter-list">
+  {
+    book.chapters.map((ch) => (
+      <li>
+        <a
+          class="chapter-row"
+          href={`/read/${book.slug}/${ch.slug}/`}
+          data-ch-key={`${book.slug}:${ch.slug}`}
+          data-ch-pages={ch.pages.length}
+        >
+          <span class="ch-no" aria-hidden="true">
+            {ch.number === 0 ? '序' : String(ch.number).padStart(2, '0')}
+          </span>
+          <span class="ch-title">{ch.title}</span>
+          <span class="ch-side">
+            <span class="chip-progress ch-progress" hidden></span>
+            {isLatestNumber(ch.number) && <span class="tag tag-lamp">最新</span>}
+            <time datetime={ch.date.toISOString().slice(0, 10)}>{fmtDate(ch.date)}</time>
+          </span>
+        </a>
+      </li>
+    ))
+  }
+</ol>
+
+<script>
+  // 「读到第 x 页 · 继续」进度标记（§6 进度记忆）
+  const rows = document.querySelectorAll<HTMLAnchorElement>('[data-ch-key]');
+  for (const row of rows) {
+    const key = `cl:progress:${row.dataset.chKey}`;
+    const saved = Number(localStorage.getItem(key) ?? 0);
+    const total = Number(row.dataset.chPages ?? 0);
+    if (saved > 0 && saved < total) {
+      const chip = row.querySelector<HTMLElement>('.ch-progress');
+      if (chip) {
+        chip.textContent = `读到 ${saved}/${total} 页 · 继续`;
+        chip.hidden = false;
+      }
+    }
+  }
+</script>
+
+<style>
+  .chapter-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-top: 1px solid var(--line);
+  }
+  .chapter-list li { border-bottom: 1px solid var(--line); }
+  .chapter-row {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    padding: 15px 6px;
+    transition: background 0.2s ease, padding-left 0.2s ease;
+  }
+  .chapter-row:hover { background: var(--ink-2); padding-left: 12px; }
+  .ch-no {
+    font-family: var(--font-latin);
+    font-size: 15px;
+    color: var(--lamp);
+    min-width: 2.2em;
+    text-align: center;
+    letter-spacing: 0.05em;
+  }
+  .ch-title {
+    flex: 1;
+    font-size: 15px;
+    letter-spacing: 0.03em;
+  }
+  .ch-side {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 12.5px;
+    color: var(--paper-faint);
+    white-space: nowrap;
+  }
+  @media (max-width: 560px) {
+    .ch-side time { display: none; }
+    .ch-title { font-size: 14px; }
+  }
+</style>

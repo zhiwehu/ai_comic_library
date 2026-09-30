@@ -1,0 +1,59 @@
+---
+import { GISCUS } from '../site.config';
+
+interface Props {
+  /** 用 book slug 做 giscus 的 term，评论按书隔离 */
+  term: string;
+}
+const { term } = Astro.props;
+const enabled = Boolean(GISCUS.repo && GISCUS.repoId && GISCUS.categoryId);
+---
+
+<section class="giscus-block">
+  <h2 class="giscus-title">读后感</h2>
+  {
+    enabled ? (
+      <script
+        is:inline
+        src="https://giscus.app/client.js"
+        data-repo={GISCUS.repo}
+        data-repo-id={GISCUS.repoId}
+        data-category={GISCUS.category}
+        data-category-id={GISCUS.categoryId}
+        data-mapping="specific"
+        data-term={term}
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="top"
+        data-theme="dark_dimmed"
+        data-lang="zh-CN"
+        data-loading="lazy"
+        crossorigin="anonymous"
+        async
+      />
+    ) : (
+      <p class="giscus-placeholder">
+        评论组件（giscus）将在 GitHub public 仓库建立后自动启用 —— 见 kickoff §9。
+      </p>
+    )
+  }
+</section>
+
+<style>
+  .giscus-block { margin-top: clamp(40px, 7vw, 72px); }
+  .giscus-title {
+    font-size: 16px;
+    letter-spacing: 0.2em;
+    color: var(--paper-dim);
+    margin: 0 0 18px;
+  }
+  .giscus-placeholder {
+    border: 1px dashed var(--line);
+    border-radius: 4px;
+    padding: 22px;
+    font-size: 13px;
+    color: var(--paper-faint);
+    margin: 0;
+  }
+</style>

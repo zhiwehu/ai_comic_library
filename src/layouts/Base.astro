@@ -1,0 +1,76 @@
+---
+import '../styles/global.css';
+import { SITE } from '../site.config';
+
+interface Props {
+  title: string;
+  description?: string;
+  ogImage?: string | null;
+  ogType?: string;
+  bodyClass?: string;
+  chrome?: boolean;
+}
+
+const {
+  title,
+  description = '为 AI 创作的漫画与绘本而建的作品图书馆：书架、目录与翻页阅读器。',
+  ogImage = null,
+  ogType = 'website',
+  bodyClass = '',
+  chrome = true,
+} = Astro.props;
+
+const ogImageAbs = ogImage ? new URL(ogImage, Astro.site).href : null;
+---
+
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>{title} · {SITE.name}</title>
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#0b0b0f" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <link rel="alternate" type="application/rss+xml" title={SITE.name} href="/rss.xml" />
+    <meta property="og:site_name" content={SITE.name} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content={ogType} />
+    {ogImageAbs && <meta property="og:image" content={ogImageAbs} />}
+    <meta name="twitter:card" content={ogImageAbs ? 'summary_large_image' : 'summary'} />
+    {ogImageAbs && <meta name="twitter:image" content={ogImageAbs} />}
+  </head>
+  <body class={bodyClass}>
+    {
+      chrome && (
+        <header class="site-head wrap">
+          <a class="brand" href="/">
+            <span class="brand-name">{SITE.name}</span>
+            <span class="brand-latin">{SITE.latinName}</span>
+          </a>
+          <nav>
+            <a href="/">书架</a>
+            <a href="/rss.xml">RSS</a>
+          </nav>
+        </header>
+      )
+    }
+    <main>
+      <slot />
+    </main>
+    {
+      chrome && (
+        <footer class="site-foot">
+          <div class="wrap">
+            <p class="motto">{SITE.tagline}</p>
+            <p class="fine">
+              {SITE.domain} · <a href="/rss.xml">RSS 订阅</a> · 深夜书房，灯给你留着
+            </p>
+          </div>
+        </footer>
+      )
+    }
+  </body>
+</html>

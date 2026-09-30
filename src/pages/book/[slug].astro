@@ -1,0 +1,194 @@
+---
+import Base from '../../layouts/Base.astro';
+import ChapterList from '../../components/ChapterList.astro';
+import Giscus from '../../components/Giscus.astro';
+import { getShelf, TYPE_LABEL, fmtDate } from '../../lib/books';
+
+export async function getStaticPaths() {
+  const shelf = await getShelf();
+  return shelf.map((book) => ({ params: { slug: book.slug }, props: { book } }));
+}
+
+const { book } = Astro.props;
+const description = book.description || `${book.title} —— ${TYPE_LABEL[book.type]}`;
+const latestChapterSlug = book.latest.slug;
+---
+
+<Base title={book.title} description={description} ogImage={book.coverUrl} ogType="book">
+  <article class="wrap book-page">
+    <header class="book-hero">
+      <div class="cover-frame">
+        {
+          book.coverUrl && (
+            <div class="cover-box">
+              <img src={book.coverUrl} alt={book.title} fetchpriority="high" />
+            </div>
+          )
+        }
+      </div>
+      <div class="book-info">
+        <p class="crumb"><a href="/">← 书架</a></p>
+        <p class="type-row">
+          <span class="tag">{TYPE_LABEL[book.type]}</span>
+          <span class="tag" class:list={[{ 'tag-lamp': book.status === 'ongoing' }]}>
+            {book.status === 'ongoing' ? '连载中' : '已完结'}
+          </span>
+          {
+            book.type === 'series' && (
+              <span class="upd">
+                更新至第 {book.latest.number} 话 · {fmtDate(book.lastUpdated)}
+              </span>
+            )
+          }
+        </p>
+        <h1>{book.title}</h1>
+        {book.description && <p class="desc">{book.description}</p>}
+        {
+          book.tags.length > 0 && (
+            <p class="tags">
+              {book.tags.map((t) => (
+                <span class="tag">#{t}</span>
+              ))}
+            </p>
+          )
+        }
+        <div class="cta-row">
+          {
+            book.isSingle ? (
+              <a
+                class="btn btn-lamp"
+                id="single-cta"
+                href={`/read/${book.slug}/${latestChapterSlug}/`}
+                data-single-key={`${book.slug}:${latestChapterSlug}`}
+                data-single-total={book.latest.pages.length}
+              >
+                开 始 阅 读
+              </a>
+            ) : (
+              <a
+                class="btn btn-lamp"
+                id="resume-cta"
+                href={`/read/${book.slug}/${latestChapterSlug}/`}
+                data-book-slug={book.slug}
+                data-latest-href={`/read/${book.slug}/${latestChapterSlug}/`}
+              >
+                读 最 新 一 话
+              </a>
+            )
+          }
+        </div>
+      </div>
+    </header>
+
+    {
+      book.isSingle ? (
+        <p class="single-note">这是一本一次读完的书，共 {book.latest.pages.length} 页。</p>
+      ) : (
+        <section class="toc">
+          <h2 class="toc-title">目录 · 共 {book.chapters.length} 话</h2>
+          <ChapterList book={book} />
+        </section>
+      )
+    }
+
+    <Giscus term={book.slug} />
+  </article>
+</Base>
+
+<script>
+  // 单章书：有进度则把按钮改成「继续阅读」
+  const single = document.getElementById('single-cta');
+  if (single) {
+    const key = `cl:progress:${single.dataset.singleKey}`;
+    const p = Number(localStorage.getItem(key) ?? 0);
+    const total = Number(single.dataset.singleTotal ?? 0);
+    if (p > 1 && p < total) single.textContent = `继 续 阅 读 · 第 ${p} 页`;
+  }
+  // 系列：最近读到的一话优先
+  const resume = document.getElementById('resume-cta');
+  if (resume) {
+    const slug = resume.dataset.bookSlug;
+    let target: string | null = null;
+    let best = -1;
+    for (let i = 0; i < localStorage.length; i++) {
+      const k = localStorage.key(i);
+      if (!k?.startsWith('cl:progress:')) continue;
+      const rest = k.slice('cl:progress:'.length);
+      if (!rest.startsWith(`${slug}:`)) continue;
+      const p = Number(localStorage.getItem(k) ?? 0);
+      if (p > best && p > 0) {
+        best = p;
+        target = rest.slice(slug.length + 1);
+      }
+    }
+    if (target) {
+      resume.href = `/read/${slug}/${target}/`;
+      resume.textContent = '继 续 阅 读';
+    }
+  }
+</script>
+
+<style>
+  .book-page { padding-top: clamp(28px, 5vw, 56px); }
+  .crumb { margin: 0 0 18px; font-size: 13px; color: var(--paper-faint); }
+  .crumb a:hover { color: var(--lamp); }
+
+  .book-hero {
+    display: grid;
+    grid-template-columns: minmax(180px, 280px) 1fr;
+    gap: clamp(24px, 4vw, 48px);
+    align-items: end;
+  }
+  @media (max-width: 640px) {
+    .book-hero { grid-template-columns: minmax(140px, 200px) 1fr; align-items: center; }
+  }
+
+  .cover-box {
+    position: relative;
+    aspect-ratio: 3 / 4;
+    overflow: hidden;
+    border-radius: 3px 8px 8px 3px;
+    box-shadow: var(--page-shadow), inset 0 0 0 1px rgba(236, 227, 208, 0.07);
+    transform: perspective(900px) rotateY(-4deg);
+  }
+  .cover-box::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: linear-gradient(90deg, rgba(0, 0, 0, 0.4), transparent 14px);
+  }
+  .cover-box img { width: 100%; height: 100%; object-fit: cover; }
+
+  .type-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin: 0 0 14px;
+  }
+  .upd { font-size: 13px; color: var(--paper-dim); letter-spacing: 0.06em; }
+  h1 {
+    margin: 0 0 14px;
+    font-size: clamp(24px, 4vw, 38px);
+    line-height: 1.35;
+    letter-spacing: 0.06em;
+  }
+  .desc { margin: 0 0 14px; color: var(--paper-dim); font-size: 15px; max-width: 60ch; }
+  .tags { display: flex; gap: 8px; flex-wrap: wrap; margin: 0 0 22px; }
+  .cta-row { display: flex; gap: 14px; flex-wrap: wrap; }
+
+  .toc { margin-top: clamp(40px, 6vw, 64px); }
+  .toc-title {
+    font-size: 16px;
+    letter-spacing: 0.22em;
+    color: var(--paper-dim);
+    margin: 0 0 18px;
+  }
+  .single-note {
+    margin-top: 26px;
+    font-size: 13.5px;
+    color: var(--paper-faint);
+    letter-spacing: 0.06em;
+  }
+</style>

@@ -1,0 +1,107 @@
+---
+import type { BookView } from '../lib/books';
+import { TYPE_LABEL } from '../lib/books';
+
+interface Props {
+  book: BookView;
+}
+const { book } = Astro.props;
+---
+
+<a class="book" href={`/book/${book.slug}/`} aria-label={book.title}>
+  <div class="book-cover">
+    {book.coverUrl && <img src={book.coverUrl} alt={book.title} loading="lazy" decoding="async" />}
+  </div>
+  <div class="book-plate">
+    <span class="book-title">{book.title}</span>
+    <span class="book-meta">
+      <span class="tag">{TYPE_LABEL[book.type]}</span>
+      {
+        book.type === 'series' && (
+          <span class="book-upd">更新至第 {book.latest.number} 话</span>
+        )
+      }
+    </span>
+  </div>
+</a>
+
+<style>
+  .book {
+    position: relative;
+    display: block;
+    padding-bottom: 46px;
+    /* 木质搁板：每本书脚下一段，横向相接成整块板 */
+  }
+  .book::after {
+    content: '';
+    position: absolute;
+    left: -12px;
+    right: -12px;
+    bottom: 30px;
+    height: 13px;
+    border-radius: 2px;
+    background:
+      linear-gradient(180deg, rgba(255, 235, 200, 0.13), rgba(0, 0, 0, 0) 45%),
+      repeating-linear-gradient(90deg, var(--wood-hi) 0 46px, #40301e 46px 78px, var(--wood-hi) 78px 130px, #3c2c1b 130px 190px),
+      var(--wood-lo);
+    box-shadow:
+      0 2px 0 rgba(0, 0, 0, 0.45),
+      0 10px 22px rgba(0, 0, 0, 0.5),
+      inset 0 -2px 3px rgba(0, 0, 0, 0.5);
+  }
+  .book-cover {
+    position: relative;
+    aspect-ratio: 3 / 4;
+    overflow: hidden;
+    border-radius: 3px 7px 7px 3px;
+    background: var(--ink-3);
+    box-shadow:
+      0 14px 34px rgba(0, 0, 0, 0.55),
+      inset 0 0 0 1px rgba(236, 227, 208, 0.06);
+    transform-origin: 50% 100%;
+    transition: transform 0.35s cubic-bezier(0.2, 0.7, 0.3, 1), box-shadow 0.35s ease;
+  }
+  /* 书脊内陷阴影 */
+  .book-cover::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: linear-gradient(90deg, rgba(0, 0, 0, 0.42), rgba(0, 0, 0, 0) 12px);
+    pointer-events: none;
+  }
+  .book-cover img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .book:hover .book-cover,
+  .book:focus-visible .book-cover {
+    transform: perspective(680px) rotateX(7deg) translateY(-5px);
+    box-shadow:
+      0 26px 48px rgba(0, 0, 0, 0.65),
+      0 8px 40px rgba(232, 180, 90, 0.13),
+      inset 0 0 0 1px rgba(236, 227, 208, 0.08);
+  }
+  .book-plate {
+    display: grid;
+    gap: 4px;
+    margin-top: 26px;
+  }
+  .book-title {
+    font-family: var(--font-display);
+    font-size: 15px;
+    letter-spacing: 0.06em;
+    color: var(--paper);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .book-meta {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+  }
+  .book-upd { color: var(--lamp); letter-spacing: 0.05em; white-space: nowrap; }
+</style>

@@ -1,0 +1,604 @@
+---
+import Base from '../../../layouts/Base.astro';
+import { getShelf, chapterNav } from '../../../lib/books';
+
+export async function getStaticPaths() {
+  const shelf = await getShelf();
+  return shelf.flatMap((book) =>
+    book.chapters.map((chapter) => ({
+      params: { book: book.slug, chapter: chapter.slug },
+      props: { book, chapter },
+    }))
+  );
+}
+
+const { book, chapter } = Astro.props;
+const { prev, next } = chapterNav(book, chapter.slug);
+const pages = chapter.pages;
+const count = pages.length;
+---
+
+<Base
+  title={`${chapter.title}`}
+  description={`${book.title} · ${chapter.title}`}
+  ogImage={pages[0] ?? null}
+  ogType="article"
+  bodyClass="reader-page"
+  chrome={false}
+>
+  <div
+    id="reader"
+    data-book={book.slug}
+    data-chapter={chapter.slug}
+    data-count={count}
+    data-prev={prev ? `/read/${book.slug}/${prev.slug}/` : ''}
+    data-next={next ? `/read/${book.slug}/${next.slug}/` : ''}
+    data-next-title={next?.title ?? ''}
+  >
+    <!-- 悬浮 chrome（阅读时自动隐藏） -->
+    <div class="chrome" id="chrome">
+      <div class="chrome-top">
+        <a class="cr-btn cr-back" href={`/book/${book.slug}/`}>← 目录</a>
+        <span class="cr-title">{book.title} · {chapter.title}</span>
+        <span class="cr-actions">
+          {
+            prev && (
+              <a class="cr-btn" id="lnk-prev" href={`/read/${book.slug}/${prev.slug}/`}>
+                上一话
+              </a>
+            )
+          }
+          {
+            next && (
+              <a class="cr-btn" id="lnk-next" href={`/read/${book.slug}/${next.slug}/`}>
+                下一话
+              </a>
+            )
+          }
+          <button class="cr-btn" id="btn-thumbs" type="button">缩略图</button>
+          <button class="cr-btn" id="btn-mode" type="button">滚动模式</button>
+          <button class="cr-btn" id="btn-full" type="button">全屏</button>
+        </span>
+      </div>
+      <div class="chrome-bottom">
+        <input
+          type="range"
+          id="slider"
+          min="1"
+          max={count}
+          value="1"
+          step="1"
+          aria-label="页码滑条"
+        />
+        <span id="page-indicator" aria-live="polite">1 / {count}</span>
+      </div>
+    </div>
+
+    <!-- 滚动模式（默认可见 = 无 JS 也能读） -->
+    <div id="scrollbook" hidden>
+      {
+        pages.map((url, i) => (
+          <div class="scroll-page" data-idx={i}>
+            <img src={url} alt={`第 ${i + 1} 页`} loading="lazy" decoding="async" draggable={false} />
+          </div>
+        ))
+      }
+    </div>
+
+    <!-- 翻页模式（page-flip HTML 模式，img 由脚本懒加载） -->
+    <div class="flip-stage" id="flip-stage" hidden>
+      <div id="flipbook">
+        {
+          pages.map((url, i) => (
+            <div class="pf-page">
+              <img data-src={url} alt={`第 ${i + 1} 页`} draggable={false} />
+            </div>
+          ))
+        }
+      </div>
+    </div>
+
+    <!-- 缩略图网格 -->
+    <div id="thumbs" hidden>
+      <button class="cr-btn thumbs-close" id="btn-thumbs-close" type="button">关闭 ✕</button>
+      <div class="thumbs-grid">
+        {
+          pages.map((url, i) => (
+            <button type="button" data-page={i + 1} aria-label={`跳到第 ${i + 1} 页`}>
+              <img data-src={url} alt="" loading="lazy" />
+              <span>{i + 1}</span>
+            </button>
+          ))
+        }
+      </div>
+    </div>
+
+    <!-- 章末引导卡 -->
+    <div id="endcard" hidden>
+      <a id="endcard-link" href="#">
+        <span class="endcard-kicker" id="endcard-kicker">本章完</span>
+        <span class="endcard-title" id="endcard-title">下一章 →</span>
+      </a>
+      <a class="endcard-back" href={`/book/${book.slug}/`}>返回目录</a>
+    </div>
+
+    <div id="toast" hidden>
+      <span id="toast-text" />
+      <button id="toast-undo" type="button" hidden>从头看</button>
+    </div>
+
+    <noscript>
+      <style>
+        .chrome { display: none !important; }
+      </style>
+    </noscript>
+  </div>
+</Base>
+
+<script>
+  import { PageFlip } from 'page-flip';
+
+  const root = document.getElementById('reader')!;
+  const bookSlug = root.dataset.book!;
+  const chapterSlug = root.dataset.chapter!;
+  const count = Number(root.dataset.count);
+  const nextUrl = root.dataset.next || null;
+  const nextTitle = root.dataset.nextTitle || '';
+  const key = `cl:progress:${bookSlug}:${chapterSlug}`;
+
+  const chrome = document.getElementById('chrome')!;
+  const scrollbook = document.getElementById('scrollbook')!;
+  const flipStage = document.getElementById('flip-stage')!;
+  const flipbook = document.getElementById('flipbook')!;
+  const slider = document.getElementById('slider') as HTMLInputElement;
+  const indicator = document.getElementById('page-indicator')!;
+  const thumbs = document.getElementById('thumbs')!;
+  const endcard = document.getElementById('endcard')!;
+  const endcardLink = document.getElementById('endcard-link') as HTMLAnchorElement;
+  const endcardKicker = document.getElementById('endcard-kicker')!;
+  const endcardTitle = document.getElementById('endcard-title')!;
+  const toast = document.getElementById('toast')!;
+  const toastText = document.getElementById('toast-text')!;
+  const toastUndo = document.getElementById('toast-undo') as HTMLButtonElement;
+  const modeBtn = document.getElementById('btn-mode') as HTMLButtonElement;
+
+  const saved = Math.min(Math.max(Number(localStorage.getItem(key) ?? 1) || 1, 1), count);
+  let mode: 'flip' | 'scroll' = localStorage.getItem('cl:mode') === 'scroll' ? 'scroll' : 'flip';
+
+  let pf: PageFlip | null = null;
+  let flipImgs: HTMLImageElement[] = [];
+  let sections: HTMLElement[] = [];
+  let orientation: 'portrait' | 'landscape' = 'portrait';
+  let endShown = false;
+  let toastTimer: ReturnType<typeof setTimeout> | undefined;
+
+  const save = (p: number) => {
+    localStorage.setItem(key, String(p));
+    localStorage.setItem('cl:last', `${bookSlug}:${chapterSlug}`);
+  };
+
+  const setIndicator = (p: number) => {
+    indicator.textContent = `${p} / ${count}`;
+    if (Number(slider.value) !== p) slider.value = String(p);
+  };
+
+  function preloadFlip(cur: number) {
+    const from = Math.max(0, cur - 2);
+    const to = Math.min(count - 1, cur + 3);
+    for (let i = from; i <= to; i++) {
+      const img = flipImgs[i];
+      if (img?.dataset.src && !img.src) img.src = img.dataset.src;
+    }
+  }
+
+  function showToast(text: string, undo?: () => void) {
+    toastText.textContent = text;
+    toastUndo.hidden = !undo;
+    toastUndo.onclick = undo ?? null;
+    toast.hidden = false;
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => (toast.hidden = true), 4200);
+  }
+
+  function updateEndcard(p: number) {
+    const atEnd = mode === 'scroll' ? p >= count : orientation === 'portrait' ? p >= count : p >= count - 1;
+    if (atEnd && !endShown) {
+      endShown = true;
+      if (nextUrl) {
+        endcardKicker.textContent = '本章完';
+        endcardTitle.textContent = `下一话：${nextTitle || '继续'} →`;
+        endcardLink.href = nextUrl;
+      } else {
+        endcardKicker.textContent = '已到最后一页';
+        endcardTitle.textContent = '← 返回书架';
+        endcardLink.href = '/';
+      }
+      endcard.hidden = false;
+    } else if (!atEnd && endShown) {
+      endShown = false;
+      endcard.hidden = true;
+    }
+  }
+
+  /* ---------- 翻页模式 ---------- */
+  function fitFlip() {
+    if (!pf) return;
+    const stage = flipStage.getBoundingClientRect();
+    const pad = { x: 20, y: 116 }; // 给上下 chrome 留空
+    const availW = stage.width - pad.x;
+    const availH = stage.height - pad.y;
+    const pageAspect = 8 / 9;
+    const pageW =
+      orientation === 'portrait'
+        ? Math.min(availW, availH * pageAspect)
+        : Math.min(availW / 2, availH * pageAspect);
+    flipbook.style.width = `${Math.floor(pageW * (orientation === 'portrait' ? 1 : 2))}px`;
+    window.dispatchEvent(new Event('resize'));
+  }
+
+  function initFlip(startPage: number) {
+    scrollbook.hidden = true;
+    flipStage.hidden = false;
+    modeBtn.textContent = '滚动模式';
+
+    pf = new PageFlip(flipbook, {
+      width: 800,
+      height: 900,
+      size: 'stretch',
+      minWidth: 320,
+      maxWidth: 900,
+      minHeight: 360,
+      maxHeight: 1012,
+      usePortrait: true,
+      showCover: false, // 章节第 1 页是内容页，1–2 页直接对开
+      mobileScrollSupport: true,
+      maxShadowOpacity: 0.5,
+      flippingTime: 620,
+      swipeDistance: 14,
+      startPage: startPage - 1,
+    });
+    pf.loadFromHTML(flipbook.querySelectorAll('.pf-page'));
+    flipImgs = [...flipbook.querySelectorAll('img')];
+
+    pf.on('flip', (e: { data: number }) => {
+      const idx = Number(e.data ?? 0);
+      setIndicator(idx + 1);
+      save(idx + 1);
+      preloadFlip(idx);
+      updateEndcard(idx + 1);
+    });
+    pf.on('changeOrientation', (e: { data: 'portrait' | 'landscape' }) => {
+      orientation = e.data;
+      fitFlip();
+      updateEndcard(Number(slider.value));
+    });
+    pf.on('init', () => {
+      orientation = pf!.getOrientation();
+      fitFlip();
+    });
+
+    setIndicator(startPage);
+    preloadFlip(startPage - 1);
+    updateEndcard(startPage);
+    if (startPage > 1) {
+      showToast(`已回到上次读到的第 ${startPage} 页`, () => {
+        localStorage.removeItem(key);
+        location.reload();
+      });
+    }
+  }
+
+  /* ---------- 滚动模式 ---------- */
+  function initScroll(startPage: number) {
+    flipStage.hidden = true;
+    scrollbook.hidden = false;
+    modeBtn.textContent = '翻页模式';
+
+    sections = [...scrollbook.querySelectorAll<HTMLElement>('.scroll-page')];
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const en of entries) {
+          if (!en.isIntersecting) continue;
+          const p = Number((en.target as HTMLElement).dataset.idx) + 1;
+          setIndicator(p);
+          save(p);
+          updateEndcard(p);
+        }
+      },
+      { root: scrollbook, threshold: 0.6 }
+    );
+    sections.forEach((s) => io.observe(s));
+
+    if (startPage > 1) {
+      requestAnimationFrame(() =>
+        sections[startPage - 1]?.scrollIntoView({ behavior: 'instant' as ScrollBehavior })
+      );
+      showToast(`已回到上次读到的第 ${startPage} 页`, () => {
+        localStorage.removeItem(key);
+        location.reload();
+      });
+    }
+  }
+
+  function scrollByPage(dir: 1 | -1) {
+    const cur = Number(slider.value);
+    const target = sections[Math.min(count, Math.max(1, cur + dir)) - 1];
+    target?.scrollIntoView({ behavior: 'smooth' });
+  }
+
+  /* ---------- 启动 ---------- */
+  setIndicator(saved);
+  if (mode === 'flip') initFlip(saved);
+  else initScroll(saved);
+
+  /* ---------- 控件 ---------- */
+  slider.addEventListener('input', () => setIndicator(Number(slider.value)));
+  slider.addEventListener('change', () => {
+    const p = Number(slider.value);
+    if (mode === 'flip') pf?.turnToPage(p - 1);
+    else sections[p - 1]?.scrollIntoView({ behavior: 'smooth' });
+  });
+
+  modeBtn.addEventListener('click', () => {
+    localStorage.setItem('cl:mode', mode === 'flip' ? 'scroll' : 'flip');
+    location.reload(); // 进度已持续保存，切换零损耗
+  });
+
+  document.getElementById('btn-full')!.addEventListener('click', () => {
+    if (document.fullscreenElement) document.exitFullscreen();
+    else document.documentElement.requestFullscreen?.().catch(() => {});
+  });
+
+  document.getElementById('btn-thumbs')!.addEventListener('click', () => {
+    thumbs.hidden = false;
+    thumbs.querySelectorAll('img').forEach((im) => {
+      const el = im as HTMLImageElement;
+      if (el.dataset.src && !el.src) el.src = el.dataset.src;
+    });
+  });
+  document.getElementById('btn-thumbs-close')!.addEventListener('click', () => (thumbs.hidden = true));
+  thumbs.addEventListener('click', (e) => {
+    const btn = (e.target as HTMLElement).closest<HTMLElement>('[data-page]');
+    if (!btn) return;
+    const p = Number(btn.dataset.page);
+    thumbs.hidden = true;
+    if (mode === 'flip') pf?.turnToPage(p - 1);
+    else sections[p - 1]?.scrollIntoView();
+  });
+
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && !thumbs.hidden) {
+      thumbs.hidden = true;
+      return;
+    }
+    if (e.key === 'ArrowRight' || e.key === 'PageDown') {
+      if (mode === 'flip') pf?.flipNext();
+      else scrollByPage(1);
+    } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+      if (mode === 'flip') pf?.flipPrev();
+      else scrollByPage(-1);
+    }
+  });
+
+  /* ---------- chrome 自动隐藏 ---------- */
+  let hideTimer: ReturnType<typeof setTimeout>;
+  const wake = () => {
+    chrome.classList.add('chrome-on');
+    clearTimeout(hideTimer);
+    hideTimer = setTimeout(() => chrome.classList.remove('chrome-on'), 2600);
+  };
+  ['pointermove', 'pointerdown', 'keydown', 'touchstart'].forEach((ev) =>
+    window.addEventListener(ev, wake, { passive: true })
+  );
+  wake();
+</script>
+
+<style>
+  body.reader-page { background: #08080c; overflow: hidden; }
+
+  #reader { position: fixed; inset: 0; }
+
+  /* ---------- chrome ---------- */
+  .chrome {
+    position: fixed;
+    inset-inline: 0;
+    inset-block: 0;
+    z-index: 40;
+    opacity: 0;
+    transition: opacity 0.35s ease;
+    pointer-events: none;
+  }
+  .chrome.chrome-on { opacity: 1; pointer-events: auto; }
+  .chrome-top,
+  .chrome-bottom { position: absolute; left: 0; right: 0; display: flex; align-items: center; gap: 14px; }
+  .chrome-top {
+    top: 0;
+    padding: 10px 14px;
+    padding-top: max(10px, env(safe-area-inset-top));
+    background: linear-gradient(180deg, rgba(4, 4, 7, 0.9), rgba(4, 4, 7, 0));
+  }
+  .chrome-bottom {
+    bottom: 0;
+    padding: 8px 16px;
+    padding-bottom: max(8px, env(safe-area-inset-bottom));
+    background: linear-gradient(0deg, rgba(4, 4, 7, 0.9), rgba(4, 4, 7, 0));
+  }
+  .cr-btn {
+    border: none;
+    background: none;
+    padding: 6px 10px;
+    color: var(--paper-dim);
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: color 0.2s ease;
+  }
+  .cr-btn:hover { color: var(--lamp); }
+  .cr-title {
+    flex: 1;
+    font-size: 13px;
+    color: var(--paper-dim);
+    letter-spacing: 0.06em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: center;
+  }
+  .cr-actions { display: flex; align-items: center; }
+  #slider { flex: 1; accent-color: var(--lamp); height: 22px; }
+  #page-indicator {
+    font-family: var(--font-latin);
+    font-size: 13px;
+    color: var(--paper-dim);
+    min-width: 64px;
+    text-align: center;
+    letter-spacing: 0.08em;
+  }
+  @media (max-width: 720px) {
+    .cr-title { display: none; }
+    #lnk-prev, #lnk-next { display: none; }
+  }
+
+  /* ---------- 滚动模式 ---------- */
+  #scrollbook {
+    position: absolute;
+    inset: 0;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scroll-snap-type: y mandatory;
+  }
+  #scrollbook[hidden] { display: none; }
+  .scroll-page {
+    height: 100%;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 10px 72px;
+  }
+  .scroll-page img {
+    max-width: min(94vw, 740px);
+    max-height: 100%;
+    border-radius: 2px;
+    box-shadow: 0 14px 46px rgba(0, 0, 0, 0.62);
+    background: #15151b;
+  }
+
+  /* ---------- 翻页模式 ---------- */
+  .flip-stage {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 58px 10px 66px;
+  }
+  .flip-stage[hidden] { display: none; }
+  #flipbook { max-width: 100%; }
+  .pf-page { background: #15151b; }
+  .pf-page img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    pointer-events: none;
+    user-select: none;
+    -webkit-user-drag: none;
+  }
+
+  /* ---------- 缩略图 ---------- */
+  #thumbs {
+    position: fixed;
+    inset: 0;
+    z-index: 60;
+    background: rgba(5, 5, 9, 0.95);
+    overflow-y: auto;
+    padding: 64px 4vw 44px;
+  }
+  .thumbs-close { position: fixed; top: 12px; right: 14px; }
+  .thumbs-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(92px, 1fr));
+    gap: 12px;
+    max-width: 920px;
+    margin-inline: auto;
+  }
+  .thumbs-grid button {
+    position: relative;
+    padding: 0;
+    aspect-ratio: 8 / 9;
+    border: 1px solid var(--line);
+    border-radius: 3px;
+    overflow: hidden;
+    background: #15151b;
+    cursor: pointer;
+    transition: border-color 0.2s ease, transform 0.2s ease;
+  }
+  .thumbs-grid button:hover { border-color: var(--lamp); transform: translateY(-2px); }
+  .thumbs-grid img { width: 100%; height: 100%; object-fit: cover; opacity: 0.92; }
+  .thumbs-grid span {
+    position: absolute;
+    right: 4px;
+    bottom: 3px;
+    font-family: var(--font-latin);
+    font-size: 11px;
+    color: var(--paper);
+    text-shadow: 0 1px 3px #000;
+  }
+
+  /* ---------- 章末卡 / toast ---------- */
+  #endcard {
+    position: fixed;
+    left: 50%;
+    bottom: 96px;
+    transform: translateX(-50%);
+    z-index: 50;
+    text-align: center;
+    animation: endrise 0.4s ease both;
+  }
+  @keyframes endrise {
+    from { opacity: 0; transform: translate(-50%, 12px); }
+    to { opacity: 1; transform: translate(-50%, 0); }
+  }
+  #endcard-link {
+    display: block;
+    background: linear-gradient(180deg, var(--lamp-bright), var(--lamp));
+    color: #2a1d07;
+    padding: 13px 30px;
+    border-radius: 4px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    box-shadow: 0 10px 34px rgba(232, 180, 90, 0.33);
+    transition: transform 0.2s ease;
+  }
+  #endcard-link:hover { transform: translateY(-2px); }
+  .endcard-kicker { display: block; font-size: 11px; letter-spacing: 0.3em; opacity: 0.72; }
+  .endcard-title { display: block; font-family: var(--font-display); font-size: 16px; }
+  .endcard-back { display: inline-block; margin-top: 10px; font-size: 12.5px; color: var(--paper-dim); }
+  .endcard-back:hover { color: var(--lamp); }
+
+  #toast {
+    position: fixed;
+    left: 50%;
+    bottom: 110px;
+    transform: translateX(-50%);
+    z-index: 70;
+    display: flex;
+    gap: 14px;
+    align-items: center;
+    background: rgba(14, 14, 20, 0.95);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 10px 18px;
+    font-size: 13px;
+  }
+  #toast button {
+    border: none;
+    background: none;
+    color: var(--lamp);
+    cursor: pointer;
+    font-size: 13px;
+    letter-spacing: 0.06em;
+  }
+</style>
