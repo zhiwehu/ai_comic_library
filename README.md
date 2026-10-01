@@ -82,28 +82,32 @@ scripts/exam-fixtures.mjs     # 书架压力考试：--make 200 生成 books/_te
 
 ## 部署
 
+**平台决策（2026-10-01 作者确认）**：先只上 **Vercel 单平台**；kickoff §9 的 Cloudflare 主 + Vercel 备双接入**暂缓**，将来需要时再按 §9 补 Cloudflare。
+
 **已完成**
 
 | 项 | 状态 |
 |---|---|
-| GitHub | `git@github.com:zhiwehu/ai_comic_library.git`，分支 `main`（⚠️ 当前为**私有**仓库） |
-| Vercel（备） | 项目 `ai_comic_library` → https://aicomiclibrary.vercel.app （由 CLI 部署，`vercel deploy --prod`） |
+| GitHub | `git@github.com:zhiwehu/ai_comic_library.git`，分支 `main`（⚠️ 目前**私有**，见下方第 1 步） |
+| Vercel | 项目 `ai_comic_library`（team `zhiwehus-projects`）→ https://aicomiclibrary.vercel.app |
 
-**剩余步骤（都需要账号权限，见 kickoff §9）**
+**剩余步骤（都需要账号权限）**
 
 1. **把 GitHub 仓库改为 public**——giscus 的硬性要求：
    Settings → General → 底部 Danger Zone → Change repository visibility → Public
-2. **Cloudflare Pages（主）**：Workers & Pages → Create → Pages → Connect to Git → 选本仓库
-   - Framework preset：`Astro`　Build command：`pnpm build`　Output directory：`dist`
-   - Node 版本 ≥ 20（环境变量可设 `NODE_VERSION=20`）
-3. **关闭 Vercel 的 Deployment Protection**（新项目默认开启，开着的话公众会撞登录页）：
-   Vercel → 项目 → Settings → Deployment Protection → Vercel Authentication → Disabled
-4. **giscus 评论**：仓库公开后 → Settings → Features 勾选 **Discussions** →
-   在 https://github.com/apps/giscus 授权本仓库 → 到 https://giscus.app 选仓库与分类，
-   拿到 4 个值填进两个平台的构建环境变量：
+2. **关闭 Vercel Deployment Protection**（团队新项目默认开启，开着时公众会撞 Vercel 登录页）：
+   项目 → Settings → Deployment Protection → Vercel Authentication → **Disabled**
+3. **giscus 评论**：仓库公开后 → 仓库 Settings → Features 勾选 **Discussions** →
+   在 https://github.com/apps/giscus 授权本仓库 → 到 https://giscus.app 选仓库与分类，拿到 4 个值
+   → 填进 Vercel 项目环境变量（Production/Preview 都要）：
    `PUBLIC_GISCUS_REPO` / `PUBLIC_GISCUS_REPO_ID` / `PUBLIC_GISCUS_CATEGORY` / `PUBLIC_GISCUS_CATEGORY_ID`
-   （未配置时详情页显示占位文案，不会报错）
-5. **DNS**：在 getaiti.com 的 DNS 处加 `comics` CNAME → Cloudflare Pages 分配的 `*.pages.dev` 域名
-   （Vercel 侧可绑定同一域名但**不要**解析过去，保持主备切换能力）
+   → 重新部署一次生效（未配置时详情页显示占位文案，不会报错）
+4. **绑定自定义域**：Vercel 项目 → Settings → Domains → 添加 `comics.getaiti.com`
+5. **DNS**：在 getaiti.com 的 DNS 处把 `comics` 指到 Vercel：
+   `CNAME comics → cname.vercel-dns.com`（按 Vercel 域名页给出的实际目标为准）
 6. **微信内置浏览器真机验收**（kickoff §6：iOS + Android 各一台，测翻页手势/预加载/进度记忆）
+
+**日常发布流程**：`pnpm run publish …` → `git commit && git push` → Vercel 自动构建上线。
+（首次需在 Vercel 项目里 Git 接入本仓库；也可继续用 `vercel deploy --prod` 从本地推送。）
+
 

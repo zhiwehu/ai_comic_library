@@ -243,6 +243,17 @@ pnpm publish --from <绘本导出目录>/images --book picture-books/<slug> --ti
 > 脚本会自动解析源目录 `index.md`/`chapter.yaml` 头部的 title/description/tags/series 字段，
 > 系列名用 `--book-title` 覆盖，单章书可不传 `--chapter`（默认 `01`）。
 
+**2026-10-01 · 上线平台决策（覆盖 §9 的主备方案）**
+
+- 代码已推送到 `git@github.com:zhiwehu/ai_comic_library.git`（分支 `main`）。
+  事实修正：仓库初始为 **private**，而 giscus 硬性要求 public，需作者在 GitHub 设置里转公开。
+- **先只上 Vercel 单平台**（项目 `ai_comic_library` → https://aicomiclibrary.vercel.app ），
+  §9 的「Cloudflare Pages 主 + Vercel 备」**暂缓**；将来要恢复双接入时按 §9 原样补 Cloudflare 即可，
+  站点本身与平台无关（纯静态、`dist` 产物）。
+- 注意两点实操差异：① Vercel 团队项目**默认开启 Deployment Protection**，不关掉公众会撞登录页；
+  ② 自定义域改为在 Vercel 绑定 `comics.getaiti.com`，DNS 加 `CNAME comics → cname.vercel-dns.com`。
+- 日常发布链路不变：`pnpm run publish` → `git push` → 平台自动构建。
+
 ---
 
 *本文档由 2025-09-30 的讨论定稿。决策依据：翻页体验优先级最高 → 选 page-flip；读者含国内 → Cloudflare Pages 主部署；创作管线已有 web 导出 → 发布脚本只做转码不做格式假设；要长期持续更新 → 一切设计服务于把"上架一本书"的边际成本压到一条命令。*
