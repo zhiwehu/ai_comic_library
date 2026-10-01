@@ -34,7 +34,7 @@ function booksSync() {
 }
 
 export default defineConfig({
-  site: 'https://comics.getaiti.com',
+  site: 'https://comic.getaiti.com',
   integrations: [sitemap(), booksSync()],
   vite: {
     server: {

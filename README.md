@@ -3,7 +3,7 @@
 为 AI 创作的漫画与绘本而建的**作品图书馆**：书架、目录、逼近实体书体验的翻页阅读器。中英双语，深浅色主题可切换。
 公众号连载的完整阅读入口与永久存档。规格见 [kickoff.md](./kickoff.md)（含 §14 修订记录）。
 
-- 线上：`comics.getaiti.com`（Cloudflare Pages 主 + Vercel 备，见 kickoff §9）
+- 线上：`comic.getaiti.com`（Cloudflare Pages 主 + Vercel 备，见 kickoff §9）
 - 技术栈：Astro 5（纯静态）· TypeScript · pnpm · page-flip · sharp · giscus / RSS / sitemap
 - 无后端：全部页面构建时生成，进度/偏好存 localStorage
 
@@ -102,7 +102,7 @@ scripts/exam-fixtures.mjs     # 书架压力考试：--make 200 生成 books/_te
    → 填进 Vercel 项目环境变量（Production/Preview 都要）：
    `PUBLIC_GISCUS_REPO` / `PUBLIC_GISCUS_REPO_ID` / `PUBLIC_GISCUS_CATEGORY` / `PUBLIC_GISCUS_CATEGORY_ID`
    → 重新部署一次生效（未配置时详情页显示占位文案，不会报错）
-4. **绑定自定义域**：Vercel 项目 → Settings → Domains → 添加 `comics.getaiti.com`
+4. **绑定自定义域**：Vercel 项目 → Settings → Domains → 添加 `comic.getaiti.com`
 5. **DNS**：在 getaiti.com 的 DNS 处把 `comics` 指到 Vercel：
    `CNAME comics → cname.vercel-dns.com`（按 Vercel 域名页给出的实际目标为准）
 6. **微信内置浏览器真机验收**（kickoff §6：iOS + Android 各一台，测翻页手势/预加载/进度记忆）

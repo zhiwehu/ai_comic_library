@@ -20,7 +20,7 @@ export async function GET(context: APIContext) {
   return rss({
     title: SITE.name,
     description: SITE.tagline,
-    site: context.site ?? 'https://comics.getaiti.com',
+    site: context.site ?? 'https://comic.getaiti.com',
     items,
     customData: '<language>zh-CN</language>',
   });

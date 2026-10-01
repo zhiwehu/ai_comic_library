@@ -26,7 +26,7 @@ User-agent: CCBot
 Allow: /
 
 # 面向 LLM 的站点说明与完整书目
-# https://comics.getaiti.com/llms.txt
-# https://comics.getaiti.com/llms-full.txt
+# https://comic.getaiti.com/llms.txt
+# https://comic.getaiti.com/llms-full.txt
 
-Sitemap: https://comics.getaiti.com/sitemap-index.xml
+Sitemap: https://comic.getaiti.com/sitemap-index.xml

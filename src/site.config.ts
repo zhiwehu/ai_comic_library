@@ -3,7 +3,7 @@ export const SITE = {
   name: '漫画图书馆',
   latinName: 'The Comic Library',
   tagline: '本馆作品由 AI 辅助创作，流程可复现',
-  domain: 'comics.getaiti.com',
+  domain: 'comic.getaiti.com',
 } as const;
 
 export const GISCUS = {

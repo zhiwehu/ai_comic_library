@@ -18,7 +18,7 @@
 | 决策项 | 结论 |
 |---|---|
 | 项目形态 | **独立新 repo**（`comic-library`），与创作 repo `ai_infra_comic` 分离 |
-| 域名 | 子域名 `comics.getaiti.com` |
+| 域名 | 子域名 `comic.getaiti.com` |
 | 读者 | 国内外都要 |
 | 部署 | **Cloudflare Pages 主 + Vercel 备**，同一仓库双接入，故障时改一条 DNS 切换 |
 | 阅读形态 | **翻页效果优先**（page-flip），保留纵向滚动作为后备模式（可切换） |
@@ -158,7 +158,7 @@ pnpm publish --from <绘本导出目录>/images --book picture-books/<slug> --ti
 ## 9. 部署
 
 1. GitHub 新建 **public** 仓库 `comic-library`（public 是 giscus 的硬性要求；内容本来就是公开的）
-2. **Cloudflare Pages（主）**：连接仓库 → 框架预设 Astro → 构建 `pnpm build` → 输出 `dist` → 绑定自定义域 `comics.getaiti.com`
+2. **Cloudflare Pages（主）**：连接仓库 → 框架预设 Astro → 构建 `pnpm build` → 输出 `dist` → 绑定自定义域 `comic.getaiti.com`
 3. **Vercel（备）**：同一仓库接入，配置同一个自定义域但 **DNS 不解析到它**；Cloudflare 故障时改一条 DNS 记录即可切换
 4. 注意：一个主机名同一时刻只能解析到一家，这是主备不是负载均衡，不要做流量分流
 5. DNS：在 getaiti.com 当前 DNS 服务商处加 `comics` 的 CNAME 指向 Cloudflare Pages 分配的域名
@@ -172,7 +172,7 @@ pnpm publish --from <绘本导出目录>/images --book picture-books/<slug> --ti
 | 阅读页 `/read/[book]/[chapter]` | §6 全部条款 |
 | 全站 | RSS `/rss.xml`、sitemap、每本书独立 OG 分享卡（封面 + 标题）、giscus 评论挂在每本书详情页 |
 
-流程验收：`git push` → 两平台自动构建 → `comics.getaiti.com` 可访问；跑一次发布脚本上架一个新章节全程 ≤ 2 分钟。
+流程验收：`git push` → 两平台自动构建 → `comic.getaiti.com` 可访问；跑一次发布脚本上架一个新章节全程 ≤ 2 分钟。
 
 ## 11. v1 明确不做（防止范围蔓延）
 
@@ -251,7 +251,13 @@ pnpm publish --from <绘本导出目录>/images --book picture-books/<slug> --ti
   §9 的「Cloudflare Pages 主 + Vercel 备」**暂缓**；将来要恢复双接入时按 §9 原样补 Cloudflare 即可，
   站点本身与平台无关（纯静态、`dist` 产物）。
 - 注意两点实操差异：① Vercel 团队项目**默认开启 Deployment Protection**，不关掉公众会撞登录页；
-  ② 自定义域改为在 Vercel 绑定 `comics.getaiti.com`，DNS 加 `CNAME comics → cname.vercel-dns.com`。
+  ② 自定义域在 Vercel 绑定并在阿里云加 `CNAME comic → cname.vercel-dns.com`。
+- **域名定稿为单数 `comic.getaiti.com`**（覆盖 §2 表中的 `comics.getaiti.com` 写法）：
+  全站 `site`/canonical/sitemap/RSS/llms.txt/页脚、robots.txt 均已统一为单数。
+- ⚠️ **实操发现（影响"国内外都要"的读者目标）**：Vercel 的 IP 段在**中国大陆网络被阻断**——
+  TCP 能连通，但 TLS ClientHello 一发出去即被 RST（换自定义域作 SNI 同样被 RST，
+  而 github.com / cloudflare.com 正常）。即国内直连打不开 `comic.getaiti.com`，需代理。
+  若要国内可访问，需按 §9 补 Cloudflare Pages，或改用阿里云 OSS+CDN 等国内托管。
 - 日常发布链路不变：`pnpm run publish` → `git push` → 平台自动构建。
 
 ---

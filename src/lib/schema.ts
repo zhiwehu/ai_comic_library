@@ -5,7 +5,7 @@
  * - ComicSeries（连载）/ Book（单本）：书目页输出；连载挂 hasPart: ComicIssue
  * - BreadcrumbList：书目页与阅读页输出
  *
- * URL 一律绝对化到 https://comics.getaiti.com（Astro.site 已配置）。
+ * URL 一律绝对化到 https://comic.getaiti.com（Astro.site 已配置）。
  */
 import { SITE } from '../site.config';
 import { bookDesc, bookTitle, type BookView, type ChapterView } from './books';
