@@ -456,10 +456,17 @@ const pageAlt = (i: number) => `${bookTitle(book, lang)} · ${t(lang, 'reader.pa
     }
   }
 
+  /** 翻页动画锁：page-flip 一次动画约 620ms，动画未结束时再发翻页请求
+   *  会落在错误页位上（按住方向键就连翻到头/尾），所以动画期间直接忽略 */
+  let flipLockUntil = 0;
+  const FLIP_LOCK_MS = 650;
+
   /** 无触点场景（键盘、自动翻页、缩略图跳页）：取书上左右底的对称坐标，
    *  让两个方向的卷页起点对称 */
   function flipBy(dir: 1 | -1) {
     if (!pf) return;
+    if (Date.now() < flipLockUntil) return;
+    flipLockUntil = Date.now() + FLIP_LOCK_MS;
     const rect = pf.getBoundsRect();
     if (rect && rect.width > 0 && rect.height > 0) {
       const y = rect.top + rect.height * 0.82;
