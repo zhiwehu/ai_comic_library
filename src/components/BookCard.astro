@@ -158,10 +158,12 @@ const extent =
   }
   .book-plate {
     display: grid;
+    grid-template-columns: minmax(0, 1fr); /* 关键：允许内容收缩，长书名不会把列撑出卡片 */
     gap: 4px;
     margin-top: 26px;
   }
   .book-title {
+    min-width: 0;
     font-family: var(--font-display);
     font-size: 15px;
     letter-spacing: 0.06em;
@@ -175,8 +177,12 @@ const extent =
   .book-meta {
     display: flex;
     align-items: center;
-    gap: 8px;
+    /* 卡片窄时「更新到第 x 集」整体折到下一行，保证显示完整 */
+    flex-wrap: wrap;
+    row-gap: 2px;
+    min-width: 0;
     font-size: 12px;
   }
+  .book-meta .tag { flex-shrink: 0; }
   .book-upd { color: var(--lamp); letter-spacing: 0.05em; white-space: nowrap; }
 </style>
