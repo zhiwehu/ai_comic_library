@@ -161,7 +161,19 @@ const title = bookTitle(book, lang);
     align-items: end;
   }
   @media (max-width: 640px) {
-    .book-hero { grid-template-columns: minmax(140px, 200px) 1fr; align-items: center; }
+    /* 手机上不再左右分栏：面包屑 → 封面 → 文字信息，一路向下。
+       用 display:contents 让 .book-info 的子元素直接参与外层排列，
+       这样面包屑可以回到封面之上（无需改结构）。 */
+    .book-hero { display: flex; flex-direction: column; gap: 0; }
+    .book-info { display: contents; }
+    .crumb { order: -2; margin-bottom: 16px; }
+    .cover-frame { order: -1; width: min(62vw, 230px); margin: 0 auto 22px; }
+    .type-row { margin-bottom: 12px; }
+    h1 { font-size: clamp(23px, 6.6vw, 30px); }
+    .desc { font-size: 14.5px; }
+    .tags { margin-bottom: 18px; }
+    .cta-row { gap: 10px; }
+    .cta-row > * { flex: 1 1 auto; justify-content: center; text-align: center; }
   }
 
   .cover-box {

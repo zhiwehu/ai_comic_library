@@ -155,7 +155,10 @@ const pageAlt = (i: number) => `${bookTitle(book, lang)} · ${t(lang, 'reader.pa
 
     <!-- 缩略图网格 -->
     <div id="thumbs" hidden>
-      <button class="cr-btn thumbs-close" id="btn-thumbs-close" type="button">✕</button>
+      <div class="thumbs-head">
+        <span class="thumbs-title">{t(lang, 'reader.thumbsTitle', { n: count })}</span>
+        <button class="cr-btn thumbs-close" id="btn-thumbs-close" type="button" aria-label={t(lang, 'reader.close')}>✕</button>
+      </div>
       <div class="thumbs-grid">
         {
           pages.map((url: string, i: number) => (
@@ -293,8 +296,15 @@ const pageAlt = (i: number) => `${bookTitle(book, lang)} · ${t(lang, 'reader.pa
     toastUndo.onclick = undo ?? null;
     toast.hidden = false;
     clearTimeout(toastTimer);
-    toastTimer = setTimeout(() => (toast.hidden = true), 4200);
+    // 带「从头看」按钮的多留一会儿，方便看清和点按
+    toastTimer = setTimeout(() => (toast.hidden = true), undo ? 6000 : 4200);
   }
+  // 点提示条空白处即可收起（按钮除外）
+  toast.addEventListener('click', (e) => {
+    if ((e.target as HTMLElement).closest('button')) return;
+    toast.hidden = true;
+    clearTimeout(toastTimer);
+  });
 
   function updateEndcard(v: number) {
     const atEnd = v >= viewsCount - 1;
@@ -351,7 +361,9 @@ const pageAlt = (i: number) => `${bookTitle(book, lang)} · ${t(lang, 'reader.pa
       mobileScrollSupport: true,
       maxShadowOpacity: 0.5,
       flippingTime: 620,
-      swipeDistance: 14,
+      // 库自带的滑动翻页在 disableFlipByClick 下同样会被角点检查拦掉（后退方向必失效），
+      // 这里把它关掉（阈值设到不可能达到），滑动翻页由我们自己的 pointer 处理统一接管
+      swipeDistance: 99999,
       startPage: startPage - 1,
       disableFlipByClick: true, // 翻页交给左右点击区：中央轻点呼出工具栏
     });
@@ -485,12 +497,33 @@ const pageAlt = (i: number) => `${bookTitle(book, lang)} · ${t(lang, 'reader.pa
     else document.documentElement.requestFullscreen?.().catch(() => {});
   });
 
+  /** 高亮当前正在读的页（对开模式高亮两页），并把它滚到视野中央 */
+  function markThumbs() {
+    const v = Number(slider.value) - 1;
+    const left = leftPageOfView(v);
+    const right = Math.min(left + perView - 1, count);
+    let firstOn: HTMLElement | undefined;
+    for (const b of thumbs.querySelectorAll<HTMLElement>('[data-page]')) {
+      const p = Number(b.dataset.page);
+      const on = p >= left && p <= right;
+      b.classList.toggle('is-active', on);
+      if (on) {
+        b.setAttribute('aria-current', 'page');
+        firstOn ??= b;
+      } else {
+        b.removeAttribute('aria-current');
+      }
+    }
+    firstOn?.scrollIntoView({ block: 'center', behavior: 'instant' as ScrollBehavior });
+  }
+
   document.getElementById('btn-thumbs')!.addEventListener('click', () => {
     thumbs.hidden = false;
     thumbs.querySelectorAll('img').forEach((im) => {
       const el = im as HTMLImageElement;
       if (el.dataset.src && !el.src) el.src = el.dataset.src;
     });
+    requestAnimationFrame(markThumbs);
   });
   document.getElementById('btn-thumbs-close')!.addEventListener('click', () => (thumbs.hidden = true));
   thumbs.addEventListener('click', (e) => {
@@ -514,10 +547,10 @@ const pageAlt = (i: number) => `${bookTitle(book, lang)} · ${t(lang, 'reader.pa
       return;
     }
     if (e.key === 'ArrowRight' || e.key === 'PageDown') {
-      if (mode === 'flip') pf?.flipNext();
+      if (mode === 'flip') flipBy(1);
       else scrollByPage(1);
     } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
-      if (mode === 'flip') pf?.flipPrev();
+      if (mode === 'flip') flipBy(-1);
       else scrollByPage(-1);
     }
   });
@@ -639,21 +672,29 @@ const pageAlt = (i: number) => `${bookTitle(book, lang)} · ${t(lang, 'reader.pa
   });
   flipStage.addEventListener('pointerup', (e) => {
     if (!tapStart) return;
-    const dx = Math.abs(e.clientX - tapStart.x);
+    const rawX = e.clientX - tapStart.x;
     const dy = Math.abs(e.clientY - tapStart.y);
+    const dx = Math.abs(rawX);
     const dt = Date.now() - tapStart.t;
     tapStart = null;
-    if (dx > 12 || dy > 12 || dt > 500) return; // 滑动：交给 StPageFlip
+    // 横向滑动：自己翻页（左滑前进 / 右滑后退）。阈值同时看横向位移与方向性，
+    // 避免纵向滚动被误判成翻页。
+    if (dx > 36 && dx > dy * 1.4 && dt < 800) {
+      stopAuto();
+      flipBy(rawX < 0 ? 1 : -1);
+      return;
+    }
+    if (dx > 12 || dy > 12 || dt > 500) return; // 其余小幅抖动忽略
     const rect = flipStage.getBoundingClientRect();
     const x = (e.clientX - rect.left) / rect.width;
     stopAuto();
     if (e.pointerType === 'mouse') {
       // 桌面：左右半区翻页（工具栏由鼠标移动呼出，2.2s 无操作自动隐藏）
-      x < 0.5 ? pf?.flipPrev() : pf?.flipNext();
+      flipBy(x < 0.5 ? -1 : 1);
     } else {
       // 触屏：两侧 35% 翻页，中央 30% 呼出/隐藏工具栏
-      if (x < 0.35) pf?.flipPrev();
-      else if (x > 0.65) pf?.flipNext();
+      if (x < 0.35) flipBy(-1);
+      else if (x > 0.65) flipBy(1);
       else chrome.classList.contains('chrome-on') ? hide() : wake();
     }
   });
@@ -944,13 +985,36 @@ const pageAlt = (i: number) => `${bookTitle(book, lang)} · ${t(lang, 'reader.pa
     -webkit-backdrop-filter: blur(24px) saturate(1.4);
     backdrop-filter: blur(24px) saturate(1.4);
     overflow-y: auto;
-    padding: 64px 4vw 44px;
+    overscroll-behavior: contain;
+    padding: 0 3vw calc(30px + env(safe-area-inset-bottom));
   }
-  .thumbs-close { position: fixed; top: 12px; right: 14px; }
+  /* 顶栏吸顶：滚动看大图时也知道自己在哪一屏，且关闭按钮永远够得着 */
+  .thumbs-head {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    max-width: 920px;
+    margin: 0 auto 14px;
+    padding: max(12px, env(safe-area-inset-top)) 2px 12px;
+    background: linear-gradient(var(--overlay) 62%, transparent);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+  }
+  .thumbs-title {
+    font-size: 12.5px;
+    letter-spacing: 0.1em;
+    color: var(--paper-dim);
+  }
+  .thumbs-close { flex: none; font-size: 16px; padding: 6px 12px; }
   .thumbs-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(92px, 1fr));
-    gap: 12px;
+    /* 移动端不缩小：390px 宽下仍是 3 列、每格约 115px */
+    grid-template-columns: repeat(auto-fill, minmax(104px, 1fr));
+    gap: 10px;
     max-width: 920px;
     margin-inline: auto;
   }
@@ -959,22 +1023,47 @@ const pageAlt = (i: number) => `${bookTitle(book, lang)} · ${t(lang, 'reader.pa
     padding: 0;
     aspect-ratio: var(--page-aspect, 8 / 9);
     border: 1px solid var(--line);
-    border-radius: 3px;
+    border-radius: 4px;
     overflow: hidden;
     background: var(--card-bg);
     cursor: pointer;
-    transition: border-color 0.2s ease, transform 0.2s ease;
+    transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
   }
   .thumbs-grid button:hover { border-color: var(--lamp); transform: translateY(-2px); }
+  /* 当前正在读的那一页（对开模式下高亮两页） */
+  .thumbs-grid button.is-active {
+    border-color: var(--lamp);
+    box-shadow: 0 0 0 1px var(--lamp), 0 10px 24px rgba(0, 0, 0, 0.45);
+  }
+  .thumbs-grid button.is-active::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    box-shadow: inset 0 0 0 2px var(--lamp);
+    pointer-events: none;
+  }
   .thumbs-grid img { width: 100%; height: 100%; object-fit: cover; opacity: 0.92; }
+  .thumbs-grid button.is-active img { opacity: 1; }
   .thumbs-grid span {
     position: absolute;
-    right: 4px;
-    bottom: 3px;
+    right: 5px;
+    bottom: 5px;
+    min-width: 20px;
+    padding: 1px 5px;
+    border-radius: 999px;
+    background: rgba(8, 8, 12, 0.66);
     font-family: var(--font-latin);
     font-size: 11px;
+    line-height: 1.5;
+    text-align: center;
     color: var(--paper);
     text-shadow: 0 1px 3px #000;
+  }
+  .thumbs-grid button.is-active span {
+    background: var(--lamp);
+    color: #1a1408;
+    font-weight: 600;
+    text-shadow: none;
   }
 
   #endcard {
@@ -1007,30 +1096,51 @@ const pageAlt = (i: number) => `${bookTitle(book, lang)} · ${t(lang, 'reader.pa
   .endcard-back { display: inline-block; margin-top: 10px; font-size: 12.5px; color: var(--paper-dim); }
   .endcard-back:hover { color: var(--lamp); }
 
+  /* 提示条 / 操作条：贴底悬浮在页码条之上，卡片式（不再是一个飘在屏幕中间的胶囊） */
   #toast {
     position: fixed;
     left: 50%;
-    bottom: 190px;
+    bottom: calc(78px + env(safe-area-inset-bottom));
     transform: translateX(-50%);
     z-index: 70;
     display: flex;
-    gap: 14px;
+    gap: 12px;
     align-items: center;
-    background: linear-gradient(120deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.01)), var(--glass-bg-strong);
-    -webkit-backdrop-filter: blur(18px) saturate(1.5);
-    backdrop-filter: blur(18px) saturate(1.5);
+    width: max-content;
+    max-width: min(560px, calc(100vw - 24px));
+    background: linear-gradient(120deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.015) 55%), var(--glass-bg-strong);
+    -webkit-backdrop-filter: blur(20px) saturate(1.5);
+    backdrop-filter: blur(20px) saturate(1.5);
     border: 1px solid var(--glass-border);
-    border-radius: 999px;
-    padding: 10px 20px;
-    font-size: 13px;
-    box-shadow: inset 0 1px 0 var(--glass-spec), 0 10px 30px var(--glass-shadow);
+    border-radius: 16px;
+    padding: 12px 12px 12px 18px;
+    font-size: 13.5px;
+    line-height: 1.5;
+    box-shadow: inset 0 1px 0 var(--glass-spec), 0 14px 38px var(--glass-shadow);
+    animation: toast-in 0.28s cubic-bezier(0.2, 0.9, 0.3, 1) both;
   }
+  @keyframes toast-in {
+    from { opacity: 0; transform: translate(-50%, 10px); }
+    to { opacity: 1; transform: translate(-50%, 0); }
+  }
+  #toast-text { flex: 1 1 auto; min-width: 0; }
   #toast button {
-    border: none;
-    background: none;
-    color: var(--lamp);
+    flex: none;
+    border: 1px solid var(--lamp-soft);
+    background: var(--lamp-soft);
+    color: var(--lamp-bright);
     cursor: pointer;
-    font-size: 13px;
+    font-size: 12.5px;
+    font-weight: 600;
     letter-spacing: 0.06em;
+    padding: 8px 14px;
+    border-radius: 999px;
+    white-space: nowrap;
+    transition: background 0.2s ease, color 0.2s ease;
+  }
+  #toast button:hover { background: var(--lamp); color: #1a1408; }
+  @media (max-width: 380px) {
+    #toast { flex-direction: column; align-items: stretch; gap: 10px; padding: 14px; text-align: left; }
+    #toast button { text-align: center; }
   }
 </style>
