@@ -47,7 +47,9 @@ const flipH = Math.round(flipW / ratio);
     data-end-done={t(lang, 'reader.endDone')}
     data-mode-flip={t(lang, 'reader.modeFlip')}
     data-mode-scroll={t(lang, 'reader.modeScroll')}
+    data-auto={t(lang, 'reader.auto')}
     data-hint={t(lang, 'reader.hint')}
+    data-auto={t(lang, 'reader.auto')}
   >
     <div class="chrome" id="chrome">
       <div class="chrome-top">
@@ -69,6 +71,7 @@ const flipH = Math.round(flipW / ratio);
             )
           }
           <button class="cr-btn" id="btn-thumbs" type="button">{t(lang, 'reader.thumbs')}</button>
+          <button class="cr-btn" id="btn-auto" type="button" aria-pressed="false">{t(lang, 'reader.auto')}</button>
           <button class="cr-btn" id="btn-mode" type="button">{t(lang, 'reader.modeScroll')}</button>
           <button class="cr-btn" id="btn-full" type="button">{t(lang, 'reader.full')}</button>
           <button class="cr-btn" id="btn-theme" type="button" aria-label={t(lang, 'theme.toggle')}><span class="icon-moon" aria-hidden="true">☾</span><span class="icon-sun" aria-hidden="true">☀</span></button>
@@ -324,6 +327,7 @@ const flipH = Math.round(flipW / ratio);
 
     pf.on('flip', (e: { data: number }) => {
       const leftIdx = Number(e.data ?? 0);
+      stopAuto();
       setView(viewOfPage(leftIdx + 1), leftIdx + 1);
       preloadFlip(leftIdx);
     });
@@ -405,6 +409,7 @@ const flipH = Math.round(flipW / ratio);
     indicator.textContent = perView === 1 ? `${left} / ${count}` : `${left}–${right} / ${count}`;
   });
   slider.addEventListener('change', () => {
+    stopAuto();
     const v = Number(slider.value) - 1;
     if (mode === 'flip') pf?.turnToPage(v * perView);
     else sections[v]?.scrollIntoView({ behavior: 'smooth' });
@@ -441,6 +446,7 @@ const flipH = Math.round(flipW / ratio);
 
   window.addEventListener('keydown', (e) => {
     wake();
+    stopAuto();
     if (e.key === 'Escape' && !thumbs.hidden) {
       thumbs.hidden = true;
       return;
@@ -465,6 +471,31 @@ const flipH = Math.round(flipW / ratio);
     chrome.classList.add('chrome-on');
     hideTimer = setTimeout(hide, 2600);
   }
+
+  /* ---------- 自动翻页 ---------- */
+  const autoBtn = document.getElementById('btn-auto');
+  let autoTimer: ReturnType<typeof setInterval> | null = null;
+  function stopAuto() {
+    if (autoTimer === null) return;
+    clearInterval(autoTimer);
+    autoTimer = null;
+    autoBtn?.classList.remove('is-active');
+    autoBtn?.setAttribute('aria-pressed', 'false');
+  }
+  function startAuto() {
+    stopAuto();
+    autoBtn?.classList.add('is-active');
+    autoBtn?.setAttribute('aria-pressed', 'true');
+    autoTimer = setInterval(() => {
+      if (viewIdx >= viewsCount - 1) {
+        stopAuto();
+        return;
+      }
+      if (mode === 'flip') pf?.flipNext();
+      else scrollByPage(1);
+    }, 5000);
+  }
+  autoBtn?.addEventListener('click', () => (autoTimer ? stopAuto() : startAuto()));
   function hide() {
     chrome.classList.remove('chrome-on');
   }
@@ -497,10 +528,15 @@ const flipH = Math.round(flipW / ratio);
     if (dx > 12 || dy > 12 || dt > 500) return; // 滑动：交给 StPageFlip
     const rect = flipStage.getBoundingClientRect();
     const x = (e.clientX - rect.left) / rect.width;
-    if (x < 0.3) pf?.flipPrev();
-    else if (x > 0.7) pf?.flipNext();
-    else if (e.pointerType !== 'mouse') {
-      chrome.classList.contains('chrome-on') ? hide() : wake();
+    stopAuto();
+    if (e.pointerType === 'mouse') {
+      // 桌面：左右半区翻页（工具栏由鼠标移动呼出，2.2s 无操作自动隐藏）
+      x < 0.5 ? pf?.flipPrev() : pf?.flipNext();
+    } else {
+      // 触屏：两侧 35% 翻页，中央 30% 呼出/隐藏工具栏
+      if (x < 0.35) pf?.flipPrev();
+      else if (x > 0.65) pf?.flipNext();
+      else chrome.classList.contains('chrome-on') ? hide() : wake();
     }
   });
 
@@ -521,7 +557,7 @@ const flipH = Math.round(flipW / ratio);
     left: 0;
     right: 0;
     height: 44px;
-    z-index: 45;
+    z-index: 35; /* 低于 chrome(40)：工具栏显示时让位，按钮可点 */
   }
   .edge-strip.top { top: 0; }
   .edge-strip.bottom { bottom: 0; }
@@ -535,9 +571,13 @@ const flipH = Math.round(flipW / ratio);
     z-index: 40;
     opacity: 0;
     transition: opacity 0.35s ease;
-    pointer-events: none;
+    pointer-events: none; /* 容器铺满视口但永不接事件，点击穿透到翻页区 */
   }
-  .chrome.chrome-on { opacity: 1; pointer-events: auto; }
+  .chrome.chrome-on { opacity: 1; }
+  .chrome-top,
+  .chrome-bottom { pointer-events: none; }
+  .chrome.chrome-on .chrome-top,
+  .chrome.chrome-on .chrome-bottom { pointer-events: auto; }
   .chrome-top,
   .chrome-bottom {
     position: absolute;
@@ -577,6 +617,18 @@ const flipH = Math.round(flipW / ratio);
     transition: color 0.2s ease;
   }
   .cr-btn:hover { color: var(--lamp); }
+  #btn-auto.is-active { color: var(--lamp); }
+  #btn-auto.is-active::before {
+    content: '';
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--lamp);
+    margin-right: 6px;
+    vertical-align: 2px;
+    animation: pulse 1.6s ease-in-out infinite;
+  }
   #btn-theme .icon-sun { display: none; }
   [data-theme='light'] #btn-theme .icon-sun { display: inline; }
   [data-theme='light'] #btn-theme .icon-moon { display: none; }
