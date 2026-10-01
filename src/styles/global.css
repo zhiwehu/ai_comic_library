@@ -234,16 +234,19 @@ h1, h2, h3 {
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  gap: 10px;
-  flex: 1 1 220px;
+  gap: 8px;
+  flex: 1 1 auto;
   min-width: 0;
 }
 @media (max-width: 560px) {
   .brand-latin { display: none; }
-  .site-head { padding-block: 16px 12px; flex-wrap: wrap; }
-  /* 工具区换行独占一整行，保证搜索框和筛选 chips 有足够宽度与点击面积 */
-  .head-tools { order: 3; flex: 1 1 100%; justify-content: flex-start; margin-top: 4px; }
-  .site-head nav { margin-left: auto; }
+  /* 极简单行：手机端只留 logo 图标 + 工具区 + 主题/语言，RSS 收进页脚 */
+  .brand-name { display: none; }
+  .brand { gap: 0; }
+  .site-head { padding-block: 12px 10px; flex-wrap: nowrap; gap: 10px; }
+  .head-tools { justify-content: flex-start; }
+  .site-head nav { gap: 12px; }
+  .site-head nav > a:not(.lang-switch) { display: none; }
 }
 :lang(en) .brand-latin { display: none; }
 .site-head nav a:hover { color: var(--lamp); }
