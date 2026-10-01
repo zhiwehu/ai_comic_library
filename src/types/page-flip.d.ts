@@ -63,6 +63,9 @@ declare module 'page-flip' {
     getOrientation(): 'portrait' | 'landscape';
     getPageCount(): number;
     getCurrentPageIndex(): number;
+    /** 返回**内部实时**配置对象（可读可改）：我们用它临时放开 disableFlipByClick，
+     *  绕过 StPageFlip 对 flipPrev() 的角点误判 */
+    getSettings(): PageFlipSettings;
 
     /** 容器尺寸变化后重算 */
     update(): void;
