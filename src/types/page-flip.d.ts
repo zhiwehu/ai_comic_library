@@ -63,8 +63,16 @@ declare module 'page-flip' {
     getOrientation(): 'portrait' | 'landscape';
     getPageCount(): number;
     getCurrentPageIndex(): number;
+    /** 书页在屏幕上的矩形：左右翻页都要用它算「书上的真实坐标」 */
+    getBoundsRect(): { left: number; top: number; width: number; height: number };
+    /**
+     * 内部翻页控制器。`flip(point)` 用**真实触点**发起翻页：卷页从触点所在角落开始，
+     * 因此左右翻页观感一致。（flipNext()/flipPrev() 内部用写死的屏幕坐标，
+     * 书居中时起点会跑偏 —— 这正是左右手感不一致的原因。）
+     */
+    getFlipController(): { flip(point: { x: number; y: number }): void } | null;
     /** 返回**内部实时**配置对象（可读可改）：我们用它临时放开 disableFlipByClick，
-     *  绕过 StPageFlip 对 flipPrev() 的角点误判 */
+     *  绕过 StPageFlip 对程序化翻页的角点误判 */
     getSettings(): PageFlipSettings;
 
     /** 容器尺寸变化后重算 */

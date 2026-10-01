@@ -1,10 +1,8 @@
 ---
 import Base from '../../layouts/Base.astro';
 import BookCard from '../BookCard.astro';
-import Pic from '../Pic.astro';
 import { getShelf, bookTitle } from '../../lib/books';
-import { SITE } from '../../site.config';
-import { t, fmtDate, type Lang } from '../../lib/i18n';
+import { t, type Lang } from '../../lib/i18n';
 import { orgSchema, webSiteSchema } from '../../lib/schema';
 
 interface Props {
@@ -14,9 +12,7 @@ const { lang } = Astro.props;
 
 const shelf = await getShelf();
 const featured = shelf[0] ?? null;
-const ch = featured?.latest ?? null;
-const leftPage = ch?.pages[0];
-const rightPage = ch?.pages[1] ?? ch?.pages[0];
+/** 新书通报：书名为分隔的跑马灯 */
 const ticker = shelf.map((b) => bookTitle(b, lang)).join('　✦　');
 ---
 
@@ -27,68 +23,30 @@ const ticker = shelf.map((b) => bookTitle(b, lang)).join('　✦　');
   schema={[webSiteSchema(lang), orgSchema(lang)]}
 >
   {
-    featured && ch && leftPage ? (
-      <section class="hero" id="hero">
-        <span class="ghost" aria-hidden="true">LIBRARY</span>
-        <div class="hero-lamp" aria-hidden="true" />
-        <aside class="hero-rail" aria-hidden="true">
-          <span class="vert">{t(lang, 'hero.rail')}</span>
-        </aside>
-
-        <div class="hero-center">
-          <p class="kicker">
-            {SITE.latinName} · EST. 2026 · {shelf.length} {t(lang, 'hero.kicker')}
-          </p>
-          <div class="mega-wrap">
-            <h1 class="mega">{t(lang, 'hero.title')}</h1>
-            <span class="seal" aria-hidden="true">藏</span>
-          </div>
-
-          <div class="stage">
-            <div class="book3d" id="book3d" style={`--ob-aspect:${(ch.ratio || 8 / 9).toFixed(4)}`}>
-              <div class="ob ob-left">
-                <span class="edge edge-l" aria-hidden="true" />
-                <Pic src={leftPage} alt="" loading="eager" fetchpriority="high" />
-              </div>
-              {rightPage && (
-                <div class="ob ob-right">
-                  <span class="edge edge-r" aria-hidden="true" />
-                  <Pic src={rightPage} alt="" loading="eager" />
-                </div>
-              )}
-              <span class="gutter" aria-hidden="true" />
-              <span class="sweep" aria-hidden="true" />
-            </div>
-          </div>
-
-          <p class="now-reading">
-            <span class="dot" aria-hidden="true" />
-            {t(lang, 'hero.now')}　{lang === 'en' ? '' : '《'}{bookTitle(featured, lang)}{lang === 'en' ? '' : '》'} · {ch.title} · {fmtDate(lang, ch.date)}
-          </p>
-          <div class="cta-row">
-            <a class="btn btn-lamp" href={`/read/${featured.slug}/${ch.slug}/`}>
-              {t(lang, 'hero.open')}
-            </a>
-            <a class="btn btn-ghost" id="continue-link" hidden href="#" data-tpl={t(lang, 'hero.continue')} data-base={lang === 'en' ? '/en' : ''} />
-          </div>
+    ticker && (
+      <div class="ticker" aria-hidden="true">
+        <div class="ticker-track">
+          <span>{ticker}　✦　</span>
+          <span>{ticker}　✦　</span>
         </div>
-
-        <div class="ticker" aria-hidden="true">
-          <div class="ticker-track">
-            <span>{ticker}　✦　</span>
-            <span>{ticker}　✦　</span>
-          </div>
-        </div>
-      </section>
-    ) : (
-      <section class="hero hero-empty wrap">
-        <h1 class="mega">{t(lang, 'hero.empty')}</h1>
-        <p class="kicker">{t(lang, 'hero.emptyHint')}</p>
-      </section>
+      </div>
     )
   }
 
   <section class="shelf wrap" id="shelf">
+    <a
+      class="continue-bar"
+      id="continue-link"
+      hidden
+      href="#"
+      data-tpl={t(lang, 'hero.continue')}
+      data-base={lang === 'en' ? '/en' : ''}
+    >
+      <span class="cb-dot" aria-hidden="true" />
+      <span class="cb-text" />
+      <span class="cb-go" aria-hidden="true">→</span>
+    </a>
+
     <header class="shelf-head">
       <div class="shelf-title-wrap">
         <h2 class="shelf-title">{t(lang, 'shelf.title')}</h2>
@@ -101,7 +59,14 @@ const ticker = shelf.map((b) => bookTitle(b, lang)).join('　✦　');
     </header>
     <div class="shelf-controls">
       <div class="shelf-search">
-        <svg class="shelf-search-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+        <svg
+          class="shelf-search-ico"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.8"
+          aria-hidden="true"
+        >
           <circle cx="11" cy="11" r="6.5" />
           <path d="M16 16l4 4" stroke-linecap="round" />
         </svg>
@@ -112,21 +77,22 @@ const ticker = shelf.map((b) => bookTitle(b, lang)).join('　✦　');
           autocomplete="off"
           aria-label={t(lang, 'shelf.search')}
         />
-        <button class="shelf-clear" id="shelf-clear" type="button" hidden aria-label={t(lang, 'shelf.clear')}>✕</button>
+        <button class="shelf-clear" id="shelf-clear" type="button" hidden aria-label={t(lang, 'shelf.clear')}
+          >✕</button
+        >
       </div>
       <div class="shelf-chips" role="group" aria-label={t(lang, 'shelf.all')}>
-        {['all', 'series', 'short', 'picture-book'].map((tp) => (
-          <button
-            class:list={['chip', { 'is-active': tp === 'all' }]}
-            data-type={tp}
-            type="button"
-          >
-            {tp === 'all' ? t(lang, 'shelf.all') : t(lang, `type.${tp}`)}
-          </button>
-        ))}
+        {
+          ['all', 'series', 'short', 'picture-book'].map((tp) => (
+            <button class:list={['chip', { 'is-active': tp === 'all' }]} data-type={tp} type="button">
+              {tp === 'all' ? t(lang, 'shelf.all') : t(lang, `type.${tp}`)}
+            </button>
+          ))
+        }
       </div>
     </div>
     <p class="shelf-result" id="shelf-result" aria-live="polite" data-tpl={t(lang, 'shelf.result')} />
+    {shelf.length === 0 && <p class="shelf-blank">{t(lang, 'hero.emptyHint')}</p>}
     <div class="shelf-grid" id="shelf-grid">
       {shelf.map((b, i) => <BookCard book={b} index={i + 1} lang={lang} />)}
     </div>
@@ -142,43 +108,20 @@ const ticker = shelf.map((b) => bookTitle(b, lang)).join('　✦　');
 </Base>
 
 <script>
-  // 「继续上次」
-  const link = document.getElementById('continue-link') as HTMLAnchorElement | null;
+  // 「继续上次」：有阅读进度时才出现
+  const continueLink = document.getElementById('continue-link') as HTMLAnchorElement | null;
   const last = localStorage.getItem('cl:last');
-  if (link && last) {
+  if (continueLink && last) {
     const sep = last.lastIndexOf(':');
     const b = last.slice(0, sep);
     const c = last.slice(sep + 1);
     const p = Number(localStorage.getItem(`cl:progress:${b}:${c}`) ?? 0);
     if (b && c && p > 0) {
-      link.href = `${link.dataset.base}/read/${b}/${c}/`;
-      link.textContent = link.dataset.tpl!.replace('{p}', String(p));
-      link.hidden = false;
+      continueLink.href = `${continueLink.dataset.base}/read/${b}/${c}/`;
+      const label = continueLink.querySelector('.cb-text');
+      if (label) label.textContent = continueLink.dataset.tpl!.replace('{p}', String(p));
+      continueLink.hidden = false;
     }
-  }
-
-  // 开卷 3D：鼠标视差（触屏/减动效自动关闭）
-  const hero = document.getElementById('hero');
-  const book = document.getElementById('book3d');
-  const fine = matchMedia('(pointer: fine)').matches;
-  const calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (hero && book && fine && !calm) {
-    let raf = 0;
-    hero.addEventListener('pointermove', (e) => {
-      if (raf) return;
-      raf = requestAnimationFrame(() => {
-        raf = 0;
-        const r = hero.getBoundingClientRect();
-        const dx = (e.clientX - r.left) / r.width - 0.5;
-        const dy = (e.clientY - r.top) / r.height - 0.5;
-        book.style.setProperty('--ry', `${(dx * 10).toFixed(2)}deg`);
-        book.style.setProperty('--rx', `${(6 - dy * 8).toFixed(2)}deg`);
-      });
-    });
-    hero.addEventListener('pointerleave', () => {
-      book.style.setProperty('--ry', '0deg');
-      book.style.setProperty('--rx', '6deg');
-    });
   }
 
   /* ---------- 书架：搜索 / 类别过滤 / 分页加载 ---------- */
@@ -281,256 +224,69 @@ const ticker = shelf.map((b) => bookTitle(b, lang)).join('　✦　');
 </script>
 
 <style>
-  /* ================= 首屏 · 满幕开卷 ================= */
-  .hero {
-    position: relative;
-    min-height: 100vh; /* 老引擎回退（旧 WebView 不识别 svh） */
-    min-height: 100svh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    overflow: hidden;
-    padding-block: clamp(56px, 8vh, 96px) clamp(72px, 10vh, 110px);
-    border-bottom: 1px solid var(--line);
-  }
-  .hero-lamp {
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    background:
-      radial-gradient(720px 480px at 50% 12%, var(--glow-1), var(--glow-2) 46%, transparent 72%),
-      radial-gradient(1100px 560px at 50% 118%, var(--glow-3), transparent 60%);
-  }
-  .ghost {
-    position: absolute;
-    top: 2%;
-    left: 50%;
-    transform: translateX(-50%);
-    font-family: var(--font-latin);
-    font-size: clamp(120px, 21vw, 320px);
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    color: transparent;
-    -webkit-text-stroke: 1px var(--ghost-stroke);
-    white-space: nowrap;
-    user-select: none;
-    pointer-events: none;
-  }
-  .hero-rail {
-    position: absolute;
-    right: clamp(14px, 3vw, 40px);
-    top: 50%;
-    transform: translateY(-50%);
-    writing-mode: vertical-rl;
-    font-family: var(--font-display);
-    font-size: 12.5px;
-    letter-spacing: 0.42em;
-    color: var(--paper-faint);
-    user-select: none;
-  }
-  @media (max-width: 1080px) { .hero-rail { display: none; } }
-
-  .hero-center { position: relative; text-align: center; }
-
-  .kicker {
-    margin: 0 0 clamp(10px, 2vh, 22px);
-    font-family: var(--font-latin);
-    font-size: 12.5px;
-    letter-spacing: 0.34em;
-    text-transform: uppercase;
-    color: var(--paper-dim);
-    animation: rise 0.9s 0.05s ease both;
-  }
-  .kicker code { color: var(--lamp); }
-
-  .mega-wrap { position: relative; display: inline-block; }
-  .mega {
-    margin: 0;
-    font-family: var(--font-display);
-    font-size: clamp(52px, 9.5vw, 128px);
-    font-weight: 700;
-    line-height: 1.04;
-    letter-spacing: 0.12em;
-    text-indent: 0.12em;
-    background: linear-gradient(180deg, var(--mega-1) 30%, var(--mega-2) 78%, var(--mega-3));
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-    text-shadow: 0 24px 70px var(--mega-glow);
-    animation: rise 1s 0.12s ease both;
-  }
-  :global([lang='en']) .mega {
-    font-family: var(--font-latin);
-    letter-spacing: 0.02em;
-    text-indent: 0;
-    font-style: italic;
-  }
-  .seal {
-    position: absolute;
-    right: clamp(-30px, -2vw, -14px);
-    top: -12px;
-    display: grid;
-    place-items: center;
-    width: clamp(40px, 4.4vw, 60px);
-    height: clamp(40px, 4.4vw, 60px);
-    border-radius: 8px;
-    background: linear-gradient(160deg, #d43a30, var(--seal));
-    color: #f7ead6;
-    font-family: var(--font-display);
-    font-size: clamp(20px, 2.2vw, 30px);
-    transform: rotate(7deg);
-    box-shadow: inset 0 0 0 2px rgba(247, 234, 214, 0.32), 0 10px 26px rgba(195, 39, 43, 0.32);
-    animation: stamp 0.5s 0.75s cubic-bezier(0.2, 1.4, 0.4, 1) both;
-  }
-  .seal-sm {
-    position: static;
-    width: 30px;
-    height: 30px;
-    font-size: 15px;
-    transform: rotate(-4deg);
-    animation: none;
-  }
-
-  /* ---- 3D 开卷 ---- */
-  .stage {
-    perspective: 1600px;
-    margin-top: clamp(-14px, -1vw, -6px);
-    animation: rise 1s 0.2s ease both;
-  }
-  .book3d {
-    position: relative;
-    display: flex;
-    width: min(88vw, 860px);
-    margin-inline: auto;
-    transform-style: preserve-3d;
-    transform: rotateX(var(--rx, 6deg)) rotateY(var(--ry, 0deg));
-    transition: transform 0.35s cubic-bezier(0.2, 0.7, 0.3, 1);
-    animation: floaty 7s ease-in-out infinite;
-    filter: drop-shadow(0 44px 70px rgba(0, 0, 0, 0.66)) drop-shadow(0 10px 34px rgba(232, 180, 90, 0.1));
-  }
-  .ob {
-    position: relative;
-    width: 50%;
-    aspect-ratio: var(--ob-aspect, 8 / 9);
-    background: var(--card-bg);
-    overflow: hidden;
-  }
-  .ob img { width: 100%; height: 100%; object-fit: cover; }
-  .ob-left {
-    border-radius: 6px 0 0 8px;
-    box-shadow: inset -26px 0 34px -24px rgba(0, 0, 0, 0.8);
-    transform-origin: right center;
-    animation: unfold-l 1.2s 0.25s cubic-bezier(0.2, 0.75, 0.3, 1) both;
-  }
-  .ob-right {
-    border-radius: 0 6px 8px 0;
-    box-shadow: inset 26px 0 34px -24px rgba(0, 0, 0, 0.8);
-    transform-origin: left center;
-    animation: unfold-r 1.2s 0.4s cubic-bezier(0.2, 0.75, 0.3, 1) both;
-  }
-  .edge {
-    position: absolute;
-    top: 3px;
-    bottom: 3px;
-    width: 5px;
-    z-index: 2;
-    pointer-events: none;
-    background: repeating-linear-gradient(90deg, #e8dcc2 0 1px, #a99a7c 1px 2.5px);
-    opacity: 0.85;
-  }
-  .edge-l { left: 0; border-radius: 3px 0 0 3px; }
-  .edge-r { right: 0; border-radius: 0 3px 3px 0; }
-
-  .gutter {
-    position: absolute;
-    left: 50%;
-    top: 0;
-    bottom: 0;
-    width: 48px;
-    transform: translateX(-50%);
-    background: linear-gradient(90deg, transparent, rgba(0, 0, 0, 0.52) 46%, rgba(0, 0, 0, 0.66) 50%, rgba(0, 0, 0, 0.52) 54%, transparent);
-    pointer-events: none;
-  }
-  .sweep {
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    background: linear-gradient(105deg, transparent 42%, rgba(255, 241, 205, 0.11) 50%, transparent 58%);
-    background-size: 260% 100%;
-    mix-blend-mode: screen;
-    animation: sweep 7.5s ease-in-out infinite;
-  }
-
-  .now-reading {
-    margin: clamp(22px, 3.4vh, 34px) auto 16px;
-    font-size: 14px;
-    letter-spacing: 0.14em;
-    color: var(--paper-dim);
-    animation: rise 0.9s 0.55s ease both;
-  }
-  :global([lang='en']) .now-reading { letter-spacing: 0.04em; }
-  .dot {
-    display: inline-block;
-    width: 7px;
-    height: 7px;
-    border-radius: 50%;
-    background: var(--lamp);
-    box-shadow: 0 0 12px rgba(232, 180, 90, 0.9);
-    margin-right: 6px;
-    animation: pulse 2.4s ease-in-out infinite;
-  }
-  .cta-row {
-    display: flex;
-    gap: 14px;
-    justify-content: center;
-    flex-wrap: wrap;
-    animation: rise 0.9s 0.68s ease both;
-  }
-
-  /* ---- 跑马灯：玻璃条 ---- */
+  /* ================= 新书通报（细玻璃条） ================= */
   .ticker {
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
+    position: relative;
     border-block: 1px solid var(--glass-border);
     background: linear-gradient(120deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.01)), var(--glass-bg);
     -webkit-backdrop-filter: blur(16px) saturate(1.4);
     backdrop-filter: blur(16px) saturate(1.4);
-    padding-block: 12px;
+    padding-block: 10px;
     overflow: hidden;
-    -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
-    mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+    mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
   }
   .ticker-track {
     display: flex;
     width: max-content;
     animation: ticker 46s linear infinite;
     font-family: var(--font-display);
-    font-size: 13.5px;
-    letter-spacing: 0.22em;
+    font-size: 13px;
+    letter-spacing: 0.2em;
     color: var(--paper-faint);
     white-space: nowrap;
   }
   .ticker:hover .ticker-track { animation-play-state: paused; }
-
   @keyframes ticker { to { transform: translateX(-50%); } }
-  @keyframes sweep { 0%, 55%, 100% { background-position: 130% 0; } 25% { background-position: -30% 0; } }
-  @keyframes floaty { 0%, 100% { translate: 0 0; } 50% { translate: 0 -8px; } }
   @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.35; } }
-  @keyframes rise {
-    from { opacity: 0; transform: translateY(16px); }
-    to { opacity: 1; transform: translateY(0); }
+
+  /* ================= 继续上次 ================= */
+  .continue-bar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: fit-content;
+    max-width: 100%;
+    margin: 0 0 24px;
+    padding: 10px 18px;
+    border: 1px solid var(--glass-border);
+    border-radius: 999px;
+    background: linear-gradient(120deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.012)), var(--glass-bg);
+    -webkit-backdrop-filter: blur(14px) saturate(1.4);
+    backdrop-filter: blur(14px) saturate(1.4);
+    box-shadow:
+      inset 0 1px 0 var(--glass-spec),
+      0 6px 20px var(--glass-shadow);
+    color: var(--paper);
+    font-size: 13.5px;
+    letter-spacing: 0.06em;
+    transition: border-color 0.2s ease, transform 0.2s ease;
   }
-  @keyframes stamp {
-    from { opacity: 0; transform: rotate(7deg) scale(1.7); }
-    to { opacity: 1; transform: rotate(7deg) scale(1); }
+  .continue-bar:hover { border-color: var(--lamp); transform: translateY(-1px); }
+  .continue-bar[hidden] { display: none; }
+  .cb-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--lamp);
+    box-shadow: 0 0 10px rgba(232, 180, 90, 0.9);
+    animation: pulse 2.4s ease-in-out infinite;
   }
-  @keyframes unfold-l { from { transform: rotateY(-24deg); } to { transform: rotateY(0); } }
-  @keyframes unfold-r { from { transform: rotateY(24deg); } to { transform: rotateY(0); } }
+  .cb-text { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .cb-go { color: var(--lamp); }
 
   /* ================= 藏书架 ================= */
-  .shelf { padding-top: clamp(52px, 8vw, 96px); }
+  .shelf { padding-top: clamp(28px, 4vw, 52px); }
   .shelf-head {
     display: flex;
     align-items: flex-end;
@@ -548,6 +304,25 @@ const ticker = shelf.map((b) => bookTitle(b, lang)).join('　✦　');
     line-height: 1;
   }
   :global([lang='en']) .shelf-title { letter-spacing: 0.04em; font-style: italic; }
+  .seal {
+    display: grid;
+    place-items: center;
+    width: clamp(40px, 4.4vw, 60px);
+    height: clamp(40px, 4.4vw, 60px);
+    border-radius: 8px;
+    background: linear-gradient(160deg, #d43a30, var(--seal));
+    color: #f7ead6;
+    font-family: var(--font-display);
+    font-size: clamp(20px, 2.2vw, 30px);
+    transform: rotate(7deg);
+    box-shadow: inset 0 0 0 2px rgba(247, 234, 214, 0.32), 0 10px 26px rgba(195, 39, 43, 0.32);
+  }
+  .seal-sm {
+    width: 30px;
+    height: 30px;
+    font-size: 15px;
+    transform: rotate(-4deg);
+  }
   .shelf-count {
     margin: 0;
     display: flex;
@@ -655,6 +430,7 @@ const ticker = shelf.map((b) => bookTitle(b, lang)).join('　✦　');
     letter-spacing: 0.18em;
     color: var(--paper-faint);
   }
+  .shelf-blank { margin: 0 0 24px; font-size: 14px; color: var(--paper-dim); }
   #shelf-empty { padding: 44px 0 56px; text-align: center; }
   #shelf-empty[hidden] { display: none; }
   .shelf-empty { margin: 0 0 18px; font-size: 14px; color: var(--paper-dim); }
@@ -670,85 +446,12 @@ const ticker = shelf.map((b) => bookTitle(b, lang)).join('　✦　');
   }
   @media (max-width: 480px) {
     .shelf-grid { grid-template-columns: repeat(auto-fill, minmax(118px, 1fr)); column-gap: 18px; }
-    .ticker-track { font-size: 12px; }
   }
-  @media (max-width: 720px) {
-    /* 手机首屏：hero 压成一条「最新上架」横条 —— 封面在左、信息与按钮在右，
-       整条约 200px，让书架在第一屏就能露头（此前纵向展台占 512px）。 */
-    .hero { min-height: auto; padding-block: 12px 16px; }
-    .ghost { display: none; } /* 背景描边字在窄屏只是噪声 */
-    .hero-center {
-      display: grid;
-      grid-template-columns: minmax(84px, 104px) 1fr;
-      /* kicker 与按钮占满整行（窄栏里折行会白吃 90px 高度），中间两行才分栏 */
-      grid-template-areas:
-        'kicker kicker'
-        'book   mega'
-        'book   now'
-        'cta    cta';
-      align-content: center;
-      align-items: center;
-      gap: 2px 14px;
-      text-align: left;
-    }
-    .kicker {
-      grid-area: kicker;
-      margin: 0 0 6px;
-      font-size: 10.5px;
-      letter-spacing: 0.1em;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      animation: none;
-    }
-    .mega-wrap { grid-area: mega; }
-    .mega {
-      font-size: clamp(23px, 7vw, 30px);
-      letter-spacing: 0.06em;
-      text-indent: 0.06em;
-      animation: none;
-    }
-    .seal { width: 22px; height: 22px; font-size: 11px; right: -4px; top: -8px; animation: none; }
-    .stage { grid-area: book; margin: 0; perspective: none; animation: none; }
-    .book3d {
-      width: 100%;
-      animation: none;
-      transform: none;
-      filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.45));
-    }
-    /* 单页封面即可，不再双页对开（104px 宽下双页每页仅 52px，看不清） */
-    .ob-right { display: none; }
-    .ob-left { width: 100%; }
-    .now-reading {
-      grid-area: now;
-      margin: 4px 0 0;
-      font-size: 11.5px;
-      line-height: 1.45;
-      letter-spacing: 0.02em;
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
-      animation: none;
-    }
-    .cta-row {
-      grid-area: cta;
-      margin-top: 10px;
-      justify-content: center;
-      gap: 8px;
-      flex-wrap: nowrap;
-      animation: none;
-    }
-    .cta-row .btn { padding: 9px 14px; font-size: 12.5px; letter-spacing: 0.03em; }
-    /* 跑马灯原本绝对定位贴底，hero 变矮会压住内容 → 改为随流排在最后 */
-    .ticker { position: static; margin-top: 12px; padding-block: 8px; }
-  }
-
   @media (max-width: 560px) {
-    /* hero 已在 720 断点压成横条，这里**不再改展台字号**（会把它重新撑大）；
-       跑马灯在手机上纯装饰，也让位给书架 */
+    /* 跑马灯在手机上让位给书架 */
     .ticker { display: none; }
 
+    .shelf { padding-top: 20px; }
     /* 搜索框独占一行；类别 chips 横向滑动，保证一行放得下且点击目标够大 */
     .shelf-controls { gap: 8px; margin-bottom: 10px; }
     .shelf-search { flex: 1 1 100%; }
@@ -765,7 +468,6 @@ const ticker = shelf.map((b) => bookTitle(b, lang)).join('　✦　');
     .shelf-result { margin-bottom: 10px; font-size: 12px; letter-spacing: 0.12em; }
 
     /* 书架标题与计数上下排列，整体收紧，让第一排书尽早进入首屏 */
-    .shelf { padding-top: 24px; }
     .shelf-head {
       flex-direction: column;
       align-items: flex-start;
@@ -778,5 +480,6 @@ const ticker = shelf.map((b) => bookTitle(b, lang)).join('　✦　');
     .shelf-count { gap: 8px; }
     .shelf-n { font-size: 30px; }
     .shelf-sub { letter-spacing: 0.1em; }
+    .continue-bar { font-size: 12.5px; padding: 9px 15px; margin-bottom: 16px; }
   }
 </style>
