@@ -105,8 +105,10 @@ const schemas = schema ? (Array.isArray(schema) ? schema : [schema]) : [];
             <span class="brand-name">{t(lang, 'site.name')}</span>
             <span class="brand-latin">{SITE.latinName}</span>
           </a>
+          <div class="head-tools">
+            <slot name="toolbar" />
+          </div>
           <nav>
-            <a href={lang === 'en' ? '/en/' : '/'}>{t(lang, 'nav.shelf')}</a>
             <a href="/rss.xml">{t(lang, 'nav.rss')}</a>
             <button
               class="theme-toggle"

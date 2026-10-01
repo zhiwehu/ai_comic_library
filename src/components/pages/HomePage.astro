@@ -20,48 +20,42 @@ const featured = shelf[0] ?? null;
   ogImage={featured?.coverUrl ?? null}
   schema={[webSiteSchema(lang), orgSchema(lang)]}
 >
->
-  <section class="shelf wrap" id="shelf">
-    <header class="shelf-head">
-      <p class="shelf-count">
-        <b class="shelf-n">{shelf.length}</b> {t(lang, 'shelf.volumes')}
-        <span class="shelf-sub">{t(lang, 'shelf.sub')}</span>
-      </p>
-    </header>
-    <div class="shelf-controls">
-      <div class="shelf-search">
-        <svg
-          class="shelf-search-ico"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="1.8"
-          aria-hidden="true"
-        >
-          <circle cx="11" cy="11" r="6.5" />
-          <path d="M16 16l4 4" stroke-linecap="round" />
-        </svg>
-        <input
-          id="shelf-search"
-          type="search"
-          placeholder={t(lang, 'shelf.search')}
-          autocomplete="off"
-          aria-label={t(lang, 'shelf.search')}
-        />
-        <button class="shelf-clear" id="shelf-clear" type="button" hidden aria-label={t(lang, 'shelf.clear')}
-          >✕</button
-        >
-      </div>
-      <div class="shelf-chips" role="group" aria-label={t(lang, 'shelf.all')}>
-        {
-          ['all', 'series', 'short', 'picture-book'].map((tp) => (
-            <button class:list={['chip', { 'is-active': tp === 'all' }]} data-type={tp} type="button">
-              {tp === 'all' ? t(lang, 'shelf.all') : t(lang, `type.${tp}`)}
-            </button>
-          ))
-        }
-      </div>
+  <div slot="toolbar" class="shelf-controls">
+    <div class="shelf-search">
+      <svg
+        class="shelf-search-ico"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.8"
+        aria-hidden="true"
+      >
+        <circle cx="11" cy="11" r="6.5" />
+        <path d="M16 16l4 4" stroke-linecap="round" />
+      </svg>
+      <input
+        id="shelf-search"
+        type="search"
+        placeholder={t(lang, 'shelf.search')}
+        autocomplete="off"
+        aria-label={t(lang, 'shelf.search')}
+      />
+      <button class="shelf-clear" id="shelf-clear" type="button" hidden aria-label={t(lang, 'shelf.clear')}
+        >✕</button
+      >
     </div>
+    <div class="shelf-chips" role="group" aria-label={t(lang, 'shelf.all')}>
+      {
+        ['all', 'series', 'short', 'picture-book'].map((tp) => (
+          <button class:list={['chip', { 'is-active': tp === 'all' }]} data-type={tp} type="button">
+            {tp === 'all' ? t(lang, 'shelf.all') : t(lang, `type.${tp}`)}
+          </button>
+        ))
+      }
+    </div>
+  </div>
+
+  <section class="shelf wrap" id="shelf">
     <p class="shelf-result" id="shelf-result" aria-live="polite" data-tpl={t(lang, 'shelf.result')} />
     {shelf.length === 0 && <p class="shelf-blank">{t(lang, 'hero.emptyHint')}</p>}
     <div class="shelf-grid" id="shelf-grid">
@@ -181,59 +175,14 @@ const featured = shelf[0] ?? null;
 <style>
   /* ================= 藏书架 ================= */
   .shelf { padding-top: clamp(28px, 4vw, 52px); }
-  .shelf-head {
-    display: flex;
-    align-items: flex-end;
-    justify-content: space-between;
-    gap: 16px;
-    margin-bottom: clamp(34px, 5vw, 58px);
-    border-bottom: 1px solid var(--line);
-    padding-bottom: 20px;
-  }
-  .seal {
-    display: grid;
-    place-items: center;
-    width: clamp(40px, 4.4vw, 60px);
-    height: clamp(40px, 4.4vw, 60px);
-    border-radius: 8px;
-    background: linear-gradient(160deg, #d43a30, var(--seal));
-    color: #f7ead6;
-    font-family: var(--font-display);
-    font-size: clamp(20px, 2.2vw, 30px);
-    transform: rotate(7deg);
-    box-shadow: inset 0 0 0 2px rgba(247, 234, 214, 0.32), 0 10px 26px rgba(195, 39, 43, 0.32);
-  }
-  .seal-sm {
-    width: 30px;
-    height: 30px;
-    font-size: 15px;
-    transform: rotate(-4deg);
-  }
-  .shelf-count {
-    margin: 0;
-    display: flex;
-    align-items: baseline;
-    gap: 12px;
-    font-family: var(--font-latin);
-    font-size: 12px;
-    letter-spacing: 0.3em;
-    color: var(--paper-faint);
-  }
-  .shelf-n {
-    font-size: clamp(38px, 5vw, 60px);
-    font-weight: 700;
-    color: var(--paper);
-    letter-spacing: 0.04em;
-  }
-  .shelf-sub { letter-spacing: 0.18em; }
 
-  /* ---- 搜索 / 类别过滤（与全站玻璃质感一致）---- */
+  /* ---- 搜索 / 类别过滤（注入顶栏，与全站玻璃质感一致）---- */
   .shelf-controls {
     display: flex;
     align-items: center;
-    gap: 14px;
+    gap: 10px;
     flex-wrap: wrap;
-    margin: 0 0 18px;
+    min-width: 0;
   }
   .shelf-search {
     position: relative;
@@ -335,11 +284,12 @@ const featured = shelf[0] ?? null;
   }
   @media (max-width: 560px) {
     .shelf { padding-top: 20px; }
-    /* 搜索框独占一行；类别 chips 横向滑动，保证一行放得下且点击目标够大 */
-    .shelf-controls { gap: 8px; margin-bottom: 10px; }
+    /* 顶栏工具区：搜索框独占一行；类别 chips 横向滑动，保证点击目标够大 */
+    .shelf-controls { gap: 8px; }
     .shelf-search { flex: 1 1 100%; }
     #shelf-search { font-size: 16px; padding: 10px 40px 10px 38px; } /* 16px：iOS 聚焦时不会自动放大整页 */
     .shelf-chips {
+      flex: 1 1 100%;
       flex-wrap: nowrap;
       overflow-x: auto;
       -webkit-overflow-scrolling: touch;
@@ -349,17 +299,5 @@ const featured = shelf[0] ?? null;
     .shelf-chips::-webkit-scrollbar { display: none; }
     .chip { flex: 0 0 auto; padding: 8px 14px; }
     .shelf-result { margin-bottom: 10px; font-size: 12px; letter-spacing: 0.12em; }
-
-    /* 书架标题与计数上下排列，整体收紧，让第一排书尽早进入首屏 */
-    .shelf-head {
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 8px;
-      margin-bottom: 16px;
-      padding-bottom: 10px;
-    }
-    .shelf-count { gap: 8px; }
-    .shelf-n { font-size: 30px; }
-    .shelf-sub { letter-spacing: 0.1em; }
   }
 </style>

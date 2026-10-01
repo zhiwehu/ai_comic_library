@@ -229,9 +229,21 @@ h1, h2, h3 {
   color: var(--paper-faint);
 }
 .site-head nav { display: flex; gap: 18px; font-size: 13px; color: var(--paper-dim); white-space: nowrap; }
+/* 页面注入顶栏的扩展工具区（如首页的搜索/筛选） */
+.head-tools {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  flex: 1 1 220px;
+  min-width: 0;
+}
 @media (max-width: 560px) {
   .brand-latin { display: none; }
-  .site-head { padding-block: 16px 12px; }
+  .site-head { padding-block: 16px 12px; flex-wrap: wrap; }
+  /* 工具区换行独占一整行，保证搜索框和筛选 chips 有足够宽度与点击面积 */
+  .head-tools { order: 3; flex: 1 1 100%; justify-content: flex-start; margin-top: 4px; }
+  .site-head nav { margin-left: auto; }
 }
 :lang(en) .brand-latin { display: none; }
 .site-head nav a:hover { color: var(--lamp); }
