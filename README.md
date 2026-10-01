@@ -88,26 +88,24 @@ scripts/exam-fixtures.mjs     # 书架压力考试：--make 200 生成 books/_te
 
 | 项 | 状态 |
 |---|---|
-| GitHub | `git@github.com:zhiwehu/ai_comic_library.git`，分支 `main`（⚠️ 目前**私有**，见下方第 1 步） |
-| Vercel | 项目 `ai_comic_library`（team `zhiwehus-projects`）→ https://aicomiclibrary.vercel.app |
+| 线上地址 | **https://comic.getaiti.com**（阿里云 DNS `CNAME comic → cname.vercel-dns.com`） |
+| GitHub | `git@github.com:zhiwehu/ai_comic_library.git`，分支 `main`，**public** |
+| Vercel | 项目 `ai_comic_library`（team `zhiwehus-projects`），已关闭 Deployment Protection，已连 Git（push 即自动部署） |
+| 备用地址 | https://aicomiclibrary.vercel.app（Vercel 默认域，canonical 指向正式域名） |
 
-**剩余步骤（都需要账号权限）**
+**剩余步骤**
 
-1. **把 GitHub 仓库改为 public**——giscus 的硬性要求：
-   Settings → General → 底部 Danger Zone → Change repository visibility → Public
-2. **关闭 Vercel Deployment Protection**（团队新项目默认开启，开着时公众会撞 Vercel 登录页）：
-   项目 → Settings → Deployment Protection → Vercel Authentication → **Disabled**
-3. **giscus 评论**：仓库公开后 → 仓库 Settings → Features 勾选 **Discussions** →
-   在 https://github.com/apps/giscus 授权本仓库 → 到 https://giscus.app 选仓库与分类，拿到 4 个值
-   → 填进 Vercel 项目环境变量（Production/Preview 都要）：
+1. **giscus 评论**（唯一未完成项）：仓库 Settings → Features 勾选 **Discussions** →
+   在 https://github.com/apps/giscus 授权本仓库 → 到 https://giscus.app 取 4 个值
+   （repo-id 已知为 `R_kgDOU2F8wg`，还缺 category-id）→ 填进 Vercel 项目环境变量：
    `PUBLIC_GISCUS_REPO` / `PUBLIC_GISCUS_REPO_ID` / `PUBLIC_GISCUS_CATEGORY` / `PUBLIC_GISCUS_CATEGORY_ID`
    → 重新部署一次生效（未配置时详情页显示占位文案，不会报错）
-4. **绑定自定义域**：Vercel 项目 → Settings → Domains → 添加 `comic.getaiti.com`
-5. **DNS**：在 getaiti.com 的 DNS 处把 `comics` 指到 Vercel：
-   `CNAME comics → cname.vercel-dns.com`（按 Vercel 域名页给出的实际目标为准）
-6. **微信内置浏览器真机验收**（kickoff §6：iOS + Android 各一台，测翻页手势/预加载/进度记忆）
+2. **微信内置浏览器真机验收**（kickoff §6：iOS + Android 各一台，测翻页手势/预加载/进度记忆）
+
+**⚠️ 国内可访问性**：Vercel 的 IP 段在中国大陆网络被 TLS 层阻断（TCP 通、ClientHello 即被 RST，
+换自定义域作 SNI 也一样），国内直连需要代理。若要国内读者直接访问，按 kickoff §9 补 Cloudflare Pages，
+或把 `dist/` 托管到阿里云 OSS + CDN（域名已备案，国内最快）。
 
 **日常发布流程**：`pnpm run publish …` → `git commit && git push` → Vercel 自动构建上线。
-（首次需在 Vercel 项目里 Git 接入本仓库；也可继续用 `vercel deploy --prod` 从本地推送。）
 
 
