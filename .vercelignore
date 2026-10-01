@@ -1,0 +1,9 @@
+# Vercel CLI 部署时排除的本地文件（books/ 必须上传，它是构建内容源）
+node_modules
+.astro
+.pnpm-store
+.vercel
+dist
+*.log
+.DS_Store
+.cdp-profile

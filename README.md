@@ -80,10 +80,30 @@ scripts/exam-fixtures.mjs     # 书架压力考试：--make 200 生成 books/_te
 - 进度：`cl:progress:<book>:<chapter>`；书架/目录页显示「继续」
 - 交互：手势滑动、点击翻页、`←` `→` `PageUp` `PageDown`、底部滑条、缩略图网格跳页、全屏
 
-## 部署前待办（作者）
+## 部署
 
-1. GitHub 建 **public** 仓库并推送；Cloudflare Pages（主）+ Vercel（备）双接入，见 kickoff §9
-2. giscus：仓库公开后配置 `PUBLIC_GISCUS_REPO` / `PUBLIC_GISCUS_REPO_ID` /
-   `PUBLIC_GISCUS_CATEGORY` / `PUBLIC_GISCUS_CATEGORY_ID` 四个环境变量（或写进 Pages 构建环境）
-3. DNS：`comics` CNAME → Cloudflare Pages 域名
-4. 微信内置浏览器真机验收（kickoff §6 兼容性条款）
+**已完成**
+
+| 项 | 状态 |
+|---|---|
+| GitHub | `git@github.com:zhiwehu/ai_comic_library.git`，分支 `main`（⚠️ 当前为**私有**仓库） |
+| Vercel（备） | 项目 `ai_comic_library` → https://aicomiclibrary.vercel.app （由 CLI 部署，`vercel deploy --prod`） |
+
+**剩余步骤（都需要账号权限，见 kickoff §9）**
+
+1. **把 GitHub 仓库改为 public**——giscus 的硬性要求：
+   Settings → General → 底部 Danger Zone → Change repository visibility → Public
+2. **Cloudflare Pages（主）**：Workers & Pages → Create → Pages → Connect to Git → 选本仓库
+   - Framework preset：`Astro`　Build command：`pnpm build`　Output directory：`dist`
+   - Node 版本 ≥ 20（环境变量可设 `NODE_VERSION=20`）
+3. **关闭 Vercel 的 Deployment Protection**（新项目默认开启，开着的话公众会撞登录页）：
+   Vercel → 项目 → Settings → Deployment Protection → Vercel Authentication → Disabled
+4. **giscus 评论**：仓库公开后 → Settings → Features 勾选 **Discussions** →
+   在 https://github.com/apps/giscus 授权本仓库 → 到 https://giscus.app 选仓库与分类，
+   拿到 4 个值填进两个平台的构建环境变量：
+   `PUBLIC_GISCUS_REPO` / `PUBLIC_GISCUS_REPO_ID` / `PUBLIC_GISCUS_CATEGORY` / `PUBLIC_GISCUS_CATEGORY_ID`
+   （未配置时详情页显示占位文案，不会报错）
+5. **DNS**：在 getaiti.com 的 DNS 处加 `comics` CNAME → Cloudflare Pages 分配的 `*.pages.dev` 域名
+   （Vercel 侧可绑定同一域名但**不要**解析过去，保持主备切换能力）
+6. **微信内置浏览器真机验收**（kickoff §6：iOS + Android 各一台，测翻页手势/预加载/进度记忆）
+

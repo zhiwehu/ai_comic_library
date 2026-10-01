@@ -5,3 +5,4 @@ dist/
 *.log
 .pnpm-store/
 books/_test-*
+.vercel
