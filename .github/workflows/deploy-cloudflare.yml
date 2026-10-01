@@ -1,0 +1,62 @@
+# 备用站点部署：把构建产物同步到 Cloudflare Pages（Direct Upload 项目 comic-library）
+#
+# 为什么用 Actions 而不是 Cloudflare 的 Git 集成：
+#   Cloudflare 规定 Direct Upload 项目**不能**事后接 Git（见官方 Direct Upload 文档），
+#   所以持续部署要走 wrangler 上传的方式 —— 这也是 Cloudflare 官方推荐的 CI 组合拳。
+#
+# 需要的仓库 Secret（Settings → Secrets and variables → Actions）：
+#   CLOUDFLARE_API_TOKEN —— Cloudflare token，权限只需 Account · Cloudflare Pages · Edit
+#
+# 其余参数都不是密钥，直接内联：
+#   CLOUDFLARE_ACCOUNT_ID 是账号标识符（控制台 URL 里就有）
+#   PUBLIC_GISCUS_* 是公开值（本来就出现在线上 HTML 里）
+name: Deploy backup to Cloudflare Pages
+
+on:
+  push:
+    branches: [main]
+    paths-ignore:
+      - '**/*.md' # 纯文档改动不影响站点产物，跳过省一次构建
+  workflow_dispatch: # 支持手动触发，用于随时把备站刷成最新
+
+permissions:
+  contents: read
+
+concurrency:
+  group: cf-pages-backup-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    name: Build & deploy to Cloudflare Pages
+    runs-on: ubuntu-latest
+    env:
+      CLOUDFLARE_ACCOUNT_ID: 507f74013fed9a9af2da858cfacb0b42
+      PUBLIC_GISCUS_REPO: zhiwehu/ai_comic_library
+      PUBLIC_GISCUS_REPO_ID: R_kgDOU2F8wg
+      PUBLIC_GISCUS_CATEGORY: Announcements
+      PUBLIC_GISCUS_CATEGORY_ID: DIC_kwDOU2F8ws4DGx5n
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build
+        run: pnpm build
+
+      - name: Deploy to Cloudflare Pages
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ env.CLOUDFLARE_ACCOUNT_ID }}
+          command: pages deploy dist --project-name=comic-library --branch=main
