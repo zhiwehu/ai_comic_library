@@ -30,6 +30,7 @@ jobs:
   deploy:
     name: Build & deploy to Cloudflare Pages
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     env:
       CLOUDFLARE_ACCOUNT_ID: 507f74013fed9a9af2da858cfacb0b42
       # 优先读 Secret；若误建成了 Variable 也能跑（预检会警告，建议迁到 Secrets）
