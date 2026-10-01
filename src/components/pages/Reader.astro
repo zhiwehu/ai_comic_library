@@ -361,7 +361,9 @@ const pageAlt = (i: number) => `${bookTitle(book, lang)} · ${t(lang, 'reader.pa
 
     pf.on('flip', (e: { data: number }) => {
       const leftIdx = Number(e.data ?? 0);
-      stopAuto();
+      // 自动翻页自己发起的翻页不该把自己停掉；只有用户手动翻页才停
+      if (autoFlipping) autoFlipping = false;
+      else stopAuto();
       setView(viewOfPage(leftIdx + 1), leftIdx + 1);
       preloadFlip(leftIdx);
     });
@@ -416,6 +418,27 @@ const pageAlt = (i: number) => `${bookTitle(book, lang)} · ${t(lang, 'reader.pa
         localStorage.removeItem(key);
         location.reload();
       });
+    }
+  }
+
+  /** 翻页（带 StPageFlip 缺陷绕过）
+   *
+   *  StPageFlip 的 flip() 在 disableFlipByClick=true 时会先做「角点检查」，
+   *  而 flipPrev() 内部用的是**屏幕绝对坐标** x=10（书居中时这一点根本不在书上），
+   *  于是后退翻页被静默拦掉 —— 这正是「只能前进、不能后退」的原因。
+   *  flipNext() 的坐标带了 rect.left 所以在书上，不受影响。
+   *  这里只在调用瞬间把开关放开，调用后立即恢复，不改变点击翻页的整体行为。
+   */
+  function flipBy(dir: 1 | -1) {
+    if (!pf) return;
+    const st = pf.getSettings();
+    const saved = st.disableFlipByClick;
+    st.disableFlipByClick = false;
+    try {
+      if (dir > 0) pf.flipNext();
+      else pf.flipPrev();
+    } finally {
+      st.disableFlipByClick = saved;
     }
   }
 
@@ -521,6 +544,8 @@ const pageAlt = (i: number) => `${bookTitle(book, lang)} · ${t(lang, 'reader.pa
   const SPEED_MIN = 2;
   const SPEED_MAX = 20;
   let autoTimer: ReturnType<typeof setInterval> | null = null;
+  /** 本次翻页是否由自动翻页发起（用于区分"自动"与"用户手动"，前者不该停表） */
+  let autoFlipping = false;
 
   /** 速度：秒/视图，持久化到 localStorage（跨书、跨章沿用） */
   let autoSpeed = SPEED_DEFAULT;
@@ -560,8 +585,12 @@ const pageAlt = (i: number) => `${bookTitle(book, lang)} · ${t(lang, 'reader.pa
         stopAuto();
         return;
       }
-      if (mode === 'flip') pf?.flipNext();
-      else scrollByPage(1);
+      if (mode === 'flip') {
+        autoFlipping = true;
+        pf?.flipNext();
+        // 兜底：若 flipNext 没触发 flip 事件（例如已在末页），1.5s 后自行复位
+        setTimeout(() => (autoFlipping = false), 1500);
+      } else scrollByPage(1);
     }, autoSpeed * 1000);
   }
   autoBtn?.addEventListener('click', () => (autoTimer ? stopAuto() : startAuto()));
