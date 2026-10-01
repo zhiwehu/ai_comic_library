@@ -17,7 +17,13 @@ const extent =
     : t(lang, 'card.pages', { n: book.latest.pages.length });
 ---
 
-<a class="book" href={lang === 'en' ? `/en/book/${book.slug}/` : `/book/${book.slug}/`} aria-label={bookTitle(book, lang)}>
+<a
+  class="book"
+  href={lang === 'en' ? `/en/book/${book.slug}/` : `/book/${book.slug}/`}
+  aria-label={bookTitle(book, lang)}
+  data-type={book.type}
+  data-search={`${book.title} ${book.titleEn ?? ''} ${book.slug}`.toLowerCase()}
+>
   {no && <span class="book-no" aria-hidden="true">No.{no}</span>}
   <div class="book-stage">
     <span class="book-ground" aria-hidden="true" />

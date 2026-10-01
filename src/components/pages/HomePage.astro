@@ -93,9 +93,35 @@ const ticker = shelf.map((b) => bookTitle(b, lang)).join('　✦　');
         <span class="shelf-sub">{t(lang, 'shelf.sub')}</span>
       </p>
     </header>
-    <div class="shelf-grid">
+    <div class="shelf-controls">
+      <input
+        id="shelf-search"
+        type="search"
+        placeholder={t(lang, 'shelf.search')}
+        autocomplete="off"
+        aria-label={t(lang, 'shelf.search')}
+      />
+      <div class="shelf-chips" role="group" aria-label={t(lang, 'shelf.all')}>
+        {['all', 'series', 'short', 'picture-book'].map((tp) => (
+          <button
+            class:list={['chip', { 'is-active': tp === 'all' }]}
+            data-type={tp}
+            type="button"
+          >
+            {tp === 'all' ? t(lang, 'shelf.all') : t(lang, `type.${tp}`)}
+          </button>
+        ))}
+      </div>
+    </div>
+    <p class="shelf-result" id="shelf-result" aria-live="polite" data-tpl={t(lang, 'shelf.result')} />
+    <div class="shelf-grid" id="shelf-grid">
       {shelf.map((b, i) => <BookCard book={b} index={i + 1} lang={lang} />)}
     </div>
+    <p class="shelf-empty" id="shelf-empty" hidden>{t(lang, 'shelf.empty')}</p>
+    <div class="shelf-morewrap" id="shelf-morewrap" hidden>
+      <button class="btn btn-ghost" id="shelf-more" type="button">{t(lang, 'shelf.more')}</button>
+    </div>
+    <div id="shelf-sentinel" aria-hidden="true" />
   </section>
 </Base>
 
@@ -137,6 +163,75 @@ const ticker = shelf.map((b) => bookTitle(b, lang)).join('　✦　');
       book.style.setProperty('--ry', '0deg');
       book.style.setProperty('--rx', '6deg');
     });
+  }
+
+  /* ---------- 书架：搜索 / 类别过滤 / 分页加载 ---------- */
+  const shelfCards = [...document.querySelectorAll<HTMLElement>('#shelf-grid .book')];
+  const searchInput = document.getElementById('shelf-search') as HTMLInputElement | null;
+  const resultLine = document.getElementById('shelf-result');
+  const emptyLine = document.getElementById('shelf-empty');
+  const moreWrap = document.getElementById('shelf-morewrap');
+  const moreBtn = document.getElementById('shelf-more');
+  const sentinel = document.getElementById('shelf-sentinel');
+
+  if (shelfCards.length && searchInput && resultLine && moreWrap && sentinel && emptyLine) {
+    const PAGE = 24;
+    let query = '';
+    let activeType = 'all';
+    let shown = PAGE;
+    let debounceTimer: ReturnType<typeof setTimeout>;
+    const norm = (s: string) => s.toLowerCase().replace(/\s+/g, ' ').trim();
+
+    function applyShelf() {
+      const q = norm(query);
+      const matches = shelfCards.filter((card) => {
+        const okType = activeType === 'all' || card.dataset.type === activeType;
+        const okQuery = !q || norm(card.dataset.search ?? '').includes(q);
+        return okType && okQuery;
+      });
+      for (const card of shelfCards) card.hidden = !matches.includes(card);
+      matches.forEach((card, i) => (card.hidden = i >= shown));
+      const tpl = resultLine.dataset.tpl ?? '{n}';
+      resultLine.textContent = tpl.replace('{n}', String(matches.length));
+      emptyLine.hidden = matches.length !== 0;
+      moreWrap.hidden = matches.length <= shown;
+    }
+
+    function loadMore() {
+      shown += PAGE;
+      applyShelf();
+    }
+
+    searchInput.addEventListener('input', () => {
+      clearTimeout(debounceTimer);
+      debounceTimer = setTimeout(() => {
+        query = searchInput.value;
+        shown = PAGE;
+        applyShelf();
+      }, 120);
+    });
+
+    document.querySelectorAll<HTMLButtonElement>('.shelf-chips .chip').forEach((chip) => {
+      chip.addEventListener('click', () => {
+        document.querySelectorAll('.shelf-chips .chip').forEach((c) => c.classList.remove('is-active'));
+        chip.classList.add('is-active');
+        activeType = chip.dataset.type ?? 'all';
+        shown = PAGE;
+        applyShelf();
+      });
+    });
+
+    moreBtn?.addEventListener('click', loadMore);
+
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((e) => e.isIntersecting) && !moreWrap!.hidden) loadMore();
+      },
+      { rootMargin: '600px' }
+    );
+    io.observe(sentinel);
+
+    applyShelf();
   }
 </script>
 

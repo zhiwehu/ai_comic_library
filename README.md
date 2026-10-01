@@ -55,6 +55,7 @@ src/
   components/pages/           # HomePage / BookDetail / Reader（按 lang 出文案）
   components/                 # BookCard / ChapterList / Giscus
 scripts/publish.mjs           # 上架脚本
+scripts/exam-fixtures.mjs     # 书架压力考试：--make 200 生成 books/_test-* 测试书，--clean 清理
 ```
 
 ## 双语
