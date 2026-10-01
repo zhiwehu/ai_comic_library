@@ -692,9 +692,10 @@ const pageAlt = (i: number) => `${bookTitle(book, lang)} · ${t(lang, 'reader.pa
       // 桌面：左右半区翻页（工具栏由鼠标移动呼出，2.2s 无操作自动隐藏）
       flipBy(x < 0.5 ? -1 : 1);
     } else {
-      // 触屏：两侧 35% 翻页，中央 30% 呼出/隐藏工具栏
-      if (x < 0.35) flipBy(-1);
-      else if (x > 0.65) flipBy(1);
+      // 触屏：两侧各 40% 翻页（竖屏下书页几乎占满屏宽，点左页靠中线处也必须能后退），
+      // 中央 20% 呼出/隐藏工具栏（上下边缘条同样可呼出）
+      if (x < 0.4) flipBy(-1);
+      else if (x > 0.6) flipBy(1);
       else chrome.classList.contains('chrome-on') ? hide() : wake();
     }
   });

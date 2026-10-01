@@ -673,28 +673,86 @@ const ticker = shelf.map((b) => bookTitle(b, lang)).join('　✦　');
     .ticker-track { font-size: 12px; }
   }
   @media (max-width: 720px) {
-    /* 手机首屏：hero 不再占满整屏（原来 min-height:100svh，书架被推到 921px 处），
-       压成一条「最新上架」展台，让书架尽早露头 */
-    .hero { min-height: auto; padding-block: 14px 22px; }
-    .ghost { font-size: clamp(64px, 24vw, 150px); top: 0; }
-    .book3d { width: min(62vw, 310px); }
-    .stage { margin-top: 8px; }
-    .now-reading { margin: 14px auto 12px; }
+    /* 手机首屏：hero 压成一条「最新上架」横条 —— 封面在左、信息与按钮在右，
+       整条约 200px，让书架在第一屏就能露头（此前纵向展台占 512px）。 */
+    .hero { min-height: auto; padding-block: 12px 16px; }
+    .ghost { display: none; } /* 背景描边字在窄屏只是噪声 */
+    .hero-center {
+      display: grid;
+      grid-template-columns: minmax(84px, 104px) 1fr;
+      /* kicker 与按钮占满整行（窄栏里折行会白吃 90px 高度），中间两行才分栏 */
+      grid-template-areas:
+        'kicker kicker'
+        'book   mega'
+        'book   now'
+        'cta    cta';
+      align-content: center;
+      align-items: center;
+      gap: 2px 14px;
+      text-align: left;
+    }
+    .kicker {
+      grid-area: kicker;
+      margin: 0 0 6px;
+      font-size: 10.5px;
+      letter-spacing: 0.1em;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      animation: none;
+    }
+    .mega-wrap { grid-area: mega; }
+    .mega {
+      font-size: clamp(23px, 7vw, 30px);
+      letter-spacing: 0.06em;
+      text-indent: 0.06em;
+      animation: none;
+    }
+    .seal { width: 22px; height: 22px; font-size: 11px; right: -4px; top: -8px; animation: none; }
+    .stage { grid-area: book; margin: 0; perspective: none; animation: none; }
+    .book3d {
+      width: 100%;
+      animation: none;
+      transform: none;
+      filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.45));
+    }
+    /* 单页封面即可，不再双页对开（104px 宽下双页每页仅 52px，看不清） */
+    .ob-right { display: none; }
+    .ob-left { width: 100%; }
+    .now-reading {
+      grid-area: now;
+      margin: 4px 0 0;
+      font-size: 11.5px;
+      line-height: 1.45;
+      letter-spacing: 0.02em;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      animation: none;
+    }
+    .cta-row {
+      grid-area: cta;
+      margin-top: 10px;
+      justify-content: center;
+      gap: 8px;
+      flex-wrap: nowrap;
+      animation: none;
+    }
+    .cta-row .btn { padding: 9px 14px; font-size: 12.5px; letter-spacing: 0.03em; }
     /* 跑马灯原本绝对定位贴底，hero 变矮会压住内容 → 改为随流排在最后 */
-    .ticker { position: static; margin-top: 20px; }
+    .ticker { position: static; margin-top: 12px; padding-block: 8px; }
   }
 
   @media (max-width: 560px) {
-    .kicker { font-size: 11px; letter-spacing: 0.16em; }
-    .mega { font-size: clamp(38px, 11.5vw, 52px); letter-spacing: 0.08em; text-indent: 0.08em; }
-    :global([lang='en']) .mega { font-size: clamp(34px, 9.5vw, 52px); }
-    .now-reading { font-size: 12.5px; letter-spacing: 0.04em; }
-    .seal { width: 34px; height: 34px; font-size: 17px; right: -8px; top: -16px; }
+    /* hero 已在 720 断点压成横条，这里**不再改展台字号**（会把它重新撑大）；
+       跑马灯在手机上纯装饰，也让位给书架 */
+    .ticker { display: none; }
 
     /* 搜索框独占一行；类别 chips 横向滑动，保证一行放得下且点击目标够大 */
-    .shelf-controls { gap: 10px; margin-bottom: 14px; }
+    .shelf-controls { gap: 8px; margin-bottom: 10px; }
     .shelf-search { flex: 1 1 100%; }
-    #shelf-search { font-size: 16px; padding: 12px 42px 12px 40px; } /* 16px：iOS 聚焦时不会自动放大整页 */
+    #shelf-search { font-size: 16px; padding: 10px 40px 10px 38px; } /* 16px：iOS 聚焦时不会自动放大整页 */
     .shelf-chips {
       flex-wrap: nowrap;
       overflow-x: auto;
@@ -703,21 +761,22 @@ const ticker = shelf.map((b) => bookTitle(b, lang)).join('　✦　');
       padding-bottom: 2px;
     }
     .shelf-chips::-webkit-scrollbar { display: none; }
-    .chip { flex: 0 0 auto; padding: 10px 16px; }
-    .shelf-result { margin-bottom: 18px; letter-spacing: 0.12em; }
+    .chip { flex: 0 0 auto; padding: 8px 14px; }
+    .shelf-result { margin-bottom: 10px; font-size: 12px; letter-spacing: 0.12em; }
 
-    /* 书架标题与计数改为上下排列：原来并排会把「藏书架」挤成两行 */
+    /* 书架标题与计数上下排列，整体收紧，让第一排书尽早进入首屏 */
+    .shelf { padding-top: 24px; }
     .shelf-head {
       flex-direction: column;
       align-items: flex-start;
-      gap: 12px;
-      margin-bottom: 26px;
-      padding-bottom: 16px;
+      gap: 8px;
+      margin-bottom: 16px;
+      padding-bottom: 10px;
     }
-    .shelf-title { white-space: nowrap; font-size: clamp(30px, 9vw, 42px); letter-spacing: 0.2em; }
-    :global([lang='en']) .shelf-title { font-size: clamp(26px, 7.5vw, 38px); letter-spacing: 0.03em; }
+    .shelf-title { white-space: nowrap; font-size: clamp(26px, 7.4vw, 34px); letter-spacing: 0.2em; }
+    :global([lang='en']) .shelf-title { font-size: clamp(23px, 6.6vw, 30px); letter-spacing: 0.03em; }
     .shelf-count { gap: 8px; }
-    .shelf-n { font-size: 34px; }
+    .shelf-n { font-size: 30px; }
     .shelf-sub { letter-spacing: 0.1em; }
   }
 </style>
