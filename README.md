@@ -91,16 +91,25 @@ scripts/exam-fixtures.mjs     # 书架压力考试：--make 200 生成 books/_te
 | 线上地址 | **https://comic.getaiti.com**（阿里云 DNS `CNAME comic → cname.vercel-dns.com`） |
 | GitHub | `git@github.com:zhiwehu/ai_comic_library.git`，分支 `main`，**public** |
 | Vercel | 项目 `ai_comic_library`（team `zhiwehus-projects`），已关闭 Deployment Protection，已连 Git（push 即自动部署） |
+| 评论 | giscus 已接入并实测渲染（仓库 Discussions 已开、giscus App 已授权） |
 | 备用地址 | https://aicomiclibrary.vercel.app（Vercel 默认域，canonical 指向正式域名） |
+
+**giscus 配置值**（已在 Vercel 项目环境变量里，Production + Preview）：
+
+| 变量 | 值 |
+|---|---|
+| `PUBLIC_GISCUS_REPO` | `zhiwehu/ai_comic_library` |
+| `PUBLIC_GISCUS_REPO_ID` | `R_kgDOU2F8wg` |
+| `PUBLIC_GISCUS_CATEGORY` | `Announcements` |
+| `PUBLIC_GISCUS_CATEGORY_ID` | `DIC_kwDOU2F8ws4DGx5n` |
+
+> 分类必须选 **Announcements** 类型（giscus 只能在该类型下创建讨论）。
+> 自查命令：`curl "https://giscus.app/api/discussions/categories?repo=<owner>/<repo>&repoId=<repo-id>&query=&first=100"`
 
 **剩余步骤**
 
-1. **giscus 评论**（唯一未完成项）：仓库 Settings → Features 勾选 **Discussions** →
-   在 https://github.com/apps/giscus 授权本仓库 → 到 https://giscus.app 取 4 个值
-   （repo-id 已知为 `R_kgDOU2F8wg`，还缺 category-id）→ 填进 Vercel 项目环境变量：
-   `PUBLIC_GISCUS_REPO` / `PUBLIC_GISCUS_REPO_ID` / `PUBLIC_GISCUS_CATEGORY` / `PUBLIC_GISCUS_CATEGORY_ID`
-   → 重新部署一次生效（未配置时详情页显示占位文案，不会报错）
-2. **微信内置浏览器真机验收**（kickoff §6：iOS + Android 各一台，测翻页手势/预加载/进度记忆）
+1. **微信内置浏览器真机验收**（kickoff §6：iOS + Android 各一台，测翻页手势/预加载/进度记忆）
+2. **国内可访问性**（见下）——需要作者决策走 Cloudflare Pages 还是阿里云 OSS + CDN
 
 **⚠️ 国内可访问性**：Vercel 的 IP 段在中国大陆网络被 TLS 层阻断（TCP 通、ClientHello 即被 RST，
 换自定义域作 SNI 也一样），国内直连需要代理。若要国内读者直接访问，按 kickoff §9 补 Cloudflare Pages，
