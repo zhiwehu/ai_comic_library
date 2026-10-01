@@ -82,17 +82,21 @@ scripts/exam-fixtures.mjs     # 书架压力考试：--make 200 生成 books/_te
 
 ## 部署
 
-**平台决策（2026-10-01 作者确认）**：先只上 **Vercel 单平台**；kickoff §9 的 Cloudflare 主 + Vercel 备双接入**暂缓**，将来需要时再按 §9 补 Cloudflare。
+**平台现状（2026-10-01）**：**Vercel 主 + Cloudflare Pages 备**（kickoff §9 的双接入，主备对调）。
+主站已上线，备站已完整部署待命，切主备只需改一条 DNS。
 
-**已完成**
-
-| 项 | 状态 |
+| 项 | 值 |
 |---|---|
-| 线上地址 | **https://comic.getaiti.com**（阿里云 DNS `CNAME comic → cname.vercel-dns.com`） |
+| **正式域名** | **https://comic.getaiti.com** |
+| 阿里云 DNS | `CNAME comic → 738733b24f153730.vercel-dns-017.com`（Vercel 专用 CNAME，非 `cname.vercel-dns.com`） |
+| 主站（Vercel） | 项目 `ai_comic_library`（team `zhiwehus-projects`），已关 Deployment Protection，已连 Git（push 即自动部署） |
+| 备站（Cloudflare Pages） | 项目 `comic-library` → **https://comic-library-du0.pages.dev**，`comic.getaiti.com` 已绑定（状态 pending，等 DNS） |
+| 切换备站 | 阿里云把 `comic` 的 CNAME 值改为 **`comic-library-du0.pages.dev`**（几分钟自动验证+签证书） |
 | GitHub | `git@github.com:zhiwehu/ai_comic_library.git`，分支 `main`，**public** |
-| Vercel | 项目 `ai_comic_library`（team `zhiwehus-projects`），已关闭 Deployment Protection，已连 Git（push 即自动部署） |
 | 评论 | giscus 已接入并实测渲染（仓库 Discussions 已开、giscus App 已授权） |
-| 备用地址 | https://aicomiclibrary.vercel.app（Vercel 默认域，canonical 指向正式域名） |
+
+> **不要用** `aicomiclibrary.vercel.app` 对外宣传：`*.vercel.app` 共享域在国内被阻断（实测 20s 超时），
+> 只有自定义域可用。Cloudflare 备站的 `pages.dev` 域名国内可直连。
 
 **giscus 配置值**（已在 Vercel 项目环境变量里，Production + Preview）：
 
@@ -109,12 +113,13 @@ scripts/exam-fixtures.mjs     # 书架压力考试：--make 200 生成 books/_te
 **剩余步骤**
 
 1. **微信内置浏览器真机验收**（kickoff §6：iOS + Android 各一台，测翻页手势/预加载/进度记忆）
-2. **国内可访问性**（见下）——需要作者决策走 Cloudflare Pages 还是阿里云 OSS + CDN
+2. 可选：加 GitHub Action 让 push 时同步刷新 Cloudflare 备站（否则备站会停留在快照）
 
-**⚠️ 国内可访问性**：Vercel 的 IP 段在中国大陆网络被 TLS 层阻断（TCP 通、ClientHello 即被 RST，
-换自定义域作 SNI 也一样），国内直连需要代理。若要国内读者直接访问，按 kickoff §9 补 Cloudflare Pages，
-或把 `dist/` 托管到阿里云 OSS + CDN（域名已备案，国内最快）。
+**⚠️ 国内可访问性（实测结论）**：自定义域 `comic.getaiti.com` 走 Vercel 专用 IP，国内**可直连**
+（首页 0.42–0.55s）；被阻断的是 Vercel 共享 IP 与 `*.vercel.app`（TLS RST / 超时）。
+Cloudflare 备站国内也直连可用（0.68s），但当前比 Vercel 慢约 2 倍，故主站仍用 Vercel。
 
 **日常发布流程**：`pnpm run publish …` → `git commit && git push` → Vercel 自动构建上线。
+（Cloudflare 备站需手动或 Action 刷新：`PUBLIC_GISCUS_* 变量构建后` → `npx wrangler pages deploy dist --project-name=comic-library --branch=main`）
 
 
