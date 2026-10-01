@@ -74,6 +74,7 @@ const zh: Dict = {
   'reader.undo': '从头看',
   'reader.pageAlt': '第 {n} 页',
   'reader.jumpAlt': '跳到第 {n} 页',
+  'reader.hint': '轻点中央呼出工具栏 · 两侧轻点翻页',
 };
 
 const en: Dict = {
@@ -141,6 +142,7 @@ const en: Dict = {
   'reader.undo': 'Start over',
   'reader.pageAlt': 'Page {n}',
   'reader.jumpAlt': 'Jump to page {n}',
+  'reader.hint': 'Tap the center for the toolbar · tap the sides to turn pages',
 };
 
 const DICTS: Record<Lang, Dict> = { zh, en };

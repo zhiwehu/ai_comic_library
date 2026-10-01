@@ -47,6 +47,7 @@ const flipH = Math.round(flipW / ratio);
     data-end-done={t(lang, 'reader.endDone')}
     data-mode-flip={t(lang, 'reader.modeFlip')}
     data-mode-scroll={t(lang, 'reader.modeScroll')}
+    data-hint={t(lang, 'reader.hint')}
   >
     <div class="chrome" id="chrome">
       <div class="chrome-top">
@@ -146,9 +147,13 @@ const flipH = Math.round(flipW / ratio);
       <button id="toast-undo" type="button" hidden />
     </div>
 
+    <!-- 边缘呼出区：点上下边缘显示工具栏 -->
+    <div class="edge-strip top" aria-hidden="true" />
+    <div class="edge-strip bottom" aria-hidden="true" />
+
     <noscript>
       <style>
-        .chrome { display: none !important; }
+        .chrome, .edge-strip { display: none !important; }
       </style>
     </noscript>
   </div>
@@ -172,6 +177,7 @@ const flipH = Math.round(flipW / ratio);
     endDone: root.dataset.endDone!,
     modeFlip: root.dataset.modeFlip!,
     modeScroll: root.dataset.modeScroll!,
+    hint: root.dataset.hint!,
   };
   const key = `cl:progress:${bookSlug}:${chapterSlug}`;
 
@@ -194,11 +200,6 @@ const flipH = Math.round(flipW / ratio);
   const saved = Math.min(Math.max(Number(localStorage.getItem(key) ?? 1) || 1, 1), count);
   let mode: 'flip' | 'scroll' = localStorage.getItem('cl:mode') === 'scroll' ? 'scroll' : 'flip';
 
-  // 页盒基准尺寸按真实页宽高比现算（与服务端 --page-aspect 同源）
-  const pageAspectCfg = Number(root.dataset.pageAspect) || 8 / 9;
-  const flipW = Math.round(pageAspectCfg >= 1 ? 900 : 800);
-  const flipH = Math.round(flipW / pageAspectCfg);
-
   let pf: PageFlip | null = null;
   let flipImgs: HTMLImageElement[] = [];
   let sections: HTMLElement[] = [];
@@ -206,27 +207,37 @@ const flipH = Math.round(flipW / ratio);
   let endShown = false;
   let toastTimer: ReturnType<typeof setTimeout> | undefined;
 
+  /** 视图（views）：对开模式 = 跨页，单页/滚动 = 页。滑条与 endcard 以视图为刻度。 */
+  let perView = 1;
+  let viewsCount = count;
+  let viewIdx = 0;
+
+  /** 页盒基准尺寸按真实页宽高比换算（客户端现算，flipW/flipH 来自 data-page-aspect） */
+  const pageAspectCfg = Number(root.dataset.pageAspect) || 8 / 9;
+  const flipW = Math.round(pageAspectCfg >= 1 ? 900 : 800);
+  const flipH = Math.round(flipW / pageAspectCfg);
+
+  function computeViews() {
+    perView = mode === 'flip' && orientation === 'landscape' ? 2 : 1;
+    viewsCount = Math.ceil(count / perView);
+    slider.max = String(viewsCount);
+  }
+  const viewOfPage = (page1: number) => Math.min(viewsCount - 1, Math.ceil(page1 / perView) - 1);
+  const leftPageOfView = (v: number) => Math.min(count, v * perView + 1);
+
   const save = (p: number) => {
     localStorage.setItem(key, String(p));
     localStorage.setItem('cl:last', `${bookSlug}:${chapterSlug}`);
   };
 
-  const setIndicator = (p: number) => {
-    indicator.textContent = `${p} / ${count}`;
-    if (Number(slider.value) !== p) slider.value = String(p);
-  };
-
-  /** WebP 支持一次性检测；不支持（Safari ≤13 / 老 WebView）则取同名 JPEG */
-  const WEBP_OK = document
-    .createElement('canvas')
-    .toDataURL('image/webp')
-    .startsWith('data:image/webp');
-  const srcFor = (url: string) => (WEBP_OK ? url : (url.replace(/\.webp$/, '.jpg') ?? url));
-
-  /** 激活一张懒加载图：按能力取 webp 或 jpg，只下载一种 */
-  function activate(img: HTMLImageElement) {
-    const raw = img.dataset.src;
-    if (raw && !img.src) img.src = srcFor(raw);
+  function setView(v: number, pageForSave: number) {
+    viewIdx = Math.min(Math.max(v, 0), viewsCount - 1);
+    const left = leftPageOfView(viewIdx);
+    const right = Math.min(left + perView - 1, count);
+    indicator.textContent = perView === 1 ? `${left} / ${count}` : `${left}–${right} / ${count}`;
+    if (Number(slider.value) !== viewIdx + 1) slider.value = String(viewIdx + 1);
+    save(pageForSave);
+    updateEndcard(viewIdx);
   }
 
   function preloadFlip(cur: number) {
@@ -234,7 +245,7 @@ const flipH = Math.round(flipW / ratio);
     const to = Math.min(count - 1, cur + 3);
     for (let i = from; i <= to; i++) {
       const img = flipImgs[i];
-      if (img?.dataset.src && !img.src) activate(img);
+      if (img?.dataset.src && !img.src) img.src = img.dataset.src;
     }
   }
 
@@ -248,8 +259,8 @@ const flipH = Math.round(flipW / ratio);
     toastTimer = setTimeout(() => (toast.hidden = true), 4200);
   }
 
-  function updateEndcard(p: number) {
-    const atEnd = mode === 'scroll' ? p >= count : orientation === 'portrait' ? p >= count : p >= count - 1;
+  function updateEndcard(v: number) {
+    const atEnd = v >= viewsCount - 1;
     if (atEnd && !endShown) {
       endShown = true;
       if (nextUrl) {
@@ -272,16 +283,14 @@ const flipH = Math.round(flipW / ratio);
   function fitFlip() {
     if (!pf) return;
     const stage = flipStage.getBoundingClientRect();
-    const pad = { x: 20, y: 116 };
-    const availW = stage.width - pad.x;
-    const availH = stage.height - pad.y;
+    const availW = stage.width - 20;
+    const availH = stage.height - 116;
     const pageAspect = Number(root.dataset.pageAspect) || 8 / 9;
     let pageW =
       orientation === 'portrait'
         ? Math.min(availW, availH * pageAspect)
         : Math.min(availW / 2, availH * pageAspect);
-    // StPageFlip 以 blockWidth < 2*minWidth 判定 portrait：页宽落进死区会在单/双页间抖动，
-    // 推过阈值保证宽屏永远走对开
+    // StPageFlip 以 blockWidth < 2*minWidth 判定 portrait：页宽落进死区会单/双页抖动
     if (pageW >= 560 && pageW < 680) pageW = 680;
     flipbook.style.width = `${Math.floor(pageW * (orientation === 'portrait' ? 1 : 2))}px`;
     window.dispatchEvent(new Event('resize'));
@@ -307,30 +316,32 @@ const flipH = Math.round(flipW / ratio);
       flippingTime: 620,
       swipeDistance: 14,
       startPage: startPage - 1,
+      disableFlipByClick: true, // 翻页交给左右点击区：中央轻点呼出工具栏
     });
     pf.loadFromHTML(flipbook.querySelectorAll('.pf-page'));
     flipImgs = [...flipbook.querySelectorAll('img')];
+    computeViews();
 
     pf.on('flip', (e: { data: number }) => {
-      const idx = Number(e.data ?? 0);
-      setIndicator(idx + 1);
-      save(idx + 1);
-      preloadFlip(idx);
-      updateEndcard(idx + 1);
+      const leftIdx = Number(e.data ?? 0);
+      setView(viewOfPage(leftIdx + 1), leftIdx + 1);
+      preloadFlip(leftIdx);
     });
     pf.on('changeOrientation', (e: { data: 'portrait' | 'landscape' }) => {
       orientation = e.data;
+      computeViews();
       fitFlip();
-      updateEndcard(Number(slider.value));
+      setView(viewIdx, leftPageOfView(viewIdx));
     });
     pf.on('init', () => {
       orientation = pf!.getOrientation();
+      computeViews();
       fitFlip();
+      setView(viewOfPage(startPage), startPage);
     });
 
-    setIndicator(startPage);
+    setView(viewOfPage(startPage), startPage);
     preloadFlip(startPage - 1);
-    updateEndcard(startPage);
     if (startPage > 1) {
       showToast(STR.toastRestore.replace('{p}', String(startPage)), () => {
         localStorage.removeItem(key);
@@ -344,6 +355,7 @@ const flipH = Math.round(flipW / ratio);
     flipStage.hidden = true;
     scrollbook.hidden = false;
     modeBtn.textContent = STR.modeFlip;
+    computeViews();
 
     sections = [...scrollbook.querySelectorAll<HTMLElement>('.scroll-page')];
     const io = new IntersectionObserver(
@@ -351,9 +363,7 @@ const flipH = Math.round(flipW / ratio);
         for (const en of entries) {
           if (!en.isIntersecting) continue;
           const p = Number((en.target as HTMLElement).dataset.idx) + 1;
-          setIndicator(p);
-          save(p);
-          updateEndcard(p);
+          setView(viewOfPage(p), p);
         }
       },
       { root: scrollbook, threshold: 0.6 }
@@ -373,26 +383,37 @@ const flipH = Math.round(flipW / ratio);
 
   function scrollByPage(dir: 1 | -1) {
     const cur = Number(slider.value);
-    const target = sections[Math.min(count, Math.max(1, cur + dir)) - 1];
+    const target = sections[Math.min(viewsCount, Math.max(1, cur + dir)) - 1];
     target?.scrollIntoView({ behavior: 'smooth' });
   }
 
   /* ---------- 启动 ---------- */
-  setIndicator(saved);
+  computeViews();
+  setIndicatorInit(saved);
+  function setIndicatorInit(p: number) {
+    indicator.textContent = `${p} / ${count}`;
+    slider.value = String(viewOfPage(p) + 1);
+  }
   if (mode === 'flip') initFlip(saved);
   else initScroll(saved);
 
   /* ---------- 控件 ---------- */
-  slider.addEventListener('input', () => setIndicator(Number(slider.value)));
+  slider.addEventListener('input', () => {
+    const v = Number(slider.value) - 1;
+    const left = leftPageOfView(v);
+    const right = Math.min(left + perView - 1, count);
+    indicator.textContent = perView === 1 ? `${left} / ${count}` : `${left}–${right} / ${count}`;
+  });
   slider.addEventListener('change', () => {
-    const p = Number(slider.value);
-    if (mode === 'flip') pf?.turnToPage(p - 1);
-    else sections[p - 1]?.scrollIntoView({ behavior: 'smooth' });
+    const v = Number(slider.value) - 1;
+    if (mode === 'flip') pf?.turnToPage(v * perView);
+    else sections[v]?.scrollIntoView({ behavior: 'smooth' });
+    setView(v, v * perView + 1);
   });
 
   modeBtn.addEventListener('click', () => {
     localStorage.setItem('cl:mode', mode === 'flip' ? 'scroll' : 'flip');
-    location.reload();
+    location.reload(); // 进度按页保存，切换零损耗
   });
 
   document.getElementById('btn-full')!.addEventListener('click', () => {
@@ -404,7 +425,7 @@ const flipH = Math.round(flipW / ratio);
     thumbs.hidden = false;
     thumbs.querySelectorAll('img').forEach((im) => {
       const el = im as HTMLImageElement;
-      if (el.dataset.src && !el.src) activate(el);
+      if (el.dataset.src && !el.src) el.src = el.dataset.src;
     });
   });
   document.getElementById('btn-thumbs-close')!.addEventListener('click', () => (thumbs.hidden = true));
@@ -415,9 +436,11 @@ const flipH = Math.round(flipW / ratio);
     thumbs.hidden = true;
     if (mode === 'flip') pf?.turnToPage(p - 1);
     else sections[p - 1]?.scrollIntoView();
+    setView(viewOfPage(p), p);
   });
 
   window.addEventListener('keydown', (e) => {
+    wake();
     if (e.key === 'Escape' && !thumbs.hidden) {
       thumbs.hidden = true;
       return;
@@ -431,29 +454,77 @@ const flipH = Math.round(flipW / ratio);
     }
   });
 
-  document.getElementById('btn-theme')!.addEventListener('click', () => {
-    const next = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
-    document.documentElement.dataset.theme = next;
-    try {
-      localStorage.setItem('cl:theme', next);
-    } catch {}
+  /* ---------- 沉浸式 chrome：默认隐藏，按需呼出 ---------- */
+  let hideTimer: ReturnType<typeof setTimeout>;
+  function wake() {
+    if (chrome.classList.contains('chrome-on')) {
+      clearTimeout(hideTimer);
+      hideTimer = setTimeout(hide, 2200);
+      return;
+    }
+    chrome.classList.add('chrome-on');
+    hideTimer = setTimeout(hide, 2600);
+  }
+  function hide() {
+    chrome.classList.remove('chrome-on');
+  }
+  // 桌面：鼠标移动临时呼出（触屏不吃 pointermove，靠边缘条/中央轻点）
+  window.addEventListener(
+    'pointermove',
+    (e) => {
+      if (e.pointerType === 'mouse') wake();
+    },
+    { passive: true }
+  );
+  window.addEventListener('keydown', wake, { passive: true });
+
+  // 边缘条：点上下边缘呼出
+  document.querySelectorAll<HTMLElement>('.edge-strip').forEach((strip) => {
+    strip.addEventListener('click', wake);
   });
 
-  /* ---------- chrome 自动隐藏 ---------- */
-  let hideTimer: ReturnType<typeof setTimeout>;
-  const wake = () => {
-    chrome.classList.add('chrome-on');
-    clearTimeout(hideTimer);
-    hideTimer = setTimeout(() => chrome.classList.remove('chrome-on'), 2600);
-  };
-  ['pointermove', 'pointerdown', 'keydown', 'touchstart'].forEach((ev) =>
-    window.addEventListener(ev, wake, { passive: true })
-  );
-  wake();
+  // 翻页模式：左右 1/3 轻点翻页，中央轻点切换工具栏（仅触屏；桌面靠鼠标移动呼出+自动隐藏）
+  let tapStart: { x: number; y: number; t: number } | null = null;
+  flipStage.addEventListener('pointerdown', (e) => {
+    tapStart = { x: e.clientX, y: e.clientY, t: Date.now() };
+  });
+  flipStage.addEventListener('pointerup', (e) => {
+    if (!tapStart) return;
+    const dx = Math.abs(e.clientX - tapStart.x);
+    const dy = Math.abs(e.clientY - tapStart.y);
+    const dt = Date.now() - tapStart.t;
+    tapStart = null;
+    if (dx > 12 || dy > 12 || dt > 500) return; // 滑动：交给 StPageFlip
+    const rect = flipStage.getBoundingClientRect();
+    const x = (e.clientX - rect.left) / rect.width;
+    if (x < 0.3) pf?.flipPrev();
+    else if (x > 0.7) pf?.flipNext();
+    else if (e.pointerType !== 'mouse') {
+      chrome.classList.contains('chrome-on') ? hide() : wake();
+    }
+  });
+
+  // 首次进入：操作提示
+  if (!localStorage.getItem('cl:hint')) {
+    setTimeout(() => {
+      showToast(STR.hint);
+      localStorage.setItem('cl:hint', '1');
+    }, 1200);
+  }
 </script>
 
 <style>
   body.reader-page { background: var(--reader-bg); overflow: hidden; }
+
+  .edge-strip {
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 44px;
+    z-index: 45;
+  }
+  .edge-strip.top { top: 0; }
+  .edge-strip.bottom { bottom: 0; }
 
   #reader { position: fixed; inset: 0; }
 
