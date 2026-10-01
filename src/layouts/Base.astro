@@ -44,7 +44,7 @@ const htmlLang = lang === 'en' ? 'en' : 'zh-CN';
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-    <title>{title} · {t(lang, 'site.name')}</title>
+    <title>{title === t(lang, 'site.name') ? title : `${title} · ${t(lang, 'site.name')}`}</title>
     <meta name="description" content={description} />
     <meta name="theme-color" content="#0b0b0f" />
     <!-- 主题：优先用户选择，否则跟随系统；内联执行避免闪屏 -->
@@ -115,7 +115,7 @@ const htmlLang = lang === 'en' ? 'en' : 'zh-CN';
           <div class="wrap">
             <p class="motto">{t(lang, 'footer.motto')}</p>
             <p class="fine">
-              {SITE.domain} · <a href="/rss.xml">{t(lang, 'footer.rss')}</a> · {t(lang, 'footer.fine')} · 由
+              {SITE.domain} · <a href="/rss.xml">{t(lang, 'footer.rss')}</a> · {t(lang, 'footer.fine')} · {t(lang, 'footer.by')}
               <a
                 class="aiti-credit"
                 href="https://www.getaiti.com"
@@ -125,7 +125,16 @@ const htmlLang = lang === 'en' ? 'en' : 'zh-CN';
               >
                 <img src="/getaiti-logo.png" alt="AITi" loading="lazy" />
               </a>
-              出品
+              {t(lang, 'footer.producer') && <>{t(lang, 'footer.producer')} · </>}
+              <a
+                class="icp"
+                href="https://beian.miit.gov.cn/"
+                target="_blank"
+                rel="noopener noreferrer"
+                title="工信部备案查询"
+              >
+                皖ICP备18006700号-2
+              </a>
             </p>
           </div>
         </footer>

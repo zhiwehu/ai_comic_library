@@ -57,7 +57,7 @@ const ticker = shelf.map((b) => bookTitle(b, lang)).join('　✦　');
 
           <p class="now-reading">
             <span class="dot" aria-hidden="true" />
-            {t(lang, 'hero.now')}　《{bookTitle(featured, lang)}》· {ch.title} · {fmtDate(lang, ch.date)}
+            {t(lang, 'hero.now')}　{lang === 'en' ? '' : '《'}{bookTitle(featured, lang)}{lang === 'en' ? '' : '》'} · {ch.title} · {fmtDate(lang, ch.date)}
           </p>
           <div class="cta-row">
             <a class="btn btn-lamp" href={`/read/${featured.slug}/${ch.slug}/`}>
