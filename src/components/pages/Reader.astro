@@ -1,7 +1,8 @@
 ---
 import Base from '../../layouts/Base.astro';
-import { getShelf, chapterNav, bookTitle } from '../../lib/books';
+import { chapterNav, bookTitle, bookDesc } from '../../lib/books';
 import { t, type Lang } from '../../lib/i18n';
+import { breadcrumbSchema, issueSchema } from '../../lib/schema';
 
 interface Props {
   lang: Lang;
@@ -14,19 +15,33 @@ const pages = chapter.pages;
 const count = pages.length;
 const base = lang === 'en' ? '/en' : '';
 const ratio = chapter.ratio && chapter.ratio > 0 ? chapter.ratio : 8 / 9;
-/** StPageFlip 页盒基准尺寸按真实比例取整 */
-const flipW = Math.round(ratio >= 1 ? 900 : 800);
-const flipH = Math.round(flipW / ratio);
+/** meta description：书名 · 章题 — 简介（截到 160 字符内，利于搜索摘要） */
+const rawDesc = `${bookTitle(book, lang)} · ${chapter.title} — ${bookDesc(book, lang)}`;
+const description = rawDesc.length > 160 ? `${rawDesc.slice(0, 157)}…` : rawDesc;
+const pageAlt = (i: number) => `${bookTitle(book, lang)} · ${t(lang, 'reader.pageAlt', { n: i + 1 })}`;
 ---
 
 <Base
-  title={`${chapter.title}`}
+  title={`${bookTitle(book, lang)} · ${chapter.title}`}
   lang={lang}
-  description={`${bookTitle(book, lang)} · ${chapter.title}`}
+  description={description}
   ogImage={pages[0] ?? null}
   ogType="article"
   bodyClass="reader-page"
   chrome={false}
+  schema={[
+    breadcrumbSchema(
+      [
+        { name: t(lang, 'site.name'), path: '/' },
+        { name: bookTitle(book, lang), path: `/book/${book.slug}/` },
+        { name: chapter.title, path: `/read/${book.slug}/${chapter.slug}/` },
+      ],
+      lang
+    ),
+    ...(book.type === 'series'
+      ? [{ '@context': 'https://schema.org', '@type': 'WebPage', name: `${bookTitle(book, lang)} · ${chapter.title}`, inLanguage: lang === 'en' ? 'en-US' : 'zh-CN', mainEntity: issueSchema(book, chapter, lang) }]
+      : []),
+  ]}
 >
   <div
     id="reader"
@@ -49,8 +64,12 @@ const flipH = Math.round(flipW / ratio);
     data-mode-scroll={t(lang, 'reader.modeScroll')}
     data-auto={t(lang, 'reader.auto')}
     data-hint={t(lang, 'reader.hint')}
-    data-auto={t(lang, 'reader.auto')}
+    data-speed-tpl={t(lang, 'reader.speedVal')}
   >
+    <p class="sr-only">
+      {bookTitle(book, lang)} · {chapter.title} · {t(lang, 'reader.pageCount', { n: count })} · {bookDesc(book, lang)}
+    </p>
+
     <div class="chrome" id="chrome">
       <div class="chrome-top">
         <a class="cr-btn cr-back" href={`${base}/book/${book.slug}/`}>{t(lang, 'reader.back')}</a>
@@ -74,12 +93,25 @@ const flipH = Math.round(flipW / ratio);
           <button class="cr-btn" id="btn-auto" type="button" aria-pressed="false">{t(lang, 'reader.auto')}</button>
           <button class="cr-btn" id="btn-mode" type="button">{t(lang, 'reader.modeScroll')}</button>
           <button class="cr-btn" id="btn-full" type="button">{t(lang, 'reader.full')}</button>
-          <button class="cr-btn" id="btn-theme" type="button" aria-label={t(lang, 'theme.toggle')}><span class="icon-moon" aria-hidden="true">☾</span><span class="icon-sun" aria-hidden="true">☀</span></button>
+          <button class="cr-btn" id="btn-theme" data-theme-toggle type="button" aria-label={t(lang, 'theme.toggle')} title={t(lang, 'theme.toggle')}><span class="icon-moon" aria-hidden="true">☾</span><span class="icon-sun" aria-hidden="true">☀</span></button>
         </span>
       </div>
       <div class="chrome-bottom">
         <input type="range" id="slider" min="1" max={count} value="1" step="1" aria-label="页码滑条" />
         <span id="page-indicator" aria-live="polite">1 / {count}</span>
+      </div>
+      <div class="auto-speed" id="auto-speed" hidden>
+        <span class="as-label">{t(lang, 'reader.autoSpeed')}</span>
+        <input
+          type="range"
+          id="speed-range"
+          min="2"
+          max="20"
+          step="1"
+          value="5"
+          aria-label={t(lang, 'reader.autoSpeed')}
+        />
+        <span class="as-val" id="speed-val" aria-live="polite"></span>
       </div>
     </div>
 
@@ -92,7 +124,7 @@ const flipH = Math.round(flipW / ratio);
               <source srcset={url} type="image/webp" />
               <img
                 src={url.replace(/\.webp$/, '.jpg')}
-                alt={t(lang, 'reader.pageAlt', { n: i + 1 })}
+                alt={pageAlt(i)}
                 loading="lazy"
                 decoding="async"
                 draggable={false}
@@ -112,7 +144,7 @@ const flipH = Math.round(flipW / ratio);
               <img
                 data-src={url}
                 data-jpg={url.replace(/\.webp$/, '.jpg')}
-                alt={t(lang, 'reader.pageAlt', { n: i + 1 })}
+                alt={pageAlt(i)}
                 draggable={false}
               />
             </div>
@@ -449,6 +481,10 @@ const flipH = Math.round(flipW / ratio);
   });
 
   window.addEventListener('keydown', (e) => {
+    // 焦点在滑条/输入框时，方向键归控件自己用（例如用 ←/→ 微调自动翻页速度），
+    // 不当作翻页手势、也不打断自动翻页
+    const t = e.target as HTMLElement | null;
+    if (t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.isContentEditable)) return;
     stopAuto();
     if (e.key === 'Escape' && !thumbs.hidden) {
       thumbs.hidden = true;
@@ -477,18 +513,48 @@ const flipH = Math.round(flipW / ratio);
 
   /* ---------- 自动翻页 ---------- */
   const autoBtn = document.getElementById('btn-auto');
+  const speedWrap = document.getElementById('auto-speed') as HTMLElement | null;
+  const speedRange = document.getElementById('speed-range') as HTMLInputElement | null;
+  const speedVal = document.getElementById('speed-val');
+  const SPEED_KEY = 'cl:auto-speed';
+  const SPEED_DEFAULT = 5;
+  const SPEED_MIN = 2;
+  const SPEED_MAX = 20;
   let autoTimer: ReturnType<typeof setInterval> | null = null;
+
+  /** 速度：秒/视图，持久化到 localStorage（跨书、跨章沿用） */
+  let autoSpeed = SPEED_DEFAULT;
+  try {
+    const saved = Number(localStorage.getItem(SPEED_KEY));
+    if (Number.isFinite(saved) && saved >= SPEED_MIN && saved <= SPEED_MAX) autoSpeed = saved;
+  } catch {}
+
+  function renderSpeed() {
+    if (speedRange) {
+      speedRange.value = String(autoSpeed);
+      const pct = ((autoSpeed - SPEED_MIN) / (SPEED_MAX - SPEED_MIN)) * 100;
+      speedRange.style.setProperty('--fill', `${pct}%`);
+    }
+    if (speedVal) {
+      const tpl = root.dataset.speedTpl || '{n}';
+      speedVal.textContent = tpl.replace('{n}', String(autoSpeed));
+    }
+  }
+
   function stopAuto() {
     if (autoTimer === null) return;
     clearInterval(autoTimer);
     autoTimer = null;
     autoBtn?.classList.remove('is-active');
     autoBtn?.setAttribute('aria-pressed', 'false');
+    if (speedWrap) speedWrap.hidden = true;
   }
   function startAuto() {
     stopAuto();
     autoBtn?.classList.add('is-active');
     autoBtn?.setAttribute('aria-pressed', 'true');
+    renderSpeed();
+    if (speedWrap) speedWrap.hidden = false;
     autoTimer = setInterval(() => {
       if (viewIdx >= viewsCount - 1) {
         stopAuto();
@@ -496,9 +562,21 @@ const flipH = Math.round(flipW / ratio);
       }
       if (mode === 'flip') pf?.flipNext();
       else scrollByPage(1);
-    }, 5000);
+    }, autoSpeed * 1000);
   }
   autoBtn?.addEventListener('click', () => (autoTimer ? stopAuto() : startAuto()));
+
+  // 拖动速度条：立即生效（重启计时器），并记住选择
+  speedRange?.addEventListener('input', () => {
+    const v = Number(speedRange.value);
+    autoSpeed = Number.isFinite(v) ? Math.min(SPEED_MAX, Math.max(SPEED_MIN, v)) : SPEED_DEFAULT;
+    try {
+      localStorage.setItem(SPEED_KEY, String(autoSpeed));
+    } catch {}
+    renderSpeed();
+    if (autoTimer) startAuto();
+  });
+  renderSpeed();
   function hide() {
     // 指针正悬停在工具栏上（读按钮/拖滑条）时不隐藏，稍后再试
     if (chrome.matches(':hover')) {
@@ -621,6 +699,71 @@ const flipH = Math.round(flipW / ratio);
     padding-bottom: max(7px, env(safe-area-inset-bottom));
     gap: 12px;
   }
+
+  /* 自动翻页速度条：仅在自动翻页开启时出现，悬浮在底部胶囊之上 */
+  .auto-speed {
+    position: absolute;
+    bottom: calc(62px + env(safe-area-inset-bottom));
+    left: 50%;
+    transform: translateX(-50%);
+    width: min(560px, 88vw);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 7px 18px;
+    border: 1px solid var(--glass-border);
+    border-radius: 999px;
+    background: linear-gradient(120deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.012) 50%), var(--glass-bg);
+    -webkit-backdrop-filter: blur(24px) saturate(1.6);
+    backdrop-filter: blur(24px) saturate(1.6);
+    box-shadow:
+      inset 0 1px 0 var(--glass-spec),
+      0 12px 34px var(--glass-shadow);
+    color: var(--paper-dim);
+    font-size: 12.5px;
+    white-space: nowrap;
+    pointer-events: none;
+  }
+  .chrome.chrome-on .auto-speed { pointer-events: auto; }
+  .auto-speed[hidden] { display: none; }
+  .auto-speed .as-label { flex: none; }
+  .auto-speed .as-val {
+    flex: none;
+    min-width: 5.5em;
+    text-align: right;
+    color: var(--lamp);
+    font-variant-numeric: tabular-nums;
+  }
+  #speed-range {
+    -webkit-appearance: none;
+    appearance: none;
+    flex: 1;
+    height: 3px;
+    border-radius: 999px;
+    background: linear-gradient(to right, var(--lamp) var(--fill, 0%), var(--glass-border) var(--fill, 0%));
+    outline: none;
+    cursor: pointer;
+  }
+  #speed-range::-webkit-slider-runnable-track { height: 3px; border-radius: 999px; background: transparent; }
+  #speed-range::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 11px;
+    height: 11px;
+    margin-top: -4px;
+    border-radius: 50%;
+    background: var(--lamp-bright);
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.35);
+  }
+  #speed-range::-moz-range-track { height: 3px; border-radius: 999px; background: transparent; }
+  #speed-range::-moz-range-thumb {
+    width: 11px;
+    height: 11px;
+    border: none;
+    border-radius: 50%;
+    background: var(--lamp-bright);
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.35);
+  }
   .cr-btn {
     border: none;
     background: none;
@@ -658,7 +801,18 @@ const flipH = Math.round(flipW / ratio);
     text-overflow: ellipsis;
     text-align: center;
   }
-  .cr-actions { display: flex; align-items: center; }
+  .cr-actions {
+    display: flex;
+    align-items: center;
+    min-width: 0;
+    /* 窄屏按钮多时不裁切：可横向滑动查看（滚动条隐藏） */
+    overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    -webkit-overflow-scrolling: touch;
+  }
+  .cr-actions::-webkit-scrollbar { display: none; }
+  .cr-actions > * { flex: 0 0 auto; }
   /* 精细滑条：3px 轨道 + 金色已读填充 + 小圆点 */
   #slider {
     -webkit-appearance: none;
@@ -703,6 +857,9 @@ const flipH = Math.round(flipW / ratio);
   @media (max-width: 720px) {
     .cr-title { display: none; }
     #lnk-prev, #lnk-next { display: none; }
+    /* 按钮收紧，让主题按钮在 390px 宽的手机上也不必滑动就能点到 */
+    .chrome-top { gap: 8px; padding: 6px 10px; }
+    .cr-btn { padding: 6px 7px; font-size: 12.5px; }
   }
 
   #scrollbook {
