@@ -64,6 +64,14 @@ scripts/exam-fixtures.mjs     # 书架压力考试：--make 200 生成 books/_te
 - 章节标题目前只有中文（来自 `chapter.yml` 的 `title`）；给某章补英文时加 `title_en` 字段即可在英文站显示
 - 阅读进度与语言无关：中文页读一半，英文页打开接着读
 
+## SEO / GEO
+
+上架新书无需任何额外操作，以下全部构建时自动生成：
+
+- **SEO**：每页 canonical / OG 全套（og:url、og:locale、og:image 走 jpg）/ Twitter Card / hreflang（zh、en、x-default）；JSON-LD 结构化数据 —— 首页 WebSite+Organization、连载 ComicSeries（hasPart: ComicIssue）、单本 Book、书目与阅读页 BreadcrumbList（`src/lib/schema.ts`）
+- **GEO（生成式引擎优化）**：`/llms.txt` 与 `/llms-full.txt`（站点说明 + 完整书目，从书架数据生成）；robots.txt 明确欢迎 GPTBot / ClaudeBot / PerplexityBot 等 AI 爬虫；阅读页带 `.sr-only` 文本上下文（书名 · 章题 · 页数 · 简介）
+- RSS `/rss.xml`、sitemap `/sitemap-index.xml`、`robots.txt` 同为自动
+
 
 ## 阅读器
 

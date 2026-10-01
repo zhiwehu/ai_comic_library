@@ -6,6 +6,7 @@ import Pic from '../Pic.astro';
 import { bookDesc, bookTitle } from '../../lib/books';
 import { fmtDate, t, type Lang } from '../../lib/i18n';
 import type { BookView } from '../../lib/books';
+import { bookSchema, breadcrumbSchema } from '../../lib/schema';
 
 interface Props {
   lang: Lang;
@@ -17,7 +18,23 @@ const latestChapterSlug = book.latest.slug;
 const title = bookTitle(book, lang);
 ---
 
-<Base title={title} lang={lang} description={description} ogImage={book.coverUrl} ogType="book">
+<Base
+  title={title}
+  lang={lang}
+  description={description}
+  ogImage={book.coverUrl}
+  ogType="book"
+  schema={[
+    bookSchema(book, lang),
+    breadcrumbSchema(
+      [
+        { name: t(lang, 'site.name'), path: '/' },
+        { name: title, path: `/book/${book.slug}/` },
+      ],
+      lang
+    ),
+  ]}
+>
   <article class="wrap book-page">
     <header class="book-hero">
       <div class="cover-frame">
@@ -112,8 +129,9 @@ const title = bookTitle(book, lang);
   }
   // 系列：最近读到的一话优先
   const resume = document.getElementById('resume-cta') as HTMLAnchorElement | null;
-  if (resume) {
-    const slug = resume.dataset.bookSlug;
+  const slug = resume?.dataset.bookSlug;
+  const latestHref = resume?.dataset.latestHref;
+  if (resume && slug && latestHref) {
     let target: string | null = null;
     let best = -1;
     for (let i = 0; i < localStorage.length; i++) {
@@ -127,7 +145,7 @@ const title = bookTitle(book, lang);
         target = rest.slice(slug.length + 1);
       }
     }
-    if (target) resume.href = resume.dataset.latestHref!.replace(/[^/]+\/$/, `${target}/`);
+    if (target) resume.href = latestHref.replace(/[^/]+\/$/, `${target}/`);
   }
 </script>
 

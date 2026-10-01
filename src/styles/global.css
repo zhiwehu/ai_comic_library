@@ -364,3 +364,16 @@ h1, h2, h3 {
   }
   html { scroll-behavior: auto; }
 }
+
+/* 仅读屏/爬虫可见（阅读页的文本上下文） */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}

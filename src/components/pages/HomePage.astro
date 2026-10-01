@@ -5,6 +5,7 @@ import Pic from '../Pic.astro';
 import { getShelf, bookTitle } from '../../lib/books';
 import { SITE } from '../../site.config';
 import { t, fmtDate, type Lang } from '../../lib/i18n';
+import { orgSchema, webSiteSchema } from '../../lib/schema';
 
 interface Props {
   lang: Lang;
@@ -19,7 +20,12 @@ const rightPage = ch?.pages[1] ?? ch?.pages[0];
 const ticker = shelf.map((b) => bookTitle(b, lang)).join('　✦　');
 ---
 
-<Base title={t(lang, 'hero.title')} lang={lang} ogImage={featured?.coverUrl ?? null}>
+<Base
+  title={t(lang, 'hero.title')}
+  lang={lang}
+  ogImage={featured?.coverUrl ?? null}
+  schema={[webSiteSchema(lang), orgSchema(lang)]}
+>
   {
     featured && ch && leftPage ? (
       <section class="hero" id="hero">
@@ -31,7 +37,7 @@ const ticker = shelf.map((b) => bookTitle(b, lang)).join('　✦　');
 
         <div class="hero-center">
           <p class="kicker">
-            {SITE.latin} · EST. 2026 · {shelf.length} {t(lang, 'hero.kicker')}
+            {SITE.latinName} · EST. 2026 · {shelf.length} {t(lang, 'hero.kicker')}
           </p>
           <div class="mega-wrap">
             <h1 class="mega">{t(lang, 'hero.title')}</h1>
@@ -183,6 +189,8 @@ const ticker = shelf.map((b) => bookTitle(b, lang)).join('　✦　');
     const norm = (s: string) => s.toLowerCase().replace(/\s+/g, ' ').trim();
 
     function applyShelf() {
+      // 外层 if 已保证存在；函数声明会把收窄丢掉，这里补一次（也防 DOM 被替换）
+      if (!resultLine || !emptyLine || !moreWrap) return;
       const q = norm(query);
       const matches = shelfCards.filter((card) => {
         const okType = activeType === 'all' || card.dataset.type === activeType;

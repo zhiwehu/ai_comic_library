@@ -11,6 +11,8 @@ interface Props {
   ogType?: string;
   bodyClass?: string;
   chrome?: boolean;
+  /** JSON-LD 结构化数据（单个或数组），原样注入 <head> */
+  schema?: Record<string, unknown> | Record<string, unknown>[];
 }
 
 const {
@@ -21,6 +23,7 @@ const {
   ogType = 'website',
   bodyClass = '',
   chrome = true,
+  schema = null,
 } = Astro.props;
 
 const ogImageAbs = ogImage
@@ -37,6 +40,13 @@ const altPath =
     : path.replace(/^\/en(?=\/|$)/, '') || '/';
 
 const htmlLang = lang === 'en' ? 'en' : 'zh-CN';
+
+/** canonical：目录式路径统一带尾斜杠（与 sitemap / 站内链接一致） */
+const canonicalPath = path === '/' || path.endsWith('/') ? path : `${path}/`;
+const canonical = new URL(canonicalPath, Astro.site).href;
+const ogLocale = lang === 'en' ? 'en_US' : 'zh_CN';
+const ogLocaleAlt = lang === 'en' ? 'zh_CN' : 'en_US';
+const schemas = schema ? (Array.isArray(schema) ? schema : [schema]) : [];
 ---
 
 <!doctype html>
@@ -65,17 +75,26 @@ const htmlLang = lang === 'en' ? 'en' : 'zh-CN';
       })();
     </script>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="canonical" href={canonical} />
     <link rel="sitemap" href="/sitemap-index.xml" />
     <link rel="alternate" type="application/rss+xml" title={t(lang, 'site.name')} href="/rss.xml" />
     <link rel="alternate" hreflang="zh" href={new URL(lang === 'zh' ? path : altPath, Astro.site)} />
     <link rel="alternate" hreflang="en" href={new URL(lang === 'en' ? path : altPath, Astro.site)} />
+    <link rel="alternate" hreflang="x-default" href={new URL(lang === 'zh' ? path : altPath, Astro.site)} />
+    <meta name="robots" content="index, follow" />
     <meta property="og:site_name" content={t(lang, 'site.name')} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content={ogType} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:locale" content={ogLocale} />
+    <meta property="og:locale:alternate" content={ogLocaleAlt} />
     {ogImageAbs && <meta property="og:image" content={ogImageAbs} />}
     <meta name="twitter:card" content={ogImageAbs ? 'summary_large_image' : 'summary'} />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
     {ogImageAbs && <meta name="twitter:image" content={ogImageAbs} />}
+    {schemas.map((s) => <script type="application/ld+json" set:html={JSON.stringify(s)} />)}
   </head>
   <body class={bodyClass}>
     {
@@ -92,6 +111,7 @@ const htmlLang = lang === 'en' ? 'en' : 'zh-CN';
             <button
               class="theme-toggle"
               id="theme-toggle"
+              data-theme-toggle
               type="button"
               aria-label={t(lang, 'theme.toggle')}
               title={t(lang, 'theme.toggle')}
@@ -145,8 +165,9 @@ const htmlLang = lang === 'en' ? 'en' : 'zh-CN';
 
 <script>
   // 主题切换：写 localStorage + 换 data-theme，无刷新过渡
-  function bindThemeToggle(btn: HTMLElement | null) {
-    btn?.addEventListener('click', () => {
+  // 全站任何带 data-theme-toggle 的按钮都生效（顶栏、阅读页工具栏……）
+  function bindThemeToggle(btn: HTMLElement) {
+    btn.addEventListener('click', () => {
       const next = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
       document.documentElement.dataset.theme = next;
       try {
@@ -156,5 +177,5 @@ const htmlLang = lang === 'en' ? 'en' : 'zh-CN';
         ?.setAttribute('content', next === 'light' ? '#f1eadb' : '#0b0b0f');
     });
   }
-  bindThemeToggle(document.getElementById('theme-toggle'));
+  document.querySelectorAll<HTMLElement>('[data-theme-toggle]').forEach(bindThemeToggle);
 </script>

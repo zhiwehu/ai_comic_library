@@ -1,6 +1,6 @@
 ---
 import Reader from '../../../../components/pages/Reader.astro';
-import { getShelf, chapterNav } from '../../../../lib/books';
+import { getShelf } from '../../../../lib/books';
 
 export async function getStaticPaths() {
   const shelf = await getShelf();
