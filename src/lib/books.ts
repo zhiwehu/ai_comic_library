@@ -115,7 +115,19 @@ export async function getShelf(): Promise<BookView[]> {
     });
   }
 
-  return shelf.sort((a, b) => +b.lastUpdated - +a.lastUpdated);
+  /** 书架顺序：最近更新优先。
+   *  日期相同（例如同批导入的书都是同一天）时必须再给确定性规则，
+   *  否则顺序取决于文件系统遍历次序——本地（macOS）与线上（Linux）会不一致，
+   *  旗舰连载还可能被排到书架末尾。依次比：连载中 → 章节多 → 书名。 */
+  return shelf.sort((a, b) => {
+    const byDate = +b.lastUpdated - +a.lastUpdated;
+    if (byDate !== 0) return byDate;
+    const byOngoing = Number(b.status === 'ongoing') - Number(a.status === 'ongoing');
+    if (byOngoing !== 0) return byOngoing;
+    const byChapters = b.chapters.length - a.chapters.length;
+    if (byChapters !== 0) return byChapters;
+    return a.title.localeCompare(b.title, 'zh-Hans-CN');
+  });
 }
 
 export function chapterNav(book: BookView, chapterSlug: string) {
