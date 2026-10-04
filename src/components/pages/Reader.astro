@@ -529,8 +529,17 @@ const pageAlt = (i: number) => `${bookTitle(book, lang)} · ${t(lang, 'reader.pa
    */
   function flipAtPoint(x: number, y: number, dir: 1 | -1) {
     if (!pf) return;
-    // 记录本次翻页方向：在最后一页再前进时（库的页号已到顶不再变化），
-    // flip 事件回调据此进入「读完页」视图
+    // 已在最后一页再往前翻 → 库不会再发 flip 事件（无页可翻），直接打开读完页
+    if (dir > 0 && viewIdx >= viewsCount - 1) {
+      flipDirNext = false;
+      showAfterword();
+      return;
+    }
+    if (afterwordOn && dir < 0) {
+      goLastPage();
+      return;
+    }
+    // 记录本次翻页方向：从末页翻回时用于同步状态
     flipDirNext = dir > 0;
     const st = pf.getSettings();
     const saved = st.disableFlipByClick;
@@ -575,8 +584,16 @@ const pageAlt = (i: number) => `${bookTitle(book, lang)} · ${t(lang, 'reader.pa
   }
 
   function scrollByPage(dir: 1 | -1) {
+    if (afterwordOn) {
+      if (dir < 0) goLastPage();
+      return; // 读完页上方向键不滚动评论区
+    }
     const cur = Number(slider.value);
-    // viewsCount 含读完页；sections 长度 = 页数 + 读完页，下标刚好对齐视图号
+    // 已在最后一页再往下 → 打开读完页覆盖层
+    if (dir > 0 && viewIdx >= viewsCount - 1) {
+      showAfterword();
+      return;
+    }
     const target = sections[Math.min(viewsCount, Math.max(1, cur + dir)) - 1];
     target?.scrollIntoView({ behavior: 'smooth' });
   }
