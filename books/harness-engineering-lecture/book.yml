@@ -1,0 +1,8 @@
+title: "Harness Engineering: A Stick Figure Lecture"
+type: picture-book
+status: completed
+language: en
+description: "Professor Andy, a stick-figure lecturer, explains the shift from prompt engineering to harness engineering: the three-floor stack (prompt, context, harness), the plan-execute-verify-improve loop, context selection and KV-cache hit rates, self-improving loops with memory, and why the model is a brilliant intern while the harness is the management. Adapted from Andrew Ng's Stanford lecture on agentic systems."
+descriptionZh: "火柴人教授 Andy 讲透 Harness Engineering：三层堆叠（Prompt→Context→Harness）、计划-执行-校验-改进循环、上下文选择与 KV-cache 命中率、带记忆的自我改进循环，以及'模型是天才实习生，harness 是管理体系'。改编自 Andrew Ng 斯坦福 agent 系统讲座的核心观点。"
+cover: cover.webp
+tags: ["AI技术", "Agent", "英文绘本", "火柴人", "信息图", "Harness"]
