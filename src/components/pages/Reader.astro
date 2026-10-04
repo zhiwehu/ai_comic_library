@@ -134,29 +134,8 @@ const pageAlt = (i: number) => `${bookTitle(book, lang)} · ${t(lang, 'reader.pa
           </div>
         ))
       }
-    </div>
-
-    <!-- 翻页模式 -->
-    <div class="flip-stage" id="flip-stage" hidden>
-      <div id="flipbook">
-        {
-          pages.map((url: string, i: number) => (
-            <div class="pf-page">
-              <img
-                data-src={url}
-                data-jpg={url.replace(/\.webp$/, '.jpg')}
-                alt={pageAlt(i)}
-                draggable={false}
-              />
-            </div>
-          ))
-        }
-      </div>
-    </div>
-
-    <!-- 读完页（最后一页之后的独立一页，两种模式共用）：评论区 + 返回目录 -->
-    <section class="afterword" id="afterword" hidden aria-label={t(lang, 'reader.afterwordTitle')}>
-      <div class="afterword-scroll">
+      <!-- 读完页：滚动模式=scrollbook 内最后一个区块；翻页模式=覆盖层（JS 切换） -->
+      <section class="afterword" id="afterword" aria-label={t(lang, 'reader.afterwordTitle')}>
         <div class="afterword-inner">
           <p class="afterword-kicker">{t(lang, 'reader.afterwordKicker')}</p>
           <h2 class="afterword-title">{t(lang, 'reader.afterwordTitle')}</h2>
@@ -181,9 +160,28 @@ const pageAlt = (i: number) => `${bookTitle(book, lang)} · ${t(lang, 'reader.pa
             <a class="afterword-back" href={`${base}/book/${book.slug}/`}>{t(lang, 'reader.backHome')}</a>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </div>
 
+    <!-- 翻页模式 -->
+    <div class="flip-stage" id="flip-stage" hidden>
+      <div id="flipbook">
+        {
+          pages.map((url: string, i: number) => (
+            <div class="pf-page">
+              <img
+                data-src={url}
+                data-jpg={url.replace(/\.webp$/, '.jpg')}
+                alt={pageAlt(i)}
+                draggable={false}
+              />
+            </div>
+          ))
+        }
+      </div>
+    </div>
+
+    <!-- 读完页（最后一页之后的独立一页，两种模式共用）：评论区 + 返回目录 -->
     <!-- 缩略图网格 -->
     <div id="thumbs" hidden>
       <div class="thumbs-head">
@@ -301,58 +299,54 @@ const pageAlt = (i: number) => `${bookTitle(book, lang)} · ${t(lang, 'reader.pa
     localStorage.setItem('cl:last', `${bookSlug}:${chapterSlug}`);
   };
 
-  /** 读完页（评论区覆盖层）：翻过最后一页才出现；进度条停在最后一页 */
+  /** 读完页：翻页模式=全屏覆盖层；滚动模式=scrollbook 内区块（始终在文档流，无需显隐） */
   function showAfterword() {
     if (afterwordOn) return;
     afterwordOn = true;
     endcard.hidden = true;
     endShown = true;
-    afterwordEl.hidden = false;
-    const sc = afterwordEl.querySelector('.afterword-scroll');
-    sc?.scrollTo(0, 0);
+    if (mode === 'flip') {
+      // 挪出 scrollbook 挂到 reader 根部 + 覆盖层样式（scrollbook 已被 hidden，留着无碍但挪出更稳）
+      afterwordEl.classList.add('as-overlay');
+      root.appendChild(afterwordEl);
+      afterwordEl.hidden = false;
+      afterwordEl.querySelector('.afterword-scroll')?.scrollTo(0, 0);
+    }
     indicator.textContent = `${count} / ${count} ✓`;
     slider.value = String(viewsCount);
     slider.style.setProperty('--fill', '100%');
     save(count);
-    // 内部滚动到顶部后再向上滑（overscroll）→ 关闭覆盖层回末页（移动端自然手势）
-    if (sc && !sc.dataset.bound) {
-      sc.dataset.bound = '1';
-      sc.addEventListener(
-        'scroll',
-        () => {
-          if (sc.scrollTop <= 0) sc.dataset.atTop = '1';
-          else sc.dataset.atTop = '';
-        },
-        { passive: true }
-      );
-      sc.addEventListener(
-        'touchstart',
-        (e) => {
-          if (sc.scrollTop <= 0) sc.dataset.atTop = '1';
-        },
-        { passive: true }
-      );
-      sc.addEventListener(
-        'touchmove',
-        (e) => {
-          if (sc.dataset.atTop === '1' && e.touches[0].clientY > afterwordTouchY + 36) {
-            sc.dataset.atTop = '';
-            stopAuto();
-            goLastPage();
-          }
-        },
-        { passive: true }
-      );
-      sc.addEventListener('touchend', () => (afterwordTouchY = 0), { passive: true });
-    }
   }
-  let afterwordTouchY = 0;
-  afterwordEl.addEventListener('touchstart', (e) => (afterwordTouchY = e.touches[0].clientY), { passive: true });
   function hideAfterword() {
     if (!afterwordOn) return;
     afterwordOn = false;
-    afterwordEl.hidden = true;
+    if (mode === 'flip') afterwordEl.hidden = true;
   }
+
+  // 读完页内部滚动到顶部后再向上滑（overscroll）→ 关闭覆盖层回末页（移动端自然手势，仅翻页模式）
+  const sc = afterwordEl.querySelector('.afterword-scroll');
+  let afterwordTouchY = 0;
+  if (sc) {
+    sc.addEventListener(
+      'touchstart',
+      () => {
+        if (sc.scrollTop <= 0) sc.dataset.atTop = '1';
+      },
+      { passive: true }
+    );
+    sc.addEventListener(
+      'touchmove',
+      (e) => {
+        if (sc.dataset.atTop === '1' && e.touches[0].clientY > afterwordTouchY + 36 && afterwordOn) {
+          sc.dataset.atTop = '';
+          stopAuto();
+          goLastPage();
+        }
+      },
+      { passive: true }
+    );
+  }
+  afterwordEl.addEventListener('touchstart', (e) => (afterwordTouchY = e.touches[0].clientY), { passive: true });
 
   function setView(v: number, pageForSave: number) {
     viewIdx = Math.min(Math.max(v, 0), viewsCount - 1);
@@ -511,36 +505,35 @@ const pageAlt = (i: number) => `${bookTitle(book, lang)} · ${t(lang, 'reader.pa
     computeViews();
 
     sections = [...scrollbook.querySelectorAll<HTMLElement>('.scroll-page')];
+    const awEl = document.getElementById('afterword');
     const io = new IntersectionObserver(
       (entries) => {
         for (const en of entries) {
           if (!en.isIntersecting) continue;
-          const p = Number((en.target as HTMLElement).dataset.idx) + 1;
+          const el = en.target as HTMLElement;
+          if (el === awEl) {
+            // 滚到读完页：指示器打 ✓，进度存最后一页
+            afterwordOn = true;
+            endcard.hidden = true;
+            endShown = true;
+            indicator.textContent = `${count} / ${count} ✓`;
+            slider.value = String(viewsCount);
+            slider.style.setProperty('--fill', '100%');
+            save(count);
+            continue;
+          }
+          if (afterwordOn) {
+            afterwordOn = false;
+            endShown = false;
+          }
+          const p = Number(el.dataset.idx) + 1;
           setView(viewOfPage(p), p);
         }
       },
       { root: scrollbook, threshold: 0.6 }
     );
     sections.forEach((s) => io.observe(s));
-    // 滚动模式：滚到 scrollbook 底部（最后一页 snap 停点之后）→ 打开读完页覆盖层；
-    // 往回滚（离开底部）→ 关闭。读完页自己内部滚动，不影响这个判定。
-    let coolDown = 0;
-    scrollbook.addEventListener(
-      'scroll',
-      () => {
-        if (Date.now() < coolDown) return;
-        const nearEnd = scrollbook.scrollTop + scrollbook.clientHeight >= scrollbook.scrollHeight - 120;
-        if (nearEnd && !afterwordOn) {
-          showAfterword();
-          coolDown = Date.now() + 400;
-        } else if (!nearEnd && afterwordOn) {
-          hideAfterword();
-          endShown = false;
-          coolDown = Date.now() + 400;
-        }
-      },
-      { passive: true }
-    );
+    if (awEl) io.observe(awEl);
 
     if (startPage > 1) {
       requestAnimationFrame(() =>
@@ -1307,21 +1300,37 @@ const pageAlt = (i: number) => `${bookTitle(book, lang)} · ${t(lang, 'reader.pa
   .endcard-back { display: inline-block; margin-top: 10px; font-size: 12.5px; color: var(--paper-dim); }
   .endcard-back:hover { color: var(--lamp); }
 
-  /* 读完页：独立覆盖层（翻过最后一页才出现），内部可滚动，移动端友好 */
+  /* 读完页：滚动模式=scrollbook 内最后一个区块（自然滚动到达）；
+     翻页模式=JS 加 .as-overlay 变成全屏覆盖层 */
   .afterword {
+    min-height: 100%;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+    display: grid;
+    place-items: center;
+    padding: 76px 18px 110px;
+    background: var(--reader-bg);
+  }
+  .afterword.as-overlay {
     position: absolute;
     inset: 0;
     z-index: 30;
-    background: var(--reader-bg);
+    min-height: 0;
+    display: block;
   }
-  .afterword[hidden] { display: none; }
-  .afterword-scroll {
+  .afterword.as-overlay .afterword-scroll,
+  .afterword .afterword-scroll {
     position: absolute;
     inset: 0;
     overflow-y: auto;
     overscroll-behavior: contain;
     -webkit-overflow-scrolling: touch;
     padding: 76px 18px 110px;
+  }
+  .afterword:not(.as-overlay) .afterword-scroll {
+    position: static;
+    overflow: visible;
+    padding: 0;
   }
   .afterword-inner {
     width: min(680px, 100%);
