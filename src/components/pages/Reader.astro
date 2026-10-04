@@ -815,8 +815,8 @@ const pageAlt = (i: number) => `${bookTitle(book, lang)} · ${t(lang, 'reader.pa
   document.getElementById('afterword-prev')?.addEventListener('click', () => {
     stopAuto();
     localStorage.removeItem(key);
+    hideAfterword();
     if (mode === 'flip' && pf) {
-      hideAfterword();
       pf.turnToPage(0);
       setView(0, 1);
     } else {
