@@ -154,6 +154,36 @@ const pageAlt = (i: number) => `${bookTitle(book, lang)} · ${t(lang, 'reader.pa
       </div>
     </div>
 
+    <!-- 读完页（最后一页之后的独立一页，两种模式共用）：评论区 + 返回目录 -->
+    <section class="afterword" id="afterword" hidden aria-label={t(lang, 'reader.afterwordTitle')}>
+      <div class="afterword-scroll">
+        <div class="afterword-inner">
+          <p class="afterword-kicker">{t(lang, 'reader.afterwordKicker')}</p>
+          <h2 class="afterword-title">{t(lang, 'reader.afterwordTitle')}</h2>
+          <p class="afterword-lead">{t(lang, 'reader.afterwordLead')}</p>
+          <div class="afterword-comments" id="comments">
+            {
+              GISCUS.repo && GISCUS.repoId && GISCUS.categoryId ? (
+                <iframe
+                  id="giscus-frame"
+                  title={t(lang, 'reader.afterwordTitle')}
+                  src={`https://giscus.app/${lang === 'en' ? 'en' : 'zh-CN'}/widget?origin=${encodeURIComponent('https://' + SITE.domain)}&repo=${encodeURIComponent(GISCUS.repo)}&repo-id=${encodeURIComponent(GISCUS.repoId)}&category=${encodeURIComponent(GISCUS.category)}&category-id=${encodeURIComponent(GISCUS.categoryId)}&mapping=specific&term=${encodeURIComponent('book:' + book.slug)}&strict=0&reactions-enabled=1&emit-metadata=0&input-position=top&theme=preferred_color_scheme&lang=${lang === 'en' ? 'en' : 'zh-CN'}`}
+                  loading="lazy"
+                  style="width:100%;border:0;min-height:420px;color-scheme:light dark;"
+                />
+              ) : (
+                <p class="afterword-comments-off">…</p>
+              )
+            }
+          </div>
+          <div class="afterword-nav">
+            <button class="afterword-prev" id="afterword-prev" type="button">{t(lang, 'reader.prevPage')}</button>
+            <a class="afterword-back" href={`${base}/book/${book.slug}/`}>{t(lang, 'reader.backHome')}</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- 缩略图网格 -->
     <div id="thumbs" hidden>
       <div class="thumbs-head">
@@ -171,32 +201,6 @@ const pageAlt = (i: number) => `${bookTitle(book, lang)} · ${t(lang, 'reader.pa
         }
       </div>
     </div>
-
-    <!-- 读完页（最后一页之后的空白页）：评论区 + 返回目录 -->
-    <section class="afterword" id="afterword" aria-label={t(lang, 'reader.afterwordTitle')}>
-      <div class="afterword-inner">
-        <p class="afterword-kicker">{t(lang, 'reader.afterwordKicker')}</p>
-        <h2 class="afterword-title">{t(lang, 'reader.afterwordTitle')}</h2>
-        <p class="afterword-lead">{t(lang, 'reader.afterwordLead')}</p>
-        <div class="afterword-comments" id="comments">
-          {
-            GISCUS.repo && GISCUS.repoId && GISCUS.categoryId ? (
-              <iframe
-                id="giscus-frame"
-                title={t(lang, 'reader.afterwordTitle')}
-                src={`https://giscus.app/${lang === 'en' ? 'en' : 'zh-CN'}/widget?origin=${encodeURIComponent('https://' + SITE.domain)}&repo=${encodeURIComponent(GISCUS.repo)}&repo-id=${encodeURIComponent(GISCUS.repoId)}&category=${encodeURIComponent(GISCUS.category)}&category-id=${encodeURIComponent(GISCUS.categoryId)}&mapping=specific&term=${encodeURIComponent('book:' + book.slug)}&strict=0&reactions-enabled=1&emit-metadata=0&input-position=top&theme=preferred_color_scheme&lang=${lang === 'en' ? 'en' : 'zh-CN'}`}
-                loading="lazy"
-                style="width:100%;border:0;min-height:420px;color-scheme:light dark;"
-              />
-            ) : (
-              <p class="afterword-comments-off">…</p>
-            )
-          }
-        </div>
-        <a class="afterword-back" href={`${base}/book/${book.slug}/`}>{t(lang, 'reader.backHome')}</a>
-        <button class="afterword-prev" id="afterword-prev" type="button">{t(lang, 'reader.prevPage')}</button>
-      </div>
-    </section>
 
     <!-- 章末引导卡 -->
     <div id="endcard" hidden>
@@ -285,30 +289,40 @@ const pageAlt = (i: number) => `${bookTitle(book, lang)} · ${t(lang, 'reader.pa
 
   function computeViews() {
     perView = mode === 'flip' && orientation === 'landscape' ? 2 : 1;
-    // +1：最后一页之后的「读完页」（评论区），占一个独立视图
-    viewsCount = Math.ceil(count / perView) + 1;
+    viewsCount = Math.ceil(count / perView);
     slider.max = String(viewsCount);
   }
   const viewOfPage = (page1: number) => Math.min(viewsCount - 1, Math.ceil(page1 / perView) - 1);
   const leftPageOfView = (v: number) => Math.min(count, v * perView + 1);
-  const isAfterwordView = (v: number) => v >= Math.ceil(count / perView);
+  let afterwordOn = false;
 
   const save = (p: number) => {
     localStorage.setItem(key, String(p));
     localStorage.setItem('cl:last', `${bookSlug}:${chapterSlug}`);
   };
 
+  /** 读完页（评论区覆盖层）：翻过最后一页才出现；进度条停在最后一页 */
+  function showAfterword() {
+    if (afterwordOn) return;
+    afterwordOn = true;
+    endcard.hidden = true;
+    endShown = true;
+    afterwordEl.hidden = false;
+    afterwordEl.querySelector('.afterword-scroll')?.scrollTo(0, 0);
+    indicator.textContent = `${count} / ${count} ✓`;
+    slider.value = String(viewsCount);
+    slider.style.setProperty('--fill', '100%');
+    save(count);
+  }
+  function hideAfterword() {
+    if (!afterwordOn) return;
+    afterwordOn = false;
+    afterwordEl.hidden = true;
+  }
+
   function setView(v: number, pageForSave: number) {
     viewIdx = Math.min(Math.max(v, 0), viewsCount - 1);
-    if (isAfterwordView(viewIdx)) {
-      // 读完页：指示器显示总页数 + ✓，进度条存最后一页（不覆盖上次阅读位置语义）
-      indicator.textContent = `${count} / ${count} ✓`;
-      slider.value = String(viewIdx + 1);
-      slider.style.setProperty('--fill', '100%');
-      save(count);
-      updateEndcard(viewIdx);
-      return;
-    }
+    hideAfterword();
     const left = leftPageOfView(viewIdx);
     const right = Math.min(left + perView - 1, count);
     indicator.textContent = perView === 1 || left === right ? `${left} / ${count}` : `${left}–${right} / ${count}`;
@@ -420,13 +434,14 @@ const pageAlt = (i: number) => `${bookTitle(book, lang)} · ${t(lang, 'reader.pa
       // 自动翻页自己发起的翻页不该把自己停掉；只有用户手动翻页才停
       if (autoFlipping) autoFlipping = false;
       else stopAuto();
-      // 翻过最后一页（flipNext 在末页再前进时页号不变）→ 进入读完页视图
+      // 翻过最后一页（flipNext 在末页再前进时页号不变）→ 打开读完页覆盖层
       const atLast = leftIdx + perView > count;
       if (atLast && flipDirNext) {
-        setView(viewsCount - 1, count);
         flipDirNext = false;
+        showAfterword();
         return;
       }
+      hideAfterword();
       setView(viewOfPage(leftIdx + 1), leftIdx + 1);
       preloadFlip(leftIdx);
     });
@@ -461,23 +476,36 @@ const pageAlt = (i: number) => `${bookTitle(book, lang)} · ${t(lang, 'reader.pa
     computeViews();
 
     sections = [...scrollbook.querySelectorAll<HTMLElement>('.scroll-page')];
-    if (afterwordEl) sections.push(afterwordEl as unknown as HTMLElement);
     const io = new IntersectionObserver(
       (entries) => {
         for (const en of entries) {
           if (!en.isIntersecting) continue;
-          const el = en.target as HTMLElement;
-          if (el.id === 'afterword') {
-            setView(viewsCount - 1, count);
-            continue;
-          }
-          const p = Number(el.dataset.idx) + 1;
+          const p = Number((en.target as HTMLElement).dataset.idx) + 1;
           setView(viewOfPage(p), p);
         }
       },
       { root: scrollbook, threshold: 0.6 }
     );
     sections.forEach((s) => io.observe(s));
+    // 滚动模式：滚过最后一页（接近 scrollbook 底部）→ 打开读完页覆盖层；
+    // 往回滚（离开底部）→ 关闭。读完页自己内部滚动，不影响这个判定。
+    let coolDown = 0;
+    scrollbook.addEventListener(
+      'scroll',
+      () => {
+        if (Date.now() < coolDown) return;
+        const nearEnd = scrollbook.scrollTop + scrollbook.clientHeight >= scrollbook.scrollHeight - 40;
+        if (nearEnd && !afterwordOn && viewIdx >= viewsCount - 1) {
+          showAfterword();
+          coolDown = Date.now() + 400;
+        } else if (!nearEnd && afterwordOn) {
+          hideAfterword();
+          endShown = false;
+          coolDown = Date.now() + 400;
+        }
+      },
+      { passive: true }
+    );
 
     if (startPage > 1) {
       requestAnimationFrame(() =>
@@ -552,6 +580,15 @@ const pageAlt = (i: number) => `${bookTitle(book, lang)} · ${t(lang, 'reader.pa
     target?.scrollIntoView({ behavior: 'smooth' });
   }
 
+  /** 关闭读完页并回到最后一页（两种模式通用） */
+  function goLastPage() {
+    hideAfterword();
+    const lastView = viewsCount - 1;
+    if (mode === 'flip') pf?.turnToPage(lastView * perView);
+    else sections[lastView]?.scrollIntoView({ behavior: 'smooth' });
+    setView(lastView, lastView * perView + 1);
+  }
+
   /* ---------- 启动 ---------- */
   computeViews();
   setIndicatorInit(saved);
@@ -574,13 +611,7 @@ const pageAlt = (i: number) => `${bookTitle(book, lang)} · ${t(lang, 'reader.pa
   slider.addEventListener('change', () => {
     stopAuto();
     const v = Number(slider.value) - 1;
-    if (isAfterwordView(v)) {
-      // 滑条拖到读完页：翻页模式滚入 afterword，滚动模式定位到区块
-      if (mode === 'flip') afterwordEl?.scrollIntoView({ behavior: 'smooth' });
-      else afterwordEl?.scrollIntoView({ behavior: 'smooth' });
-      setView(v, count);
-      return;
-    }
+    hideAfterword();
     if (mode === 'flip') pf?.turnToPage(v * perView);
     else sections[v]?.scrollIntoView({ behavior: 'smooth' });
     setView(v, v * perView + 1);
@@ -646,17 +677,14 @@ const pageAlt = (i: number) => `${bookTitle(book, lang)} · ${t(lang, 'reader.pa
       return;
     }
     if (e.key === 'ArrowRight' || e.key === 'PageDown') {
-      if (isAfterwordView(viewIdx)) return; // 读完页：←→交给评论区（giscus 输入框），不再翻页
+      if (afterwordOn) return; // 读完页：方向键交给评论区（giscus 输入框），不再翻页
       if (mode === 'flip') flipBy(1);
       else scrollByPage(1);
     } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
-      if (isAfterwordView(viewIdx)) {
-        // 读完页后退：直接回最后一页（走库翻页会跳到前一个跨页，漏掉末页）
+      if (afterwordOn) {
+        // 读完页后退：关闭覆盖层回最后一页
         stopAuto();
-        const lastView = viewsCount - 2;
-        if (mode === 'flip') pf?.turnToPage(lastView * perView);
-        else sections[lastView]?.scrollIntoView({ behavior: 'smooth' });
-        setView(lastView, lastView * perView + 1);
+        goLastPage();
         return;
       }
       if (mode === 'flip') flipBy(-1);
@@ -748,13 +776,10 @@ const pageAlt = (i: number) => `${bookTitle(book, lang)} · ${t(lang, 'reader.pa
     if (autoTimer) startAuto();
   });
   renderSpeed();
-  // 读完页「回到末页」：与键盘 ← 同一逻辑（直接回最后一页，不走库翻页避免跳页）
+  // 读完页「回到末页」：关闭覆盖层回最后一页
   document.getElementById('afterword-prev')?.addEventListener('click', () => {
     stopAuto();
-    const lastView = viewsCount - 2;
-    if (mode === 'flip') pf?.turnToPage(lastView * perView);
-    else sections[lastView]?.scrollIntoView({ behavior: 'smooth' });
-    setView(lastView, lastView * perView + 1);
+    goLastPage();
   });
   function hide() {
     // 指针正悬停在工具栏上（读按钮/拖滑条）时不隐藏，稍后再试
@@ -1230,15 +1255,25 @@ const pageAlt = (i: number) => `${bookTitle(book, lang)} · ${t(lang, 'reader.pa
   .endcard-back { display: inline-block; margin-top: 10px; font-size: 12.5px; color: var(--paper-dim); }
   .endcard-back:hover { color: var(--lamp); }
 
-  /* 读完页：最后一页之后的独立区块（滚动模式在文档流里，翻页模式滚入视野） */
+  /* 读完页：独立覆盖层（翻过最后一页才出现），内部可滚动，移动端友好 */
   .afterword {
-    min-height: 72vh;
-    display: grid;
-    place-items: center;
-    padding: 56px 18px 120px;
+    position: absolute;
+    inset: 0;
+    z-index: 30;
+    background: var(--reader-bg);
+  }
+  .afterword[hidden] { display: none; }
+  .afterword-scroll {
+    position: absolute;
+    inset: 0;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+    padding: 76px 18px 110px;
   }
   .afterword-inner {
     width: min(680px, 100%);
+    margin: 0 auto;
     text-align: center;
   }
   .afterword-kicker {
@@ -1277,9 +1312,9 @@ const pageAlt = (i: number) => `${bookTitle(book, lang)} · ${t(lang, 'reader.pa
     transition: color 0.2s ease;
   }
   .afterword-back:hover { color: var(--lamp); }
+  .afterword-nav { display: flex; gap: 18px; justify-content: center; align-items: center; margin-top: 22px; }
   .afterword-prev {
     display: inline-block;
-    margin-left: 18px;
     font-size: 13px;
     color: var(--paper-dim);
     background: none;
