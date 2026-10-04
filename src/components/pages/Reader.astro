@@ -308,12 +308,46 @@ const pageAlt = (i: number) => `${bookTitle(book, lang)} · ${t(lang, 'reader.pa
     endcard.hidden = true;
     endShown = true;
     afterwordEl.hidden = false;
-    afterwordEl.querySelector('.afterword-scroll')?.scrollTo(0, 0);
+    const sc = afterwordEl.querySelector('.afterword-scroll');
+    sc?.scrollTo(0, 0);
     indicator.textContent = `${count} / ${count} ✓`;
     slider.value = String(viewsCount);
     slider.style.setProperty('--fill', '100%');
     save(count);
+    // 内部滚动到顶部后再向上滑（overscroll）→ 关闭覆盖层回末页（移动端自然手势）
+    if (sc && !sc.dataset.bound) {
+      sc.dataset.bound = '1';
+      sc.addEventListener(
+        'scroll',
+        () => {
+          if (sc.scrollTop <= 0) sc.dataset.atTop = '1';
+          else sc.dataset.atTop = '';
+        },
+        { passive: true }
+      );
+      sc.addEventListener(
+        'touchstart',
+        (e) => {
+          if (sc.scrollTop <= 0) sc.dataset.atTop = '1';
+        },
+        { passive: true }
+      );
+      sc.addEventListener(
+        'touchmove',
+        (e) => {
+          if (sc.dataset.atTop === '1' && e.touches[0].clientY > afterwordTouchY + 36) {
+            sc.dataset.atTop = '';
+            stopAuto();
+            goLastPage();
+          }
+        },
+        { passive: true }
+      );
+      sc.addEventListener('touchend', () => (afterwordTouchY = 0), { passive: true });
+    }
   }
+  let afterwordTouchY = 0;
+  afterwordEl.addEventListener('touchstart', (e) => (afterwordTouchY = e.touches[0].clientY), { passive: true });
   function hideAfterword() {
     if (!afterwordOn) return;
     afterwordOn = false;
