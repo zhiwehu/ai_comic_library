@@ -522,15 +522,15 @@ const pageAlt = (i: number) => `${bookTitle(book, lang)} · ${t(lang, 'reader.pa
       { root: scrollbook, threshold: 0.6 }
     );
     sections.forEach((s) => io.observe(s));
-    // 滚动模式：滚过最后一页（接近 scrollbook 底部）→ 打开读完页覆盖层；
+    // 滚动模式：滚到 scrollbook 底部（最后一页 snap 停点之后）→ 打开读完页覆盖层；
     // 往回滚（离开底部）→ 关闭。读完页自己内部滚动，不影响这个判定。
     let coolDown = 0;
     scrollbook.addEventListener(
       'scroll',
       () => {
         if (Date.now() < coolDown) return;
-        const nearEnd = scrollbook.scrollTop + scrollbook.clientHeight >= scrollbook.scrollHeight - 40;
-        if (nearEnd && !afterwordOn && viewIdx >= viewsCount - 1) {
+        const nearEnd = scrollbook.scrollTop + scrollbook.clientHeight >= scrollbook.scrollHeight - 120;
+        if (nearEnd && !afterwordOn) {
           showAfterword();
           coolDown = Date.now() + 400;
         } else if (!nearEnd && afterwordOn) {
