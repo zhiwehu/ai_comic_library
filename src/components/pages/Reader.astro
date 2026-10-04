@@ -3,7 +3,7 @@ import Base from '../../layouts/Base.astro';
 import { chapterNav, bookTitle, bookDesc } from '../../lib/books';
 import { t, type Lang } from '../../lib/i18n';
 import { breadcrumbSchema, issueSchema } from '../../lib/schema';
-import { GISCUS, SITE } from '../../site.config';
+import Giscus from '../Giscus.astro';
 
 interface Props {
   lang: Lang;
@@ -98,7 +98,7 @@ const pageAlt = (i: number) => `${bookTitle(book, lang)} · ${t(lang, 'reader.pa
         </span>
       </div>
       <div class="chrome-bottom">
-        <input type="range" id="slider" min="1" max={count} value="1" step="1" aria-label="页码滑条" />
+        <input type="range" id="slider" min="1" max={count} value="1" step="1" aria-label={t(lang, 'reader.slider')} />
         <span id="page-indicator" aria-live="polite">1 / {count}</span>
       </div>
       <div class="auto-speed" id="auto-speed" hidden>
@@ -141,19 +141,7 @@ const pageAlt = (i: number) => `${bookTitle(book, lang)} · ${t(lang, 'reader.pa
           <h2 class="afterword-title">{t(lang, 'reader.afterwordTitle')}</h2>
           <p class="afterword-lead">{t(lang, 'reader.afterwordLead')}</p>
           <div class="afterword-comments" id="comments">
-            {
-              GISCUS.repo && GISCUS.repoId && GISCUS.categoryId ? (
-                <iframe
-                  id="giscus-frame"
-                  title={t(lang, 'reader.afterwordTitle')}
-                  src={`https://giscus.app/${lang === 'en' ? 'en' : 'zh-CN'}/widget?origin=${encodeURIComponent('https://' + SITE.domain)}&repo=${encodeURIComponent(GISCUS.repo)}&repo-id=${encodeURIComponent(GISCUS.repoId)}&category=${encodeURIComponent(GISCUS.category)}&category-id=${encodeURIComponent(GISCUS.categoryId)}&mapping=specific&term=${encodeURIComponent('book:' + book.slug)}&strict=0&reactions-enabled=1&emit-metadata=0&input-position=top&theme=preferred_color_scheme&lang=${lang === 'en' ? 'en' : 'zh-CN'}`}
-                  loading="lazy"
-                  style="width:100%;border:0;min-height:420px;color-scheme:light dark;"
-                />
-              ) : (
-                <p class="afterword-comments-off">…</p>
-              )
-            }
+            <Giscus term={book.slug} lang={lang} />
           </div>
           <div class="afterword-nav">
             <button class="afterword-prev" id="afterword-prev" type="button">{t(lang, 'reader.restart')}</button>
@@ -1361,7 +1349,7 @@ const pageAlt = (i: number) => `${bookTitle(book, lang)} · ${t(lang, 'reader.pa
     margin-bottom: 26px;
   }
   .afterword-comments iframe { width: 100%; border: 0; min-height: 420px; color-scheme: light dark; }
-  .afterword-comments-off { text-align: center; color: var(--paper-dim); font-size: 13px; }
+  .afterword-comments :global(.giscus) { width: 100%; }
   .afterword-back {
     display: inline-block;
     font-size: 13px;

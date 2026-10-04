@@ -81,6 +81,7 @@ const zh: Dict = {
   'reader.close': '关闭',
   'reader.jumpAlt': '跳到第 {n} 页',
   'reader.hint': '轻点左右翻页 · 中央呼出工具栏',
+  'reader.slider': '页码滑条',
   'reader.auto': '自动翻页',
 };
 
@@ -156,10 +157,71 @@ const en: Dict = {
   'reader.close': 'Close',
   'reader.jumpAlt': 'Jump to page {n}',
   'reader.hint': 'Tap sides to turn pages · center for the toolbar',
+  'reader.slider': 'Page slider',
   'reader.auto': 'Auto play',
 };
 
 const DICTS: Record<Lang, Dict> = { zh, en };
+
+/** 标签双语：book.yml 里的 tag 是中文，英文站显示对应英文；未映射的回退原文 */
+const TAG_EN: Record<string, string> = {
+  '996': '996',
+  'AI Infra': 'AI Infra',
+  AI基础设施: 'AI Infrastructure',
+  AI技术: 'AI Tech',
+  AI新闻: 'AI News',
+  Agent: 'Agent',
+  Harness: 'Harness',
+  XKCD风格: 'XKCD Style',
+  信息图: 'Infographic',
+  克苏鲁: 'Cthulhu',
+  写实画风: 'Realistic',
+  动漫: 'Anime',
+  历史: 'History',
+  友情: 'Friendship',
+  古埃及: 'Ancient Egypt',
+  古文: 'Classical Chinese',
+  周更: 'Weekly',
+  夜晚: 'Night',
+  大模型: 'LLM',
+  太阳雨: 'Sunshower',
+  工具指南: 'Tool Guide',
+  恐怖: 'Horror',
+  悬疑: 'Mystery',
+  拳击: 'Boxing',
+  无字绘本: 'Wordless',
+  显存: 'VRAM',
+  晚安: 'Goodnight',
+  月亮: 'Moon',
+  水墨: 'Ink Wash',
+  治愈: 'Healing',
+  游戏化: 'Gamified',
+  漫画: 'Comic',
+  火星: 'Mars',
+  火柴人: 'Stick Figure',
+  灯塔: 'Lighthouse',
+  科幻: 'Sci-Fi',
+  科普: 'Explainer',
+  科普漫画: 'Explainer Comic',
+  美式漫画: 'American Comic',
+  职场: 'Workplace',
+  自我成长: 'Self Growth',
+  自我认同: 'Identity',
+  苏轼: 'Su Shi',
+  英文: 'English',
+  英文短篇: 'English Story',
+  英文绘本: 'English Picture Book',
+  行为心理学: 'Behavioral Psych',
+  讽刺漫画: 'Satire',
+  都市: 'Urban',
+  都市生活: 'City Life',
+  青春: 'Youth',
+};
+
+export function tTag(lang: Lang, tag: string): string {
+  if (lang === 'en') return TAG_EN[tag] ?? tag;
+  return tag;
+}
 
 export function t(lang: Lang, key: string, vars?: Record<string, string | number>): string {
   let s = DICTS[lang][key] ?? DICTS.zh[key] ?? key;

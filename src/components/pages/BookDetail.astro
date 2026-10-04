@@ -4,7 +4,7 @@ import ChapterList from '../ChapterList.astro';
 import Giscus from '../Giscus.astro';
 import Pic from '../Pic.astro';
 import { bookDesc, bookTitle } from '../../lib/books';
-import { fmtDate, t, type Lang } from '../../lib/i18n';
+import { fmtDate, t, tTag, type Lang } from '../../lib/i18n';
 import type { BookView } from '../../lib/books';
 import { bookSchema, breadcrumbSchema } from '../../lib/schema';
 
@@ -40,9 +40,9 @@ const title = bookTitle(book, lang);
       <div class="cover-frame">
         {
           book.coverUrl && (
-            <div class="cover-box">
+            <a class="cover-box" href={`/read/${book.slug}/${latestChapterSlug}/`} aria-label={`${title} · ${t(lang, 'detail.start')}`}>
               <Pic src={book.coverUrl} alt={title} loading="eager" fetchpriority="high" />
-            </div>
+            </a>
           )
         }
       </div>
@@ -67,7 +67,7 @@ const title = bookTitle(book, lang);
           book.tags.length > 0 && (
             <p class="tags">
               {book.tags.map((tg) => (
-                <span class="tag">#{tg}</span>
+                <span class="tag">#{tTag(lang, tg)}</span>
               ))}
             </p>
           )
@@ -183,6 +183,7 @@ const title = bookTitle(book, lang);
   }
 
   .cover-box {
+    display: block;
     position: relative;
     aspect-ratio: 3 / 4;
     overflow: hidden;
@@ -190,6 +191,7 @@ const title = bookTitle(book, lang);
     box-shadow: var(--page-shadow), inset 0 0 0 1px var(--frame-line);
     transform: perspective(900px) rotateY(-4deg);
   }
+  .cover-box:hover { filter: brightness(1.05); }
   .cover-box::before {
     content: '';
     position: absolute;
