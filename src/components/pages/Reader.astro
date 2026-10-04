@@ -435,7 +435,8 @@ const pageAlt = (i: number) => `${bookTitle(book, lang)} · ${t(lang, 'reader.pa
       if (autoFlipping) autoFlipping = false;
       else stopAuto();
       // 翻过最后一页（flipNext 在末页再前进时页号不变）→ 打开读完页覆盖层
-      const atLast = leftIdx + perView > count;
+      // 注意：库的页号 0-based，单页模式末页 leftIdx=count-1，对开模式末跨页 leftIdx=count-perView
+      const atLast = leftIdx + perView >= count;
       if (atLast && flipDirNext) {
         flipDirNext = false;
         showAfterword();
