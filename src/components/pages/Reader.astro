@@ -366,6 +366,10 @@ const pageAlt = (i: number) => `${bookTitle(book, lang)} · ${t(lang, 'reader.pa
       swipeDistance: 99999,
       startPage: startPage - 1,
       disableFlipByClick: true, // 翻页交给左右点击区：中央轻点呼出工具栏
+      // 关掉库自带的鼠标/触摸事件：它的 onTouchStart 有 250ms 延迟的 startUserTouch，
+      // 轻点持续 ≥250ms 时它的 userStop() 也会 flip 一次，和我们的 pointerup 翻页叠加
+      // 造成「点一下翻两页」。翻页手势全部由下面的 pointerdown/pointerup 自己处理。
+      useMouseEvents: false,
     });
     pf.loadFromHTML(flipbook.querySelectorAll('.pf-page'));
     flipImgs = [...flipbook.querySelectorAll('img')];
