@@ -297,7 +297,7 @@ const pageAlt = (i: number) => `${bookTitle(book, lang)} · ${t(lang, 'reader.pa
       afterwordEl.classList.add('as-overlay');
       root.appendChild(afterwordEl);
       afterwordEl.hidden = false;
-      afterwordEl.querySelector('.afterword-scroll')?.scrollTo(0, 0);
+      afterwordEl.scrollTo(0, 0);
     }
     indicator.textContent = `${count} / ${count} ✓`;
     slider.value = String(viewsCount);
@@ -310,29 +310,27 @@ const pageAlt = (i: number) => `${bookTitle(book, lang)} · ${t(lang, 'reader.pa
     if (mode === 'flip') afterwordEl.hidden = true;
   }
 
-  // 读完页内部滚动到顶部后再向上滑（overscroll）→ 关闭覆盖层回末页（移动端自然手势，仅翻页模式）
-  const sc = afterwordEl.querySelector('.afterword-scroll');
+  // 覆盖层内部滚动到顶部后再向上滑（overscroll）→ 关闭覆盖层回末页（移动端自然手势，仅翻页模式）
+  const sc = afterwordEl;
   let afterwordTouchY = 0;
-  if (sc) {
-    sc.addEventListener(
-      'touchstart',
-      () => {
-        if (sc.scrollTop <= 0) sc.dataset.atTop = '1';
-      },
-      { passive: true }
-    );
-    sc.addEventListener(
-      'touchmove',
-      (e) => {
-        if (sc.dataset.atTop === '1' && e.touches[0].clientY > afterwordTouchY + 36 && afterwordOn) {
-          sc.dataset.atTop = '';
-          stopAuto();
-          goLastPage();
-        }
-      },
-      { passive: true }
-    );
-  }
+  sc.addEventListener(
+    'touchstart',
+    () => {
+      if (sc.scrollTop <= 0) sc.dataset.atTop = '1';
+    },
+    { passive: true }
+  );
+  sc.addEventListener(
+    'touchmove',
+    (e) => {
+      if (sc.dataset.atTop === '1' && e.touches[0].clientY > afterwordTouchY + 36 && afterwordOn) {
+        sc.dataset.atTop = '';
+        stopAuto();
+        goLastPage();
+      }
+    },
+    { passive: true }
+  );
   afterwordEl.addEventListener('touchstart', (e) => (afterwordTouchY = e.touches[0].clientY), { passive: true });
 
   function setView(v: number, pageForSave: number) {
@@ -1302,20 +1300,11 @@ const pageAlt = (i: number) => `${bookTitle(book, lang)} · ${t(lang, 'reader.pa
     z-index: 45; /* 高于 edge-strip(35)/chrome(40)：覆盖层打开时按钮不被拦 */
     min-height: 0;
     display: block;
-  }
-  .afterword.as-overlay .afterword-scroll,
-  .afterword .afterword-scroll {
-    position: absolute;
-    inset: 0;
+    /* 覆盖层自身滚动（HTML 里已无 .afterword-scroll 包裹层）：
+       giscus 评论区很高，按钮在视口外，不滚就永远看不到 */
     overflow-y: auto;
     overscroll-behavior: contain;
     -webkit-overflow-scrolling: touch;
-    padding: 76px 18px 110px;
-  }
-  .afterword:not(.as-overlay) .afterword-scroll {
-    position: static;
-    overflow: visible;
-    padding: 0;
   }
   .afterword-inner {
     width: min(680px, 100%);
