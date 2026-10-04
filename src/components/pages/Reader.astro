@@ -156,7 +156,7 @@ const pageAlt = (i: number) => `${bookTitle(book, lang)} · ${t(lang, 'reader.pa
             }
           </div>
           <div class="afterword-nav">
-            <button class="afterword-prev" id="afterword-prev" type="button">{t(lang, 'reader.prevPage')}</button>
+            <button class="afterword-prev" id="afterword-prev" type="button">{t(lang, 'reader.restart')}</button>
             <a class="afterword-back" href={`${base}/book/${book.slug}/`}>{t(lang, 'reader.backHome')}</a>
           </div>
         </div>
@@ -271,7 +271,6 @@ const pageAlt = (i: number) => `${bookTitle(book, lang)} · ${t(lang, 'reader.pa
   let sections: HTMLElement[] = [];
   let orientation: 'portrait' | 'landscape' = 'portrait';
   let endShown = false;
-  let flipDirNext = false;
   let toastTimer: ReturnType<typeof setTimeout> | undefined;
   const afterwordEl = document.getElementById('afterword');
 
@@ -462,14 +461,8 @@ const pageAlt = (i: number) => `${bookTitle(book, lang)} · ${t(lang, 'reader.pa
       // 自动翻页自己发起的翻页不该把自己停掉；只有用户手动翻页才停
       if (autoFlipping) autoFlipping = false;
       else stopAuto();
-      // 翻过最后一页（flipNext 在末页再前进时页号不变）→ 打开读完页覆盖层
-      // 注意：库的页号 0-based，单页模式末页 leftIdx=count-1，对开模式末跨页 leftIdx=count-perView
-      const atLast = leftIdx + perView >= count;
-      if (atLast && flipDirNext) {
-        flipDirNext = false;
-        showAfterword();
-        return;
-      }
+      // 翻到最后一页正常显示；「翻过最后一页」由 flipAtPoint 在末页再翻时主动处理
+      // （库在末页 flipNext 无页可翻、不发 flip 事件），这里不做 afterword 判定
       hideAfterword();
       setView(viewOfPage(leftIdx + 1), leftIdx + 1);
       preloadFlip(leftIdx);
@@ -558,7 +551,6 @@ const pageAlt = (i: number) => `${bookTitle(book, lang)} · ${t(lang, 'reader.pa
     if (!pf) return;
     // 已在最后一页再往前翻 → 库不会再发 flip 事件（无页可翻），直接打开读完页
     if (dir > 0 && viewIdx >= viewsCount - 1) {
-      flipDirNext = false;
       showAfterword();
       return;
     }
@@ -566,8 +558,6 @@ const pageAlt = (i: number) => `${bookTitle(book, lang)} · ${t(lang, 'reader.pa
       goLastPage();
       return;
     }
-    // 记录本次翻页方向：从末页翻回时用于同步状态
-    flipDirNext = dir > 0;
     const st = pf.getSettings();
     const saved = st.disableFlipByClick;
     st.disableFlipByClick = false;
@@ -821,10 +811,17 @@ const pageAlt = (i: number) => `${bookTitle(book, lang)} · ${t(lang, 'reader.pa
     if (autoTimer) startAuto();
   });
   renderSpeed();
-  // 读完页「回到末页」：关闭覆盖层回最后一页
+  // 读完页「重新阅读」：清进度回第 1 页
   document.getElementById('afterword-prev')?.addEventListener('click', () => {
     stopAuto();
-    goLastPage();
+    localStorage.removeItem(key);
+    if (mode === 'flip' && pf) {
+      hideAfterword();
+      pf.turnToPage(0);
+      setView(0, 1);
+    } else {
+      location.reload();
+    }
   });
   function hide() {
     // 指针正悬停在工具栏上（读按钮/拖滑条）时不隐藏，稍后再试
@@ -1314,7 +1311,7 @@ const pageAlt = (i: number) => `${bookTitle(book, lang)} · ${t(lang, 'reader.pa
   .afterword.as-overlay {
     position: absolute;
     inset: 0;
-    z-index: 30;
+    z-index: 45; /* 高于 edge-strip(35)/chrome(40)：覆盖层打开时按钮不被拦 */
     min-height: 0;
     display: block;
   }
