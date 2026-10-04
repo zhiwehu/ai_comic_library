@@ -463,6 +463,14 @@ const pageAlt = (i: number) => `${bookTitle(book, lang)} · ${t(lang, 'reader.pa
 
   /** 无触点场景（键盘、自动翻页、缩略图跳页）：取书上左右底的对称坐标，
    *  让两个方向的卷页起点对称 */
+  /** 点击翻页同样走动画锁：动画未结束时忽略再次点击，避免一次轻点连翻两页 */
+  function tapFlipAtPoint(x: number, y: number, dir: 1 | -1) {
+    if (!pf) return;
+    if (Date.now() < flipLockUntil) return;
+    flipLockUntil = Date.now() + FLIP_LOCK_MS;
+    flipAtPoint(x, y, dir);
+  }
+
   function flipBy(dir: 1 | -1) {
     if (!pf) return;
     if (Date.now() < flipLockUntil) return;
@@ -713,13 +721,13 @@ const pageAlt = (i: number) => `${bookTitle(book, lang)} · ${t(lang, 'reader.pa
     stopAuto();
     if (e.pointerType === 'mouse') {
       // 桌面：左右半区翻页（工具栏由鼠标移动呼出，2.2s 无操作自动隐藏）
-      flipAtPoint(e.clientX, e.clientY, x < 0.5 ? -1 : 1);
+      tapFlipAtPoint(e.clientX, e.clientY, x < 0.5 ? -1 : 1);
     } else {
       // 触屏：两侧各 40% 翻页（竖屏下书页几乎占满屏宽，点左页靠中线处也必须能后退），
       // 中央 20% 呼出/隐藏工具栏（上下边缘条同样可呼出）。
       // 翻页传**真实触点**：卷页从你点的那个角落开始，左右观感才一致。
-      if (x < 0.4) flipAtPoint(e.clientX, e.clientY, -1);
-      else if (x > 0.6) flipAtPoint(e.clientX, e.clientY, 1);
+      if (x < 0.4) tapFlipAtPoint(e.clientX, e.clientY, -1);
+      else if (x > 0.6) tapFlipAtPoint(e.clientX, e.clientY, 1);
       else chrome.classList.contains('chrome-on') ? hide() : wake();
     }
   });
