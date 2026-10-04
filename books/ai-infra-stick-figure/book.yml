@@ -1,0 +1,9 @@
+title: "AI Infra: A Stick Figure Field Manual"
+type: picture-book
+status: completed
+language: en
+description: "火柴人讲透 AI 基础设施：芯片（HBM 才是真瓶颈）→ 集群（NVLink/网络/钱包）→ 软件栈千层蛋糕（CUDA→PyTorch→OOM）→ 推理（Prefill+Decode、买 vs 租）→ 训练的不对称生意 → 制冷与地理 → 能耗金字塔。XKCD 风白底黑线，主角 STICKY 螺旋桨帽全程带路。"
+cover: cover.webp
+tags: ["AI基础设施", "火柴人", "科普", "英文绘本", "XKCD风格"]
+title_en: "AI Infra: A Stick Figure Field Manual"
+description_en: "The entire AI infrastructure stack explained by stick figures: chips (HBM is the real bottleneck), clusters (NVLink, networks, and your wallet), the software layer cake (CUDA to PyTorch to OOM), inference (prefill + decode, buy vs rent), the training asymmetry, cooling and geography, and the electricity pyramid. XKCD-style black ink on white, guided by STICKY in a propeller cap."
