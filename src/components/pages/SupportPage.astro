@@ -7,7 +7,16 @@ interface Props {
   lang: Lang;
 }
 const { lang } = Astro.props;
-const anyChannel = !!(SUPPORT.wechatReward || SUPPORT.afdian || SUPPORT.store || SUPPORT.contact);
+// 中英双轨：中文站走国内通路（微信/爱发电），英文站走海外通路（Ko-fi/海外商店）
+type Channels = {
+  wechatReward?: string;
+  afdian?: string;
+  kofi?: string;
+  store?: string;
+  contact?: string;
+};
+const c: Channels = lang === 'en' ? SUPPORT.en : SUPPORT.zh;
+const anyChannel = !!(c.wechatReward || c.afdian || c.kofi || c.store || c.contact);
 ---
 
 <Base
@@ -30,12 +39,21 @@ const anyChannel = !!(SUPPORT.wechatReward || SUPPORT.afdian || SUPPORT.store ||
     {
       anyChannel ? (
         <div class="sup-grid">
-          {SUPPORT.wechatReward && (
+          {c.kofi && (
+            <section class="sup-card sup-card--first">
+              <h2>{t(lang, 'support.kofiTitle')}</h2>
+              <p>{t(lang, 'support.kofiDesc')}</p>
+              <a class="btn btn-lamp" href={c.kofi} target="_blank" rel="noopener">
+                {t(lang, 'support.kofiCta')} ☕
+              </a>
+            </section>
+          )}
+          {c.wechatReward && (
             <section class="sup-card">
               <h2>{t(lang, 'support.wechatTitle')}</h2>
               <img
                 class="sup-qr"
-                src={SUPPORT.wechatReward}
+                src={c.wechatReward}
                 alt={t(lang, 'support.wechatTitle')}
                 width="220"
                 height="220"
@@ -44,29 +62,29 @@ const anyChannel = !!(SUPPORT.wechatReward || SUPPORT.afdian || SUPPORT.store ||
               <p>{t(lang, 'support.wechatDesc')}</p>
             </section>
           )}
-          {SUPPORT.afdian && (
+          {c.afdian && (
             <section class="sup-card">
               <h2>{t(lang, 'support.afdianTitle')}</h2>
               <p>{t(lang, 'support.afdianDesc')}</p>
-              <a class="btn btn-lamp" href={SUPPORT.afdian} target="_blank" rel="noopener">
+              <a class="btn btn-lamp" href={c.afdian} target="_blank" rel="noopener">
                 {t(lang, 'support.afdianCta')} →
               </a>
             </section>
           )}
-          {SUPPORT.store && (
+          {c.store && (
             <section class="sup-card">
               <h2>{t(lang, 'support.storeTitle')}</h2>
               <p>{t(lang, 'support.storeDesc')}</p>
-              <a class="btn" href={SUPPORT.store} target="_blank" rel="noopener">
+              <a class="btn" href={c.store} target="_blank" rel="noopener">
                 {t(lang, 'support.storeCta')} →
               </a>
             </section>
           )}
-          {SUPPORT.contact && (
+          {c.contact && (
             <section class="sup-card">
               <h2>{t(lang, 'support.bizTitle')}</h2>
               <p>{t(lang, 'support.bizDesc')}</p>
-              <a class="btn btn-ghost" href={SUPPORT.contact}>
+              <a class="btn btn-ghost" href={c.contact}>
                 {t(lang, 'support.bizCta')} →
               </a>
             </section>
@@ -131,6 +149,12 @@ const anyChannel = !!(SUPPORT.wechatReward || SUPPORT.afdian || SUPPORT.store ||
     border-radius: 16px;
     background: var(--card-bg);
   }
+  /* Ko-fi 打赏卡是海外主推渠道，通栏稍加强调 */
+  .sup-card--first {
+    grid-column: 1 / -1;
+    border-color: rgba(232, 180, 90, 0.4);
+  }
+  .sup-card--first p { max-width: 60ch; }
   .sup-card h2 {
     margin: 0;
     font-size: 17.5px;

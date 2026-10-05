@@ -15,14 +15,28 @@ export const GISCUS = {
 
 /**
  * 支持与变现渠道：**填了才在站上显示**（顶栏「支持」、读完页卡片、/support 页）。
- * - afdian        爱发电主页链接（月度赞助），如 https://afdian.com/a/xxxx
- * - wechatReward  微信赞赏码图片：把图片放进 public/ 后填路径，如 /support-wechat.png
- * - store         完整版商品链接（无水印 PDF / 合订本 / 壁纸包，爱发电商品页或 Gumroad）
- * - contact       商务合作（定制漫画）：mailto:you@example.com 或说明页链接
+ * 中英双轨：中文站走国内通路，英文站走海外通路（海外读者看不到微信/爱发电）。
+ *
+ * zh（国内）
+ * - wechatReward  微信赞赏码：图片放 public/ 后填路径，如 /support-wechat.png
+ * - afdian        爱发电主页（月度追更，抽 6%，次月结）
+ * - store/contact 国内向商品页 / 商务联系
+ *
+ * en（海外）
+ * - kofi          Ko-fi 主页（打赏 0% / 会员 5%，钱直达你的 PayPal，即时到账）
+ * - store         Lemon Squeezy 或 Gumroad 商品页（无水印 PDF；LS 为 MoR，代缴全球税）
+ * - contact       商务合作：mailto:you@example.com 或说明页链接
  */
 export const SUPPORT = {
-  afdian: '',
-  wechatReward: '',
-  store: '',
-  contact: '',
+  zh: {
+    wechatReward: '',
+    afdian: '',
+    store: '',
+    contact: '',
+  },
+  en: {
+    kofi: '',
+    store: '',
+    contact: '',
+  },
 } as const;

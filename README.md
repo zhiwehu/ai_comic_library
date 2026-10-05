@@ -84,12 +84,14 @@ scripts/exam-fixtures.mjs     # 书架压力考试：--make 200 生成 books/_te
 ## 支持与变现
 
 支持入口集中在双语 `/support/` 页（顶栏「支持」+ 每章读完页「♥ 支持作者」卡）。
-渠道开关在 `src/site.config.ts` 的 `SUPPORT`，**填了才显示，全部留空则是占位空态**：
+渠道在 `src/site.config.ts` 的 `SUPPORT` 里**中英双轨**配置（中文站国内通路 / 英文站海外通路），
+**填了才显示，全部留空则是占位空态**：
 
-- `afdian`：爱发电主页（月度追更赞助，平台抽 6%）
-- `wechatReward`：微信赞赏码——图片放 `public/` 后填路径（如 `/support-wechat.png`）
-- `store`：完整版商品链接（无水印高清 PDF / 合订本 / 壁纸包；在线版带水印，付费版干净，天然分层）
-- `contact`：商务合作（定制技术漫画 / 品牌绘本），mailto 或说明页
+- `SUPPORT.zh`（国内）：`wechatReward` 微信赞赏码（图片放 `public/` 后填路径）、
+  `afdian` 爱发电（月度追更，抽 6%，次月结）、`store`、`contact`
+- `SUPPORT.en`（海外）：`kofi` Ko-fi（打赏 0% / 会员 5%，**钱直达 PayPal 即时到账**，
+  大陆创作者做海外读者的首选）、`store` Lemon Squeezy 或 Gumroad（无水印 PDF；
+  LS 为 MoR 代缴全球销售税，Gumroad 小额商品全费用 ≈22% 但有 Discovery 市场流量）、`contact`
 
 ## 版权防护（防下载 / 防剽窃）
 
