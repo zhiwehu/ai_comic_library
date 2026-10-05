@@ -7,3 +7,4 @@ dist/
 books/_test-*
 .vercel
 .env
+kofi-assets/
