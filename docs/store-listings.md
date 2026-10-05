@@ -367,27 +367,31 @@ From the gift of the Nile, pyramids and hieroglyphs to Tutankhamun, the Rosetta 
 
 ## 单品 · 系列
 
-### 18. Why Won't the Model Run? — AI Infra 全集合订本 · 12 话 · 105 页 · **$12.9 / ¥49**
+### 18. Why Won't the Model Run? — AI Infra 全集合订本 · 1 序章 + 22 话 · 519 页 · **$14.9 / ¥59**
 
 **EN**
-> *The complete 12-chapter comic course on AI infrastructure.*
+> *The complete 23-part comic course on AI infrastructure — 519 full-color pages.*
 
 Letian hits Run and the screen only answers: **Out of Memory.** Follow Letian, Azhe, Xiaoya and Keke into the inner world of large models — the city of parameters, the quantization pipeline, the VRAM workbench, the KV Cache archive — and learn, in full-color comics, what actually decides whether a model can run.
 
-**The complete series (12 chapters, 105 pages):** parameters & B-notation · VRAM residents · quantization · compute vs memory · VRAM capacity & bandwidth · prefill & decode · buying vs renting GPUs · batch & continuous batching · TTFT/TPOT throughput · and more.
+**What's inside — 1 prologue + 22 chapters:** from the first OOM to a model that finally runs. Parameters and what "B" really means · VRAM residents · quantization · compute vs memory · VRAM capacity and bandwidth · token / context / KV Cache · prefill and decode · compute-bound vs memory-bound · TTFT and TPOT · batching and continuous batching — and the chapters the free feed hasn't reached yet.
 
-**Inside:** 105 full-color pages, 12 chapters in one PDF · watermark-free · DRM-free
-**For:** AI engineers, students, anyone who has ever seen "OOM"
+**⚡ Ahead of the free feed:** the free serialization at comic.getaiti.com is at chapter 11. This PDF is the full 23-part story — you're months ahead of free, with the ending already drawn.
+
+**Inside:** 519 full-color pages, one DRM-free PDF · watermark-free
+**For:** AI engineers, students, PMs, anyone who has ever seen "OOM"
 `#AI infra` `#LLM` `#explainer` `#complete series`
 
 **中文**
-> *漫画读懂 AI Infra：全 12 话合订本。*
+> *漫画读懂 AI Infra：1 篇序章 + 22 话全集，519 页全彩。*
 
 乐天点下 Run，屏幕只回了一行 **Out of Memory**。跟着乐天、阿哲、小雅、可可走进大模型的内部世界：参数之城、量化流水线、显存工作台、KV Cache 档案室——「什么模型能在什么机器上跑起来」这件事，一次讲明白。
 
-**全 12 话 105 页：** 参数与 B 的含义 · 显存住客 · 量化 · 算力≠显存 · 显存容量与带宽 · Prefill 与 Decode · 买卡 vs 租卡 · Batch 与连续批处理 · TTFT/TPOT 吞吐 · 等等。
+**全集内容（1 序章 + 22 话）：** 从第一次 OOM 到模型真正跑起来——参数与 B 的含义 · 显存住客 · 量化 · 算力≠显存 · 显存容量与带宽 · Token/上下文/KV Cache · Prefill 与 Decode · 算力边界与访存边界 · TTFT/TPOT · Batch 与连续批处理……以及免费连载还没更到的后续话数。
 
-**内含：** 105 页全彩 · 12 话合一 PDF · 无水印 · 无 DRM
+**⚡ 领先免费连载：** comic.getaiti.com 免费连载目前更到第 11 话，这份 PDF 是完整 23 部——结局已经画完，你领先免费读者好几个月。
+
+**内含：** 519 页全彩 · 一个无 DRM PDF · 无水印
 `#AI基础设施` `#大模型` `#科普漫画` `#全集合订`
 
 ---
