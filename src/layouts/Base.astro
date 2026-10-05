@@ -109,6 +109,7 @@ const schemas = schema ? (Array.isArray(schema) ? schema : [schema]) : [];
             <slot name="toolbar" />
           </div>
           <nav>
+            <a href={href(lang, '/commissions/')}>{lang === 'en' ? 'Commissions' : '定制'}</a>
             <a href={href(lang, '/support/')}>{t(lang, 'nav.support')}</a>
             <a href="/rss.xml">{t(lang, 'nav.rss')}</a>
             <button

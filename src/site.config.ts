@@ -20,10 +20,12 @@ export const GISCUS = {
  * zh（国内）
  * - wechatReward  微信赞赏码：图片放 public/ 后填路径，如 /support-wechat.png
  * - afdian        爱发电主页（月度追更，抽 6%，次月结）
+ * - commissions   定制漫画接单表单（Tally 链接；空则回落 contact）
  * - store/contact 国内向商品页 / 商务联系
  *
  * en（海外）
  * - kofi          Ko-fi 主页（打赏 0% / 会员 5%，钱直达你的 PayPal，即时到账）
+ * - commissions   定制漫画接单表单（Tally 链接；空则回落 Ko-fi 主页）
  * - store         Lemon Squeezy 或 Gumroad 商品页（无水印 PDF；LS 为 MoR，代缴全球税）
  * - contact       商务合作：mailto:you@example.com 或说明页链接
  */
@@ -31,11 +33,13 @@ export const SUPPORT = {
   zh: {
     wechatReward: '',
     afdian: '',
+    commissions: '',
     store: '',
     contact: '',
   },
   en: {
     kofi: 'https://ko-fi.com/zhiwehu',
+    commissions: '',
     store: '',
     contact: '',
   },

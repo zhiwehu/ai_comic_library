@@ -1,0 +1,229 @@
+---
+/**
+ * CommissionPage —— 定制漫画服务页（双语）
+ *
+ * 文案与价格集中在本文件的 COPY/PRICING 里（市场页不适合塞 i18n 字典，改价格只动这里）。
+ * 下单按钮：优先用 site.config.ts 的 SUPPORT[lang].commissions（Tally 表单链接）；
+ * 没配则回落——en → Ko-fi 主页（私信开工），zh → contact（空则显示「即将开放」）。
+ */
+import Base from '../../layouts/Base.astro';
+import Pic from '../Pic.astro';
+import { SUPPORT } from '../../site.config';
+import { href, t, type Lang } from '../../lib/i18n';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+
+/** ★ 价格在这里改（USD / CNY） */
+const PRICING = {
+  en: [
+    { name: 'Single Panel', price: '$19', desc: 'One illustration from your text (+ up to 3 reference images), any library style.' },
+    { name: 'Mini Comic', price: '$59', desc: 'A 4-page short with a beginning, a turn and an ending.' },
+    { name: 'Short Comic', price: '$99', desc: '8 pages — a complete scene-by-scene story.' },
+    { name: 'Picture Book', price: '$149', desc: '12 pages + cover, the full library treatment for your story.' },
+  ],
+  zh: [
+    { name: '单幅插画', price: '¥99', desc: '一段文字（+ 至多 3 张参考图）出一张插画，馆内任选画风。' },
+    { name: '迷你漫画', price: '¥299', desc: '4 页短篇，有开头、有转折、有收尾。' },
+    { name: '短篇漫画', price: '¥499', desc: '8 页完整分镜故事。' },
+    { name: '定制绘本', price: '¥799', desc: '12 页 + 封面，给你的故事全套图书馆待遇。' },
+  ],
+};
+
+const COPY = {
+  en: {
+    kicker: 'COMMISSIONS',
+    title: 'Your story, as a comic',
+    lead: 'Send a paragraph of text and up to 3 reference images — a style, a character, a scene. I turn it into a finished, full-color comic or picture book, and deliver it as a clean PDF.',
+    processTitle: 'How it works',
+    process: [
+      { n: '1', t: 'Tell me your idea', d: 'A paragraph of text plus up to 3 reference images (style, character, or scene). No brief too small.' },
+      { n: '2', t: 'Approve the plan', d: 'Within 24h you get a page plan and a fixed quote. Pay through Ko-fi or Lemon Squeezy — production starts on payment.' },
+      { n: '3', t: 'Get your comic', d: '3–7 days later: a watermark-free PDF, one revision round included, plus web-ready pages if you want to share it.' },
+    ],
+    tiersTitle: 'Packages',
+    addons: 'Add-ons: extra revision +$15 · commercial license +100% · 72h rush +50%',
+    stylesTitle: 'Pick a style from the shelf',
+    stylesNote: 'Every style below is a real book in the library — click one to see it live.',
+    cta: 'Start your commission',
+    ctaFallback: 'Message me on Ko-fi to start',
+    faqTitle: 'Small print, honestly',
+    faq: [
+      ['Is it AI?', 'Yes — AI-assisted and human-curated, disclosed on every delivery. You get the finished files with a personal-use license; commercial license available as an add-on.'],
+      ['Who owns the reference images?', 'You must own or have rights to any reference you send. No private-person likenesses, no NSFW, nothing involving minors.'],
+      ['What if I do not like it?', 'One full revision round is included in every package. Full refund any time before production starts; no refunds after final delivery.'],
+      ['What do I receive?', 'A watermark-free PDF (and web-ready page images on request). Source prompts and workflow stay with the studio.'],
+    ],
+  },
+  zh: {
+    kicker: 'COMMISSIONS',
+    title: '你的故事，画成漫画',
+    lead: '发我一段文字，配上至多 3 张参考图（画风、角色或场景均可），我把它做成一部完整的全彩漫画或绘本，交付无水印 PDF。',
+    processTitle: '流程',
+    process: [
+      { n: '1', t: '告诉我你的想法', d: '一段文字 + 至多 3 张参考图。需求再小都可以聊。' },
+      { n: '2', t: '确认方案', d: '24 小时内回复页数规划与一口价报价，Ko-fi / 爱发电付款后开工。' },
+      { n: '3', t: '交付成书', d: '3–7 天交付无水印 PDF，含一轮修改；需要的话附网页版页面图。' },
+    ],
+    tiersTitle: '套餐',
+    addons: '加购：额外一轮修改 +¥99 · 商用授权 ×2 · 72 小时加急 +50%',
+    stylesTitle: '从书架挑一种画风',
+    stylesNote: '下面每种画风都是馆里真实上架的书——点开就能看到实物。',
+    cta: '开始定制',
+    ctaFallback: '通过 Ko-fi 私信开工',
+    faqTitle: '丑话说在前面',
+    faq: [
+      ['是 AI 画的吗？', '是——AI 辅助、人工打磨，交付物按规范明确标注。含个人使用授权；商用授权加购。'],
+      ['参考图的版权？', '你必须拥有所发参考图的版权或授权。不接真人肖像（公众人物与私人一律）、不接 NSFW、不接涉及未成年人的内容。'],
+      ['不满意怎么办？', '每个套餐含一轮完整修改。开工前可全额退款；交付后不退款。'],
+      ['交付什么？', '无水印 PDF（可附网页版页面图）。Prompt 与工作流保留在工作室。'],
+    ],
+  },
+} as const;
+
+const c = COPY[lang];
+const commissionsUrl = (lang === 'en' ? SUPPORT.en.commissions : SUPPORT.zh.commissions) || '';
+const fallbackUrl = lang === 'en' ? SUPPORT.en.kofi : SUPPORT.zh.contact;
+const orderUrl = commissionsUrl || fallbackUrl || '';
+const base = lang === 'en' ? '/en' : '';
+
+/** 画风样例：真实馆藏（缩略图 + 链接） */
+const styles = [
+  { img: '/books/bloom/cover.webp', label: 'Manga', zh: '日系漫画', book: 'bloom' },
+  { img: '/books/goodnight-wren/cover.webp', label: 'Watercolor night', zh: '水彩夜景', book: 'goodnight-wren' },
+  { img: '/books/chibifu/cover.webp', label: 'Ink wash', zh: '水墨写意', book: 'chibifu' },
+  { img: '/books/stick-figure-ancient-egypt/cover.webp', label: 'XKCD-style stick', zh: '火柴人', book: 'stick-figure-ancient-egypt' },
+  { img: '/books/mars-odyssey/cover.webp', label: 'American comic', zh: '美式漫画', book: 'mars-odyssey' },
+  { img: '/books/996-urban-workhorse/cover.webp', label: 'Photorealistic', zh: '电影写实', book: '996-urban-workhorse' },
+];
+---
+
+<Base
+  title={c.title}
+  lang={lang}
+  description={c.lead}
+  bodyClass="commissions-page"
+>
+  <article class="wrap commissions">
+    <p class="crumb"><a href={href(lang, '/')}>{t(lang, 'support.crumb')}</a></p>
+
+    <header class="head">
+      <p class="kicker">{c.kicker}</p>
+      <h1>{c.title}</h1>
+      <p class="lead">{c.lead}</p>
+    </header>
+
+    <!-- 流程 -->
+    <section class="process">
+      <h2>{c.processTitle}</h2>
+      <ol class="steps">
+        {c.process.map((s) => (
+          <li class="step">
+            <span class="step-n">{s.n}</span>
+            <div>
+              <h3>{s.t}</h3>
+              <p>{s.d}</p>
+            </div>
+          </li>
+        ))}
+      </ol>
+    </section>
+
+    <!-- 画风样例：真实馆藏 -->
+    <section class="styles">
+      <h2>{c.stylesTitle}</h2>
+      <p class="styles-note">{c.stylesNote}</p>
+      <div class="style-grid">
+        {styles.map((s) => (
+          <a class="style-card" href={`${base}/book/${s.book}/`}>
+            <Pic src={s.img} alt={s.label} loading="lazy" />
+            <span>{lang === 'en' ? s.label : s.zh}</span>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <!-- 套餐 -->
+    <section class="tiers">
+      <h2>{c.tiersTitle}</h2>
+      <div class="tier-grid">
+        {PRICING[lang].map((p) => (
+          <section class="tier">
+            <h3>{p.name}</h3>
+            <p class="price">{p.price}</p>
+            <p class="desc">{p.desc}</p>
+          </section>
+        ))}
+      </div>
+      <p class="addons">{c.addons}</p>
+    </section>
+
+    <!-- 下单 CTA -->
+    {
+      orderUrl ? (
+        <div class="order">
+          <a class="btn btn-lamp" href={orderUrl} target={orderUrl.startsWith('http') ? '_blank' : undefined} rel="noopener">
+            {commissionsUrl ? c.cta : c.ctaFallback} →
+          </a>
+        </div>
+      ) : (
+        <div class="order sup-empty">
+          <p>{c.cta}</p>
+        </div>
+      )
+    }
+
+    <!-- FAQ -->
+    <section class="faq">
+      <h2>{c.faqTitle}</h2>
+      {c.faq.map(([q, a]) => (
+        <details class="qa">
+          <summary>{q}</summary>
+          <p>{a}</p>
+        </details>
+      ))}
+    </section>
+  </article>
+</Base>
+
+<style>
+  .commissions { max-width: 880px; padding-block: clamp(28px, 6vw, 64px) clamp(48px, 8vw, 96px); }
+  .crumb { margin: 0 0 clamp(16px, 3vw, 28px); font-size: 13px; }
+  .crumb a { color: var(--paper-dim); }
+  .crumb a:hover { color: var(--lamp); }
+  .kicker { font-size: 11px; letter-spacing: 0.34em; color: var(--lamp); margin: 0 0 12px; }
+  .head h1 { font-size: clamp(28px, 5vw, 42px); margin: 0 0 14px; }
+  .lead { color: var(--paper-dim); font-size: 14.5px; line-height: 1.8; max-width: 56ch; margin: 0; }
+  h2 { font-size: 20px; margin: 0 0 16px; }
+  section { margin-top: clamp(34px, 6vw, 56px); }
+
+  .steps { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; }
+  .step { display: flex; gap: 16px; align-items: flex-start; padding: 18px 20px; border: 1px solid var(--line); border-radius: 14px; background: var(--card-bg); }
+  .step-n { flex: none; width: 30px; height: 30px; border-radius: 999px; display: grid; place-items: center; background: var(--lamp-soft); color: var(--lamp); font-weight: 700; font-size: 14px; }
+  .step h3 { margin: 2px 0 6px; font-size: 15.5px; }
+  .step p { margin: 0; color: var(--paper-dim); font-size: 13.5px; line-height: 1.7; }
+
+  .styles-note { color: var(--paper-dim); font-size: 13px; margin: -6px 0 14px; }
+  .style-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 12px; }
+  .style-card { position: relative; display: block; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; aspect-ratio: 3 / 4; transition: transform 0.2s ease, border-color 0.2s ease; }
+  .style-card:hover { transform: translateY(-3px); border-color: var(--lamp); }
+  .style-card :global(img) { width: 100%; height: 100%; object-fit: cover; }
+  .style-card span { position: absolute; left: 0; right: 0; bottom: 0; padding: 18px 10px 8px; background: linear-gradient(transparent, rgba(0, 0, 0, 0.78)); color: #fff; font-size: 12px; letter-spacing: 0.04em; }
+
+  .tier-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 12px; }
+  .tier { padding: 20px 18px; border: 1px solid var(--line); border-radius: 14px; background: var(--card-bg); }
+  .tier h3 { margin: 0 0 8px; font-size: 15px; }
+  .price { margin: 0 0 10px; font-family: var(--font-latin); font-size: 24px; color: var(--lamp); }
+  .tier .desc { margin: 0; color: var(--paper-dim); font-size: 13px; line-height: 1.7; }
+  .addons { margin: 14px 2px 0; font-size: 12.5px; color: var(--paper-dim); }
+
+  .order { display: flex; justify-content: center; padding: clamp(20px, 4vw, 34px); border: 1px dashed var(--line); border-radius: 16px; }
+  .order .btn { font-size: 15px; padding: 13px 34px; }
+  .order.sup-empty { color: var(--paper-dim); font-size: 14px; }
+
+  .faq details { border-bottom: 1px solid var(--line); padding: 14px 2px; }
+  .faq summary { cursor: pointer; font-size: 14.5px; font-weight: 600; }
+  .faq details p { margin: 10px 0 2px; color: var(--paper-dim); font-size: 13.5px; line-height: 1.75; }
+</style>
