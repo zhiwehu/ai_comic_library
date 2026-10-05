@@ -7,3 +7,4 @@ cover: cover.webp
 tags: ["AI基础设施", "火柴人", "科普", "英文绘本", "XKCD风格"]
 title_en: "AI Infra: A Stick Figure Field Manual"
 description_en: "The entire AI infrastructure stack explained by stick figures: chips (HBM is the real bottleneck), clusters (NVLink, networks, and your wallet), the software layer cake (CUDA to PyTorch to OOM), inference (prefill + decode, buy vs rent), the training asymmetry, cooling and geography, and the electricity pyramid. XKCD-style black ink on white, guided by STICKY in a propeller cap."
+store_url: "https://ko-fi.com/s/43f82830b3"
