@@ -46,6 +46,7 @@ books/<slug>/                 # ★ 唯一内容目录，全部由发布脚本�
   cover.webp                  # 可选，缺省回退第一章第一页
   <chapter>/chapter.yml       # 章元数据（短篇/绘本即单章 01）
   <chapter>/pages/001.webp…   # 页图，文件名字典序 = 阅读顺序
+.wm-manifest.json             # 水印烧录清单（发布时排除，不对外）
 src/
   content.config.ts           # books / chapters 两个 collection
   lib/books.ts                # 书架/章节视图模型
@@ -79,6 +80,25 @@ scripts/exam-fixtures.mjs     # 书架压力考试：--make 200 生成 books/_te
 - 滚动模式为后备通道，与翻页共用进度键，切换零损耗（`cl:mode`）
 - 进度：`cl:progress:<book>:<chapter>`；书架/目录页显示「继续」
 - 交互：手势滑动、点击翻页、`←` `→` `PageUp` `PageDown`、底部滑条、缩略图网格跳页、全屏
+
+## 版权防护（防下载 / 防剽窃）
+
+网页图片没有绝对防下载（截屏、开发者工具总能拿到图），本站做的是**多层抬门槛**，
+核心思路是「水印烧在图里，谁拿走都带标」：
+
+| 层 | 手段 | 挡住什么 |
+|---|---|---|
+| 发布水印 | 上架/回填时把整页平铺斜纹水印（默认 `comic.getaiti.com`）烧进图片本体（webp + jpg 孪生图） | 下载、截屏、搬运后的每一张图都带站标，裁剪局部也躲不开——**防剽窃的根基** |
+| 阅读器防护 | 阅读页禁右键菜单、禁拖图、禁 iOS/安卓长按存图；另有全屏隐形水印层（截屏/屏摄也带标） | 「右键另存为 / 拖到桌面」这类零成本下载路径 |
+| 直链防索引 | `X-Robots-Tag: noindex, noimageindex`（`public/_headers` + `vercel.json`，主备站同规则） | 图片被收进 Google/Bing 图片搜索后被批量扒走 |
+
+### 日常操作
+
+- **新上架默认带水印**：`pnpm run publish …` 直接用。可调：`--no-wm` 关闭、`--wm <文字>` 自定义、
+  `--wm-opacity <0~1>` 调淡、`--wm-cover` 封面也打（默认封面不打，保持 OG/宣传图干净）
+- **存量补水印**：`pnpm run watermark`（`--cover` 含封面、`--dry` 预览、`--force` 无视清单重烧）。
+  重复执行安全：`books/.wm-manifest.json` 记录每张图烧录前后哈希——烧过的跳过，干净版被重新上架会自动重烧
+- ⚠ 仓库里只有压缩发布版（红线：原始大图不进 repo）：水印一旦烧入，想要干净版只能从导出源图重新上架
 
 ## 部署
 
