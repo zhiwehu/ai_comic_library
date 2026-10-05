@@ -25,6 +25,7 @@ export const GISCUS = {
  *
  * en（海外）
  * - kofi          Ko-fi 主页（打赏 0% / 会员 5%，钱直达你的 PayPal，即时到账）
+ * - kofiTiers     Ko-fi 会员档位页（月度 Patron：追更 + 会员专享下载）
  * - commissions   定制漫画接单表单（Tally 链接；空则回落 Ko-fi 主页）
  * - store         Lemon Squeezy 或 Gumroad 商品页（无水印 PDF；LS 为 MoR，代缴全球税）
  * - contact       商务合作：mailto:you@example.com 或说明页链接
@@ -39,6 +40,7 @@ export const SUPPORT = {
   },
   en: {
     kofi: 'https://ko-fi.com/zhiwehu',
+    kofiTiers: 'https://ko-fi.com/zhiwehu/tiers',
     commissions: '',
     store: 'https://ko-fi.com/zhiwehu/shop',
     contact: '',
