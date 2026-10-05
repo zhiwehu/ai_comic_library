@@ -102,7 +102,11 @@ async function main() {
   Object.assign(manifest, { text: opts.text, opacity: opts.opacity, angle: opts.angle });
 
   const targets = collect({ cover: !!args.cover });
-  if (targets.length === 0) die(`books/ 下没有页图: ${BOOKS}`);
+  if (targets.length === 0) {
+    // 不算错误：作为 build 前置步骤时（空仓库/新 clone）要静默通过
+    console.log(`⚠ books/ 下没有页图，无事可做: ${BOOKS}`);
+    return;
+  }
   console.log(
     `回填水印 ·「${opts.text}」· 透明度 ${opts.opacity} · ${targets.length} 张${args.cover ? '（含封面）' : '（不含封面）'}${dry ? '（dry 预览）' : ''}${force ? '（--force 重烧）' : ''}`
   );

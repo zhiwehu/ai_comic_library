@@ -98,6 +98,8 @@ scripts/exam-fixtures.mjs     # 书架压力考试：--make 200 生成 books/_te
   `--wm-opacity <0~1>` 调淡、`--wm-cover` 封面也打（默认封面不打，保持 OG/宣传图干净）
 - **存量补水印**：`pnpm run watermark`（`--cover` 含封面、`--dry` 预览、`--force` 无视清单重烧）。
   重复执行安全：`books/.wm-manifest.json` 记录每张图烧录前后哈希——烧过的跳过，干净版被重新上架会自动重烧
+- **构建期兜底**：`pnpm build` 第一步自动跑 watermark——哪怕图片绕过 publish 脚本被直接拷进 `books/`
+  （比如 AI 助手代发布时漏了脚本），构建/上线前也会补上水印，裸图上不了线
 - ⚠ 仓库里只有压缩发布版（红线：原始大图不进 repo）：水印一旦烧入，想要干净版只能从导出源图重新上架
 
 ## 部署
@@ -142,8 +144,9 @@ scripts/exam-fixtures.mjs     # 书架压力考试：--make 200 生成 books/_te
 （首页 0.42–0.55s）；被阻断的是 Vercel 共享 IP 与 `*.vercel.app`（TLS RST / 超时）。
 Cloudflare 备站国内也直连可用（0.68–0.93s），当前比 Vercel 慢，故主站仍用 Vercel。
 
-**日常发布流程**：`pnpm run publish …` → `git commit && git push` → **两个平台各自自动构建上线**
-（Vercel 走 Git 集成；Cloudflare 备站走 GitHub Actions，纯文档改动 `**/*.md` 会跳过以省构建）。
+**日常发布流程**：`pnpm run publish …`（水印自动烧录）→ `git commit && git push` → **两个平台各自自动构建上线**
+（Vercel 走 Git 集成；Cloudflare 备站走 GitHub Actions，纯文档改动 `**/*.md` 会跳过以省构建；
+云端构建同样先跑 watermark 兜底，裸图上不了线）。
 Actions 里部署前有三步预检（secret 是否注入 / token 是否有效 / 是否具备 Pages 权限），失败时看步骤名即可定位。
 
 
