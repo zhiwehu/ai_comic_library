@@ -1839,7 +1839,239 @@
     "books/your-life-is-a-video-game/01/pages/008.webp": {
       "in": "859ac6a138260d8c168dd4ebd792562b4861b7428f9a099d79ba5b0dcbab0442",
       "out": "83e900f2da2b7625a239065ad80b4bdc21e81540bb5880114c98c9e4ad484f1a"
+    },
+    "books/ai-infra/ch12-inference_frameworks/pages/001.jpg": {
+      "in": "cb38f381c0f744d20d5ae7a0c384bd595b994e1ec205d390d2b37b32ad4dd55b",
+      "out": "c11f40e700b4c564937f2fb9479f7d2c976d761ff2d7433e583360e00f496be9"
+    },
+    "books/ai-infra/ch12-inference_frameworks/pages/001.webp": {
+      "in": "1fc20656d4a9eced8f721b666ee47f364a69e477c2b0df0b0fc2ad761542805b",
+      "out": "a9747b2d7cfb873f24bf22804c06ff7ebd41f42ef438fd5625ef06dedb726ba4"
+    },
+    "books/ai-infra/ch12-inference_frameworks/pages/002.jpg": {
+      "in": "4fdc8a27f998fdee92e9cdd366ced6573a04c667c79e09b702becfae07a9731c",
+      "out": "524e15ce30bbe8f6a418c431ddb4dbacd660d97e6b36ae424e3c26096f6f58e1"
+    },
+    "books/ai-infra/ch12-inference_frameworks/pages/002.webp": {
+      "in": "f58b96cdf1d44b4e068915cf00eb5b45c3cbe4fd507d68d4a3f23a349c0b408a",
+      "out": "c0f0eeecfebdfa61cf73db83f403cb2b9cbfc37ecd847e6e646469c9bae312ac"
+    },
+    "books/ai-infra/ch12-inference_frameworks/pages/003.jpg": {
+      "in": "ffa9e2d94c4c23864ab88602b707d599403530de71ff912b1b4ffa31ecd72504",
+      "out": "bfe839381190ec369e05a074ef2724ab2c789f668570df3bf79d893bc3edc207"
+    },
+    "books/ai-infra/ch12-inference_frameworks/pages/003.webp": {
+      "in": "1c324dd435b2d3484b2f9fa7ef73cfac3cdfb91aa77f4be36001e266cab01251",
+      "out": "edd8e71affe043af7670da5b753128c89d2271c492da8958a36cd4b444f5f12a"
+    },
+    "books/ai-infra/ch12-inference_frameworks/pages/004.jpg": {
+      "in": "c573afa5efdc306560ed6e6d41d45331f786648b1b7bdbfa235c445108f3b9b7",
+      "out": "7567cbf7f0a6e04b7db90b66b5ebd09b99029081d2698feea3eb03bfaa0e3616"
+    },
+    "books/ai-infra/ch12-inference_frameworks/pages/004.webp": {
+      "in": "0b04a7b9263be4c097a8c540c67c2578d3dedcdc58418a6845a152875df0974b",
+      "out": "42cadbe40402f726cf88046628118193eb5c0ff0f63114a0e7caebf31caf1f9e"
+    },
+    "books/ai-infra/ch12-inference_frameworks/pages/005.jpg": {
+      "in": "62af495dfb5053b2a87dcb9f73bd49f8bab0454a8f434631170cd4211a524973",
+      "out": "c11d55546b631871508c68ea2b4f512f062532df06b695f3c4e56f6f875704ab"
+    },
+    "books/ai-infra/ch12-inference_frameworks/pages/005.webp": {
+      "in": "285c2d3263c8d5f2089bea1e7429b57c4eac194bee0246c925c591797a30ae9a",
+      "out": "1382b14b4beaacefd9cbf2a03fbf561bab425c5ba3bfbfc53c4245b75aa2f78f"
+    },
+    "books/ai-infra/ch12-inference_frameworks/pages/006.jpg": {
+      "in": "cde55f18d4197ef7ed469448ec7e0660ce0a3fe7ac82a08b83052563dfc504d0",
+      "out": "ccb0fe8d629af0d70a48f5ed0e91301c4b9d59aee2578d6cec729dc652e1b674"
+    },
+    "books/ai-infra/ch12-inference_frameworks/pages/006.webp": {
+      "in": "c654ecca90823d536a526f02495e8a4df15ef1b40be18e273ccc9ac0854490bb",
+      "out": "7f2bfa4bcc4699035e68c9904474ec9f9bd8a507ba038382731a44ef77ff593d"
+    },
+    "books/ai-infra/ch12-inference_frameworks/pages/007.jpg": {
+      "in": "49ed438eb05437e900a7866a440aa3e3e2df2e9d3f01449829263dd57fbb4f12",
+      "out": "35f2d16852903041dbd11e6ad55ebe68d854fa2f703888b2526c1e1e7227e1b8"
+    },
+    "books/ai-infra/ch12-inference_frameworks/pages/007.webp": {
+      "in": "f9744ff81e9e0a8212d8f6a015a0a8c38fd0a7354b0e83ccb07b8aeef2c1ec0c",
+      "out": "3923bbae9394199d3395edd7a8c19d90fa85f99cbab0f6c3db393f21efa79525"
+    },
+    "books/ai-infra/ch12-inference_frameworks/pages/008.jpg": {
+      "in": "12e383320506fd1fb69193addbbf5a6a2b9425b608db79d7538f49fc9b0a0c39",
+      "out": "02c9a3c979fe62e0a59700eaff7dea74128ce0e0ddabc2b60c1f02dc6b9f7594"
+    },
+    "books/ai-infra/ch12-inference_frameworks/pages/008.webp": {
+      "in": "30d8bfaee08dd3f968fe63adab1add037e1838b1a54eabe07c689754cd21027a",
+      "out": "e45b2ac5b3f3b69aeb5a53077cb115765076c51947a03de032af0b11657014c6"
+    },
+    "books/ai-infra/ch12-inference_frameworks/pages/009.jpg": {
+      "in": "39b1cd5c75ffb4bb2c52f4f5e6fc81ac7ef8dae6bbf56fcc9d5da8a53a9830e6",
+      "out": "5194a141f4f80f33329d388650d94b049a4a37a8832fe02cbd8bf55b38c31698"
+    },
+    "books/ai-infra/ch12-inference_frameworks/pages/009.webp": {
+      "in": "10eec01a0a9dd591b5fea38dd701c7a8c8e7aacf6caafc44c20136d932188a67",
+      "out": "2690d52cb3cfd0d3e236e182fb631f86fa204422977226b42f3a35d22c56316c"
+    },
+    "books/ai-infra/ch12-inference_frameworks/pages/010.jpg": {
+      "in": "cab17440fc48eb2d338fcda9bc82d2c34aace6ed2624c0e81878eb33c2fb1365",
+      "out": "240fceb462eca6f0f8b1413a9bfc095a8f6646eee2300d1b8f42dc66b1ea9bb1"
+    },
+    "books/ai-infra/ch12-inference_frameworks/pages/010.webp": {
+      "in": "bea0a9742ff7ee392ff2e76595e4683493134acea75b7ce2b8001d07445e2f8f",
+      "out": "634754450f39ad6cb3ebbd4db729476c71808531a74a45e45cc7badc5e9f1ac9"
+    },
+    "books/ai-infra/ch12-inference_frameworks/pages/011.jpg": {
+      "in": "e5b6ba893295015492633ce7c40dae4c8f8bbbc1672c9e951992f58f877c8943",
+      "out": "cf41f31d9b7df36cf8cc56a90b4d376adc1670472be29fd3655e03b58cb035ab"
+    },
+    "books/ai-infra/ch12-inference_frameworks/pages/011.webp": {
+      "in": "d62d2d0c042a3c90ee4a8662b46d425ae8d39f4755262a73540f3b83e3fe579c",
+      "out": "3797c06d97241911fa55474a707de99cae9c2d19dc6f66b3a598a740736303be"
+    },
+    "books/ai-infra/ch12-inference_frameworks/pages/012.jpg": {
+      "in": "4341b285dc377ca86106a96f83fdffd59a9acf122bded89d2786bed0a4773bb9",
+      "out": "cfc033ecb5025a74f6c8b6243ea0da4a50baa85d1ffe7c194c2dd0bc98149e69"
+    },
+    "books/ai-infra/ch12-inference_frameworks/pages/012.webp": {
+      "in": "cf8ddad58c6bb4174ad96444e4eb9b77f3e4898a1e2852655177b69cedd63fcf",
+      "out": "1ccf9acaab04bf2c9658d7c101e31e7237236ff0af2e154cc1983e3b80b504d4"
+    },
+    "books/ai-infra/ch13-operator_compiler_kernel_runtime/pages/001.jpg": {
+      "in": "2648c3726e414580f359c600813618f46fc4d42b4e4a16df8d5597f924f1ec1f",
+      "out": "c58a7ee45d3c6c682b536ec52af94d70ef4b6983d18fda80625b096c9bf2a8c6"
+    },
+    "books/ai-infra/ch13-operator_compiler_kernel_runtime/pages/001.webp": {
+      "in": "dd7a18344893b1e852d4edd28e87ba8299a3e1ef8d24b51fbe3088b4d45eb97b",
+      "out": "ec6f49ab426fbff4c6da04d0e192950291beeb0a10c2aa980687d47b6e60e1e4"
+    },
+    "books/ai-infra/ch13-operator_compiler_kernel_runtime/pages/002.jpg": {
+      "in": "70b58029a4d6b2fb03eedf039fbf42d6da98f297f0eaa99de5fc9b34046e8842",
+      "out": "4e14a3b3e9fda5434712dc3325b3e98f4aa962f05ba9439935f30c7d1721aa18"
+    },
+    "books/ai-infra/ch13-operator_compiler_kernel_runtime/pages/002.webp": {
+      "in": "2869517a10b617864cae1f1f72d28ea65ea35be38ff61a3a5970bbb2b52f3740",
+      "out": "8fb94a0f03d442167288ddaea4d62dc146a76b9caaf8f9cf5968b0a3a7d07787"
+    },
+    "books/ai-infra/ch13-operator_compiler_kernel_runtime/pages/003.jpg": {
+      "in": "f5edcca04866b953680b2d24bca40e2a26cd6e03c4ca6f4339094b1fc0d6145b",
+      "out": "5415590dd46b93e97798dcd512fe320909fa98458de88a99a2f473dd5855c616"
+    },
+    "books/ai-infra/ch13-operator_compiler_kernel_runtime/pages/003.webp": {
+      "in": "e6243501514ec52022b281ba33d1a3bad738d38298b4639236a32f6354dc05b9",
+      "out": "f505301a71a2d0edc84fc8a8d0387cdcf2633691c999c08f31863ac81aa8349e"
+    },
+    "books/ai-infra/ch13-operator_compiler_kernel_runtime/pages/004.jpg": {
+      "in": "b866548a1c1729798dd20c1f8b3ef3896fbea5c215f262b26b21c349c1e79795",
+      "out": "7b191e53a6ae057bc3912b1bb4f9dc3dc58bfad918889cca6aef9942972cb66f"
+    },
+    "books/ai-infra/ch13-operator_compiler_kernel_runtime/pages/004.webp": {
+      "in": "a6abf1e7c52e339df9d4be1e7ad2c09117b44699eaef862c371c97948dfaf3a9",
+      "out": "dc0a71ed3c363a9748699e3d4090fe0300726bd4399a5ce06caa479360e9efd5"
+    },
+    "books/ai-infra/ch13-operator_compiler_kernel_runtime/pages/005.jpg": {
+      "in": "52f75a9525926bc7a3cba851261a377c7a94230ad078b2889b911ca47c6f340a",
+      "out": "3e0f28c065ac6b65337ff85f780ec3287d2b8a75259b0e888a1467c2b62cf71d"
+    },
+    "books/ai-infra/ch13-operator_compiler_kernel_runtime/pages/005.webp": {
+      "in": "8bcd08a7bd52ae1d79f3fa0b531233c2b2bcd6879429629224873b83277eb363",
+      "out": "745e8d7c77f5e5b4922108a91d8f91c847eacdf61fd2a552586c5c780e1dea80"
+    },
+    "books/ai-infra/ch13-operator_compiler_kernel_runtime/pages/006.jpg": {
+      "in": "e5cc33720eaeb5fba55e064147cec7238e4475c862ada8944b917b379b08aa41",
+      "out": "04aaed40f2ccff783517bedf2ad2afde3aa03cb74d0756394b5d2375a3636a0a"
+    },
+    "books/ai-infra/ch13-operator_compiler_kernel_runtime/pages/006.webp": {
+      "in": "5b3b1f16a7be84993c48795000bb5bd554247209d096d0ab19215899403f486d",
+      "out": "e15620d079c8c47f985b354f7dea27c0c127995ae66e1d9273026db96bc8114b"
+    },
+    "books/ai-infra/ch13-operator_compiler_kernel_runtime/pages/007.jpg": {
+      "in": "07b03f17ddb7b8d3027896ad2354bb564d56fac122747442369fac98d2727698",
+      "out": "3b02c00c7c3581b8a10f083c2ac91602b905ebeb3ef0db31b012bff08914a952"
+    },
+    "books/ai-infra/ch13-operator_compiler_kernel_runtime/pages/007.webp": {
+      "in": "bfd20f5d68663e39e600a367797c5ad3dba271cfdbf1d5bf756a964bfdbdb431",
+      "out": "8c47da1aef4043893255fa3199c6c241afba13c706b0d2bd8cf5f68af982004c"
+    },
+    "books/ai-infra/ch13-operator_compiler_kernel_runtime/pages/008.jpg": {
+      "in": "4d5bb6d6f39915325ed4a5affccc2681144d9c34168fceb651646b4d68293328",
+      "out": "70e510dc58da02497f7c0c15a151cb16c38c2b4bc49370d3d5f791e08fee152e"
+    },
+    "books/ai-infra/ch13-operator_compiler_kernel_runtime/pages/008.webp": {
+      "in": "b55b10cddd4265c12b7a9f82e460bc9dff44c76d37bc1431e1d91ce73a45b061",
+      "out": "df0d220fc5b459985998fc61a220197e094c7c89b1329a07ac1d19ffbaf7ea16"
+    },
+    "books/ai-infra/ch13-operator_compiler_kernel_runtime/pages/009.jpg": {
+      "in": "ec89c282ca6348fa6503ee245f0c5c0249c64c382d19caaba463dc98bf8b3278",
+      "out": "a82e709f38f3ce1420437b1b1b121853745ebce6478145da4690b93b78322fc7"
+    },
+    "books/ai-infra/ch13-operator_compiler_kernel_runtime/pages/009.webp": {
+      "in": "5c1e76bf1331601d91bbdb05954aa6fcbdad3729a870f2a53946a3edadfd1020",
+      "out": "fc280ccc6a85fc9172337519a890f54fb6d956b3da747b3ec6d9248a6b8d1412"
+    },
+    "books/ai-infra/ch13-operator_compiler_kernel_runtime/pages/010.jpg": {
+      "in": "475781f4ed73424363c18a6f53253b66bceb83aa1e7262755d6a808071fab098",
+      "out": "3b51a8e08d1027eeeaed5e345ed89682c533947b0672b12cc0ed0f8e6b7548da"
+    },
+    "books/ai-infra/ch13-operator_compiler_kernel_runtime/pages/010.webp": {
+      "in": "59911f6a7543066f9f1c0e430fbfcc5512146fcb6c95cefe2cf0d2853d15b491",
+      "out": "573f3671f767fabfa072789c80912e4ca760dfb040b4512fb47ce17c2b8786d5"
+    },
+    "books/ai-infra/ch13-operator_compiler_kernel_runtime/pages/011.jpg": {
+      "in": "46ed8c3a6cf9ad27700fe45a3eca388b20dcc83be3962d449fcd85057549897e",
+      "out": "e2119be14e895fb0041bb26dc335dad5b4c715146fdcd57a898bff2cf32ab4eb"
+    },
+    "books/ai-infra/ch13-operator_compiler_kernel_runtime/pages/011.webp": {
+      "in": "5b7a1cb49e414ffd45b929a6b4441a60ab14578136789a215632406cdc1025ad",
+      "out": "888e6e12073091b214be3be00c011fdeb44b15b861ab2401606c5ef82d7d5a17"
+    },
+    "books/ai-infra/ch13-operator_compiler_kernel_runtime/pages/012.jpg": {
+      "in": "d1f2d3934f99be0453728d4ce57e5780daaa61472a3b73cb8389cef99107c525",
+      "out": "b0745c3018f782ea689c0a257f6157e35c449c447afb35e623c4990421369217"
+    },
+    "books/ai-infra/ch13-operator_compiler_kernel_runtime/pages/012.webp": {
+      "in": "10af89b8b282f3d7679cbe30b9060c3cb852828f1d6e9181ceb2c9267af7db0b",
+      "out": "73b4a7f2f8a8a2ba5d2d38bc60e083b1e912820a7238ab6b7ceaaa04cf951143"
+    },
+    "books/how-to-make-money-on-x/01/pages/001.jpg": {
+      "in": "b0230f066d1728e67fdf9b656dd1d4af2af717bc2432e8774bfbf824a5f7d2e5",
+      "out": "d2e2f69d4d0a3a5ed32ede95960189b6ada6a081010944388a56148a80a66e11"
+    },
+    "books/how-to-make-money-on-x/01/pages/001.webp": {
+      "in": "876def6377ab128f5d9de5147f03eb5d3ba8be79a89d5c4540f01cbd88f93d0f",
+      "out": "6c53c2b65b52734ec2edffd432c9edbe41e674d5820ac352a649ceb1bf5ac8e7"
+    },
+    "books/how-to-make-money-on-x/01/pages/002.jpg": {
+      "in": "c3a5159056da618de90d75297c85e7e6c01d25d681ff18d28ee979fcb890a752",
+      "out": "23dbe0745f26cc416308474607d730014316795e13879883f2c50dbc059e0790"
+    },
+    "books/how-to-make-money-on-x/01/pages/002.webp": {
+      "in": "4a5b25da5a2ef68044074643047526d6463219635e211c64ec6373b962941b4a",
+      "out": "9e7f7ffb92339c81e0751fa64d6fc71d889b7d1ea91e710a1f05a567e96faa93"
+    },
+    "books/how-to-make-money-on-x/01/pages/003.jpg": {
+      "in": "ed046ffb79c2f4a3892fbb4d8507890dabbb7e0e8e623a74995095ec1a32a1fb",
+      "out": "fa66ba82f1618bff16c75d351751481efa9c6c058f300da91b2113a315cd6246"
+    },
+    "books/how-to-make-money-on-x/01/pages/003.webp": {
+      "in": "b8875f7bcdbd296cb492ffdc74bca487a32301fe95562264831d1d1e18d81d71",
+      "out": "3752f3c6fb8de7ff76cb179741589b36db0086a3519679584e61879c5b77d667"
+    },
+    "books/how-to-make-money-on-x/01/pages/004.jpg": {
+      "in": "d54a5e6374d5c029a36acaeb66f98dd9c030ff97b672cc7557facaa4b49fc406",
+      "out": "84c0d462ac777db432ddf643e3f7e623172bcd58f9955e9b5b274ed58fb546c8"
+    },
+    "books/how-to-make-money-on-x/01/pages/004.webp": {
+      "in": "6f89c8c9859a9aa219b7cbb1500465411e8d0ead91b6d3077dc37dc33b087abd",
+      "out": "fff310b49f5a24ec2e05e513c943e850ebd96f24d70039224d05aa5ac0f05d9c"
+    },
+    "books/how-to-make-money-on-x/01/pages/005.jpg": {
+      "in": "038e390605a1b01c475d0129b8bfd4cf77aebe87928658b44efa7d38e3868cce",
+      "out": "6a8cae528c1ad0d8eac8554bfba665b7a40b1fcc4a210d3270066cd2fa67931d"
+    },
+    "books/how-to-make-money-on-x/01/pages/005.webp": {
+      "in": "61c972b3635b8d949b938b2a99f298f78f1fa5ca17aedfa83fd62be2ae2e6060",
+      "out": "4ebd9e45176d165260ca5e26b8b3e86568daa17828fdb397eba402f631a9312d"
     }
   },
-  "stampedAt": "2026-10-05T00:14:57.363Z"
+  "stampedAt": "2026-10-05T14:54:12.280Z"
 }
