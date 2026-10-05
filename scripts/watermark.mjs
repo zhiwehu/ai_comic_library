@@ -97,8 +97,22 @@ async function main() {
   const manifestFile = path.join(ROOT, MANIFEST_PATH);
   const manifest = fs.existsSync(manifestFile)
     ? JSON.parse(fs.readFileSync(manifestFile, 'utf-8'))
-    : { version: 1, ...opts, files: {} };
+    : { version: 1, files: {} };
   manifest.version = 1;
+  // 参数与清单不一致时拒绝执行：清单记录的“这张图是用什么参数烧的”必须和实际一致，
+  // 否则换文字/透明度只烧到零星几张，全书水印参差。要按新参数全书重烧请显式加 --force。
+  const hasFiles = Object.keys(manifest.files ?? {}).length > 0;
+  const settingsChanged =
+    hasFiles &&
+    (manifest.text !== opts.text ||
+      manifest.opacity !== opts.opacity ||
+      manifest.angle !== opts.angle);
+  if (settingsChanged && !force) {
+    die(
+      `水印参数与清单不一致（清单: 「${manifest.text}」透明度 ${manifest.opacity} 角度 ${manifest.angle}°；` +
+        `本次: 「${opts.text}」透明度 ${opts.opacity} 角度 ${opts.angle}°）。按新参数全书重烧请加 --force`
+    );
+  }
   Object.assign(manifest, { text: opts.text, opacity: opts.opacity, angle: opts.angle });
 
   const targets = collect({ cover: !!args.cover });
@@ -133,15 +147,16 @@ async function main() {
     if (stamped % 50 === 0) console.log(`  … ${stamped} 张`);
   }
 
-  if (!dry) {
+  // 只在真烧录了东西时才写清单：全跳过（日常构建路径）不碰文件，git 不产生无意义 diff
+  if (!dry && stamped > 0) {
     manifest.stampedAt = new Date().toISOString();
     fs.writeFileSync(manifestFile, JSON.stringify(manifest, null, 2) + '\n');
+    console.log(`清单：${MANIFEST_PATH}（重复执行安全；commit 时一并提交）`);
   }
   const mb = (bytes / 1024 / 1024).toFixed(1);
   console.log(
     `\n✓ 完成：烧录 ${stamped} 张${dry ? '（dry）' : ` · ${mb} MB`}，跳过已烧 ${skipped} 张 · ${((Date.now() - t0) / 1000).toFixed(1)}s`
   );
-  if (!dry) console.log(`清单：${MANIFEST_PATH}（重复执行安全；commit 时一并提交）`);
   console.log(`建议 commit message：\n  watermark: bake tiled watermark into ${stamped} published pages`);
 }
 
