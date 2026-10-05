@@ -1,0 +1,4 @@
+# 版权防护：/books/ 图片直链不进搜索/图片索引，降低被批量爬取与盗图曝光面。
+# Cloudflare Pages（备站）读取本文件（置于发布根目录）；主站 Vercel 走 vercel.json headers，两处保持一致。
+/books/*
+  X-Robots-Tag: noindex, noimageindex
