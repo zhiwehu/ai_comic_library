@@ -6,3 +6,4 @@ description: "Professor Andy, a friendly anime lecturer inspired by Andrew Ng, e
 descriptionZh: "动漫风 Andy 教授（形象致敬 Andrew Ng）讲透 Harness Engineering：三层堆叠（Prompt→Context→Harness）、计划-执行-校验-改进循环、上下文选择与 KV-cache 命中率、带记忆的自我改进循环，以及'模型是天才实习生，harness 是管理体系'。改编自 Andrew Ng 斯坦福 agent 系统讲座的核心观点。"
 cover: cover.webp
 tags: ["AI技术", "Agent", "英文绘本", "动漫", "信息图", "Harness"]
+store_url: "https://ko-fi.com/s/061d797453"

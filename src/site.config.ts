@@ -40,7 +40,7 @@ export const SUPPORT = {
   en: {
     kofi: 'https://ko-fi.com/zhiwehu',
     commissions: '',
-    store: '',
+    store: 'https://ko-fi.com/zhiwehu/shop',
     contact: '',
   },
 } as const;
