@@ -35,7 +35,7 @@ export const SUPPORT = {
     contact: '',
   },
   en: {
-    kofi: '',
+    kofi: 'https://ko-fi.com/zhiwehu',
     store: '',
     contact: '',
   },
