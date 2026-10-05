@@ -140,6 +140,10 @@ const pageAlt = (i: number) => `${bookTitle(book, lang)} · ${t(lang, 'reader.pa
           <p class="afterword-kicker">{t(lang, 'reader.afterwordKicker')}</p>
           <h2 class="afterword-title">{t(lang, 'reader.afterwordTitle')}</h2>
           <p class="afterword-lead">{t(lang, 'reader.afterwordLead')}</p>
+          <div class="afterword-support">
+            <a class="sup-pill" href={`${base}/support/`}>{t(lang, 'reader.supportCta')}</a>
+            <p class="sup-hint">{t(lang, 'reader.supportNote')}</p>
+          </div>
           <div class="afterword-comments" id="comments">
             <Giscus term={book.slug} lang={lang} />
           </div>
@@ -275,7 +279,7 @@ const pageAlt = (i: number) => `${bookTitle(book, lang)} · ${t(lang, 'reader.pa
   let orientation: 'portrait' | 'landscape' = 'portrait';
   let endShown = false;
   let toastTimer: ReturnType<typeof setTimeout> | undefined;
-  const afterwordEl = document.getElementById('afterword');
+  const afterwordEl = document.getElementById('afterword')!;
 
   /** 视图（views）：对开模式 = 跨页，单页/滚动 = 页。滑条与 endcard 以视图为刻度。 */
   let perView = 1;
@@ -1365,6 +1369,29 @@ const pageAlt = (i: number) => `${bookTitle(book, lang)} · ${t(lang, 'reader.pa
     color: var(--paper-dim);
     margin: 0 auto 26px;
     max-width: 46ch;
+  }
+  /* 支持作者：读完页轻量入口（评论区之前，不与推荐卡抢注意力） */
+  .afterword-support { margin: 0 0 28px; }
+  .afterword-support .sup-pill {
+    display: inline-block;
+    padding: 9px 22px;
+    border: 1px solid var(--lamp-soft);
+    border-radius: 999px;
+    background: var(--lamp-soft);
+    color: var(--lamp);
+    font-size: 13px;
+    letter-spacing: 0.06em;
+    transition: background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+  }
+  .afterword-support .sup-pill:hover {
+    background: var(--lamp);
+    color: #1a1408;
+    box-shadow: 0 8px 26px rgba(232, 180, 90, 0.3);
+  }
+  .afterword-support .sup-hint {
+    margin: 10px 0 0;
+    font-size: 12px;
+    color: var(--paper-dim);
   }
   .afterword-comments {
     text-align: left;

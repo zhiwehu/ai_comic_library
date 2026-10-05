@@ -1,7 +1,7 @@
 ---
 import '../styles/global.css';
 import { SITE } from '../site.config';
-import { t, type Lang } from '../lib/i18n';
+import { t, href, type Lang } from '../lib/i18n';
 
 interface Props {
   title: string;
@@ -109,6 +109,7 @@ const schemas = schema ? (Array.isArray(schema) ? schema : [schema]) : [];
             <slot name="toolbar" />
           </div>
           <nav>
+            <a href={href(lang, '/support/')}>{t(lang, 'nav.support')}</a>
             <a href="/rss.xml">{t(lang, 'nav.rss')}</a>
             <button
               class="theme-toggle"
