@@ -1,0 +1,1845 @@
+{
+  "version": 1,
+  "text": "comic.getaiti.com",
+  "opacity": 0.1,
+  "angle": -24,
+  "files": {
+    "books/996-urban-workhorse/01/pages/001.webp": {
+      "in": "9ad1999f15d887fb7504ec7b1ec49ce87066121352d6f316b01baec45bcfb9fa",
+      "out": "41cb4504ef0d9e56f585a21c4d7bbdaae54e08862b8fad970979954f7392311a"
+    },
+    "books/996-urban-workhorse/01/pages/002.webp": {
+      "in": "76dda570ce0e2358b39cef45f1c512f872d334312df6e6e1f51ba9eef380cb66",
+      "out": "09c256ced4774d9beab85914860d7ed717c35654b4ca06c99df6afd5f55c4d38"
+    },
+    "books/996-urban-workhorse/01/pages/003.webp": {
+      "in": "e0f516ff9951098df56e8178b86305cf6e29c83380f5b26e0e291e13cb8726ce",
+      "out": "a253788e2266428cda74c9c3491de60a07af6bc23c4b9e9953f9f74dd3ca7e44"
+    },
+    "books/996-urban-workhorse/01/pages/004.webp": {
+      "in": "e7893f847484aa0d1edbd5fcab6e4e057c04af49193062eb744acdc57f16838e",
+      "out": "5478f3c0bc647985bd91acaa04c2844e5a6f2e6e0a78ae1266b260c447469124"
+    },
+    "books/996-urban-workhorse/01/pages/005.webp": {
+      "in": "937920fdf211c7be185efb8fa309c53676123caa7a84950234404f76cce9c548",
+      "out": "02214eafb39e0908a3428681760470befc6ee71a034f9f31ebefe34d2d0dd17e"
+    },
+    "books/996-urban-workhorse/01/pages/006.webp": {
+      "in": "3519bcd1a674e13eb19e3108845183971812e11e08014c5483fb4df5db0192b2",
+      "out": "6de45759337cf06194994003477b994df8636ac93c5199bc1dc4dc9cd1f45539"
+    },
+    "books/996-urban-workhorse/01/pages/007.webp": {
+      "in": "8f6c75f4e9d3098951205d48a73bfa622b2f34646b0dcb934950d0d2d7267af3",
+      "out": "ed09de3e0e5cebc84c2da60f4a7bce672877db13742193983c0d83c801a1d709"
+    },
+    "books/agent-harness-field-guide/01/pages/001.webp": {
+      "in": "a2438f8f4eeb104a3ab6be26244934a0a759f1f8898d71406b448185ff8abe00",
+      "out": "b9200b2ca557bf8cd686f91159e60f43a5213bbc7055e34833b724b2594a37d4"
+    },
+    "books/agent-harness-field-guide/01/pages/002.webp": {
+      "in": "7504299e6b2c4921cff884a2642fdd920fea940a94d0d893188a99d847eef830",
+      "out": "57812497926c01a7a658e7d2aa8281ffb45c85fb25a4e9afa157d57cda6001dc"
+    },
+    "books/agent-harness-field-guide/01/pages/003.webp": {
+      "in": "a3623e6a0701ac996415fb929a2639ad99311a6b70a6693fae2d737165621946",
+      "out": "22d1f9953887ecfa42b8fb62ab40ad14bcf4cf62b94b7d74af3f83f61690ee31"
+    },
+    "books/agent-harness-field-guide/01/pages/004.webp": {
+      "in": "d09f4df0b21f7c0a13870d7e1d2e9e9b8c64b57bc6e0060d7222045ed793fd25",
+      "out": "f44230779c83c07821c243009954745591ba53bab247a62e510c3257a56b6e7b"
+    },
+    "books/agent-harness-field-guide/01/pages/005.webp": {
+      "in": "23778231fa7c0640d062a70a6742c32cafce6ebe6496996cac9b4381ddc32b8c",
+      "out": "07c72aba9fb07571d9c3e53f847bbef66a3363a7498ddcff611db7980909fb9e"
+    },
+    "books/agent-harness-field-guide/01/pages/006.webp": {
+      "in": "c06d217855915aa0e65097458b1890fe3e17f28e7022739d7adbf0b6ec7f3439",
+      "out": "4e966f1e1f059f0c65622de907c7fe95b426372b281d12878d37cb16f9e1b314"
+    },
+    "books/agent-harness-field-guide/01/pages/007.webp": {
+      "in": "4a595cd413fa315643e239bac4b5279f641e29044e2f40b03741b4bfec68eb0e",
+      "out": "40838d717a779d570b91d75353606bd73122ad40cf77a7c1f2659a4a4850292a"
+    },
+    "books/agent-harness-field-guide/01/pages/008.webp": {
+      "in": "6853098cd57b2e610000f66404323d003f1cc7f1aa24522f3334ffa178057242",
+      "out": "31f086d32ae1d3ae0b477332e2f383cca2020f6045fbe9f1c5fa9fa49d9ef429"
+    },
+    "books/ai-infra/ch1-downloaded_but_cannot_run/pages/001.jpg": {
+      "in": "96e2f8b2097683f620288734f1ab98e2d0c602c1086c44296b4a2a3ac3e84bb1",
+      "out": "a3f61148625fd6207d0874ddb7abf28ea9a22f05bbccce39d38a4fb7841d27da"
+    },
+    "books/ai-infra/ch1-downloaded_but_cannot_run/pages/001.webp": {
+      "in": "20f123dab2f121c0acef10ce2da9d8821b76e6ff4af54a811f6ad1ad4034ce65",
+      "out": "ad3083074572d0aaef64eef183b4df917813a132f72da51c69417ddcb8c078ae"
+    },
+    "books/ai-infra/ch1-downloaded_but_cannot_run/pages/002.jpg": {
+      "in": "80030bfc83d3c404789c63fcd40f98e967a43ae5446e35ddf106b81b4d0b7df8",
+      "out": "af3bd686b83334ece2d84e0dc5826cef6f929eefd2e6e14f14a0d98248d54f21"
+    },
+    "books/ai-infra/ch1-downloaded_but_cannot_run/pages/002.webp": {
+      "in": "02bfb25d9bc3e7cd4dda4ca206b905303ac9f7b76331b529ef72319a7c9da123",
+      "out": "09313b8e293d06d77618251ff8fb400fd7b458bc1333794dcf6cd75f4c3aad72"
+    },
+    "books/ai-infra/ch1-downloaded_but_cannot_run/pages/003.jpg": {
+      "in": "13c9de796ac542be9a41f1c330b9e7eab6c2cb3cdea84fd507a39312d5ff2ba9",
+      "out": "aa827174fc03cd61c3eaf2316005ee8824fdf3d00adbd58a73ed9fcb322ea67b"
+    },
+    "books/ai-infra/ch1-downloaded_but_cannot_run/pages/003.webp": {
+      "in": "c2f57acba905259972914a2ec4d1c34661c212581f85c8fd86320d307a6b1f71",
+      "out": "69071afaab2692231387f109600440b20c854a115a032beac7a3108391e0a653"
+    },
+    "books/ai-infra/ch1-downloaded_but_cannot_run/pages/004.jpg": {
+      "in": "bceb8cd61d7ad7fe4bc4c6035ec22e725644f2f79e33f123f5e952e9e4bf9e39",
+      "out": "8fb052559230ed1e7a0aa8cc8c61a25552e2d098262cb43ce422e1d1a73e9cac"
+    },
+    "books/ai-infra/ch1-downloaded_but_cannot_run/pages/004.webp": {
+      "in": "896ad66eea17666cd389f2e7eafaa173da30232d9cc47a2e99285a564d10e885",
+      "out": "b7768b4541d6ed9766625230c8ed47921d9317f792b952751283add7f7f08741"
+    },
+    "books/ai-infra/ch1-downloaded_but_cannot_run/pages/005.jpg": {
+      "in": "f9e5f6601a3df6f0d9f1c412bac535eb9add4c48245753da6cd7e388c427533f",
+      "out": "f384176829671ed7fc144435a2a39375b2a8c9fba8489b62dc1778bee436fa5d"
+    },
+    "books/ai-infra/ch1-downloaded_but_cannot_run/pages/005.webp": {
+      "in": "a04277f700c42b5d0ff277fde08a23602be1d6ca39cd5737833c7ba52e2b0a8e",
+      "out": "79e1f1a2cce242b83c3f52184ee6580f04af790df25bb957739c9ea8e5749766"
+    },
+    "books/ai-infra/ch1-downloaded_but_cannot_run/pages/006.jpg": {
+      "in": "a2d1273a95d6e6517e6249e2edc8d11caac4645d00598840dfb30d5c970d6453",
+      "out": "c2af20ff381242ec9f85c3ff9fd9773cec962312976261a22b1145866f7b233e"
+    },
+    "books/ai-infra/ch1-downloaded_but_cannot_run/pages/006.webp": {
+      "in": "a030108b5504ddf1ffd9b2b58431a694d20e732db662d654ebe7e29d80cc5cce",
+      "out": "5257ff36415f5a50a2a468003ea808762afcf26dceb2a2fa48cedf70ac201599"
+    },
+    "books/ai-infra/ch1-downloaded_but_cannot_run/pages/007.jpg": {
+      "in": "b0c0b8f2071a11466276a3a95ef909d4658f9b07b070f4208b30a38bf4b489e1",
+      "out": "3b5c904a89d6e80967bfe7b8ea9b7589f2f324f2c8357be0240543a274c58fe7"
+    },
+    "books/ai-infra/ch1-downloaded_but_cannot_run/pages/007.webp": {
+      "in": "275f21c8bd6e299e88d52cb5607e82b36ff24c659dfd237b0ad3eff365a99502",
+      "out": "e6c7de2723cd1e081546982a77022520ac3fcfe7a358b596e6f2033bbbbc1866"
+    },
+    "books/ai-infra/ch1-downloaded_but_cannot_run/pages/008.jpg": {
+      "in": "4ffcbf4b69fdd064a6075378c0c00ffbac09e152f03f41836417c8ce1ac43cd1",
+      "out": "d4752c293cc0daa65b72ea6aad9aefb9c7ce67e5839e306a76946b48da00c9bb"
+    },
+    "books/ai-infra/ch1-downloaded_but_cannot_run/pages/008.webp": {
+      "in": "5cd88790bd9082942024b1d5022b1c630371a2d66b2094a2f334e79cd107b071",
+      "out": "6e6a514ebe47be716c396239b9d5fa275cb29feaf5397b1b1c1247df48a58941"
+    },
+    "books/ai-infra/ch10-ttft_tpot_throughput/pages/001.jpg": {
+      "in": "cb91f8d08adb3beddbba54bd7ce102d6fbe6d1bc078fb897483e6f6b85a58a5b",
+      "out": "90e13882893ece4aa3545dae631248188582194d6f71bc36c1ae3f29c982aa8e"
+    },
+    "books/ai-infra/ch10-ttft_tpot_throughput/pages/001.webp": {
+      "in": "41c9157c2733e531c0cc9aeccab8ac8deeb4439a7d078f7fcd1096a2ad5d8f16",
+      "out": "040ec83fff6fb5577ab0fbe92c3cac1702ef51029d9c77fa6d4e43c4d69cdf99"
+    },
+    "books/ai-infra/ch10-ttft_tpot_throughput/pages/002.jpg": {
+      "in": "64e32cddf558c754421e04038bed4ffa199f5cdd997858f310ebf09ab6887779",
+      "out": "2100e9b70333f8893a6e81edb19d4e565e97ae45ff906aab27437d78c4d3040e"
+    },
+    "books/ai-infra/ch10-ttft_tpot_throughput/pages/002.webp": {
+      "in": "cad7cdb74df757a642ec69bfc65a3d1643d6b73d95c02228e6624e129a83c225",
+      "out": "d8e7a43a4fd47b6f907e0561d412252fad08950baecd07ddd0e7cadd2705a6e6"
+    },
+    "books/ai-infra/ch10-ttft_tpot_throughput/pages/003.jpg": {
+      "in": "f0b2120c6b2aefd0ddc79209e784ddbd5e48b3e273c45ba308789a9e97023805",
+      "out": "82fa1aa659f0cad96f03a0d07fb4ae518483d3dab5bb9d567c4f804d3857ab1f"
+    },
+    "books/ai-infra/ch10-ttft_tpot_throughput/pages/003.webp": {
+      "in": "f9fe820d6351e4846af3dbe1e87ac9382041badc07a99a23933193a86206434b",
+      "out": "611bdb22442b929a94e222a5c078228a0128c7a205efb0c48a2269089ab84957"
+    },
+    "books/ai-infra/ch10-ttft_tpot_throughput/pages/004.jpg": {
+      "in": "8e97be288b0a1edaa102627482e41ec7197e7bcd4e9b6c1a7ff271ec511e70ba",
+      "out": "2adf5bf178576d77b0aa6cfcb16404059c1f4a7bc0b4d507fc1424612090ee21"
+    },
+    "books/ai-infra/ch10-ttft_tpot_throughput/pages/004.webp": {
+      "in": "42bc0d8cd2cd1793e4db65a1f2788f9896c4c7fcb2dd0f6321442c0d474a1b5e",
+      "out": "f3f36e65f2dbc6931b014a7f4e2533ba06cbb803a18ac6100d63e6c985451646"
+    },
+    "books/ai-infra/ch10-ttft_tpot_throughput/pages/005.jpg": {
+      "in": "a0ec3ea2a4448247b2e42e45e6f831478c68fd7a32d42fe8930c0a099fc2fb7f",
+      "out": "ecf8fb0d481c07a884199f712bd7d65c47ee05e715e9363ff09f74b79c79a2c4"
+    },
+    "books/ai-infra/ch10-ttft_tpot_throughput/pages/005.webp": {
+      "in": "763a1d13be7434584839bde872572ebbc2039d9ef0a459b3599cf085ada8b050",
+      "out": "383877e7fa31755c9a4375f4a33549aed5580722914c9701f6b76b1fa62546b4"
+    },
+    "books/ai-infra/ch10-ttft_tpot_throughput/pages/006.jpg": {
+      "in": "8b253a7f873bcb719dc46dccd0faf916a00ce7eb7b0b589164f10db3c7e2adf5",
+      "out": "ba4ecbe2693311c5c150204c1d895e7858c9a946563365ed684aafe6fd23267a"
+    },
+    "books/ai-infra/ch10-ttft_tpot_throughput/pages/006.webp": {
+      "in": "a35e06179b8ebf7f64928cc223d04b4e6ce1a484d803d333508e0dbe3c3a32f4",
+      "out": "7d28a8f27e3939e77b43d5e8b9b7f423c1c805536d6fb5fde5549f56a9698195"
+    },
+    "books/ai-infra/ch10-ttft_tpot_throughput/pages/007.jpg": {
+      "in": "3862592bc2fa65dc6654ed14237ad596e1cfd2626dc827ba60fff134b5ba7b53",
+      "out": "ef8ade2571ae2465015726b4a76af3ff162b28c137a469ef1f5967ff4d74c0a8"
+    },
+    "books/ai-infra/ch10-ttft_tpot_throughput/pages/007.webp": {
+      "in": "34c3daf40b1415aa4ad10e739640362ad692dd5c7a8974ab3f43ea9bbe87953e",
+      "out": "bf9da75b40403d59328f05f44118816b547d844c342ce094d7e172989fb15c53"
+    },
+    "books/ai-infra/ch10-ttft_tpot_throughput/pages/008.jpg": {
+      "in": "9dba21ccea1db1868df3f717c8f8dfecb0614245cb4bcd69fb86160da808593d",
+      "out": "453c746945bc6e4a610e1588ceb5a1431f476430cffb784c46d535051f8f6cd4"
+    },
+    "books/ai-infra/ch10-ttft_tpot_throughput/pages/008.webp": {
+      "in": "d9c792ae8bfdab3a46272e44f4840ecd57bf49eb5bc77120fb8a5a7e8d252656",
+      "out": "b9c348a713469cf709f9b0dc283214e369d00ac22bb5bc0f344f85b5352b7ccd"
+    },
+    "books/ai-infra/ch10-ttft_tpot_throughput/pages/009.jpg": {
+      "in": "5be924773560f5d45cc7d96e12b09ebde18bb7e1263f8441d2c51d86e738d554",
+      "out": "0abfad53539bac13c4f0d6bd0626f996592515cc40bf317ddab27922272024cd"
+    },
+    "books/ai-infra/ch10-ttft_tpot_throughput/pages/009.webp": {
+      "in": "96abfc456870dced6d4d46c4c19315444f25e5310512804368de65c3c9dc846e",
+      "out": "4e75d685d4aaf7cabac36ed5566b6f3e89a95b85f406a2551195f750f338032f"
+    },
+    "books/ai-infra/ch10-ttft_tpot_throughput/pages/010.jpg": {
+      "in": "49ae210d5d8eaccc6feed362acde3df9cb97b5604204d59c8167868f1cf39b8d",
+      "out": "6ef4254384b64d0a5963fbd997dc514bd3087aada23f01a37377b1d78294e0ce"
+    },
+    "books/ai-infra/ch10-ttft_tpot_throughput/pages/010.webp": {
+      "in": "6075de027ee3b451fa39d11738e3211ec4a9e2569e90410090d248256383cfc2",
+      "out": "b3bc73a7ee232c1a26967ed312c78a51614e6688b667817257ad73eb144ffa39"
+    },
+    "books/ai-infra/ch10-ttft_tpot_throughput/pages/011.jpg": {
+      "in": "f8e34cd6e5df3fe91568c6c3049aa186d75455cd4b13ac677800945b3a85c967",
+      "out": "80fd2fc398dd36771dc0ec49c6a8f03cfd9571e2e3b7b43e0c027a11d11ea3b1"
+    },
+    "books/ai-infra/ch10-ttft_tpot_throughput/pages/011.webp": {
+      "in": "974b88d5b37d47beb9ed13d9efbb839a80e614fb2a7bc8010351d7d9e59771e6",
+      "out": "67438e3bdf4b78fdb4322e0bebbc9807d9c99a5376ed42208e57e00907b77634"
+    },
+    "books/ai-infra/ch11-batch_and_continuous_batching/pages/001.jpg": {
+      "in": "06d5292aa7ace06f910b8163385caa276a4aae2fa0d8cb9ec2ac5998caa9cbca",
+      "out": "b48bc1292f57257364ba9eb4ba6ba4bd3bf02ee2504c8d662adea181d068f41c"
+    },
+    "books/ai-infra/ch11-batch_and_continuous_batching/pages/001.webp": {
+      "in": "130bde80d879220886b59eb8652d296212928c6c164c300b0e8bb2686b6e1833",
+      "out": "333b56fd30922e5b654d792095fe645d97e22decbfacfc71ddfff8f66792367f"
+    },
+    "books/ai-infra/ch11-batch_and_continuous_batching/pages/002.jpg": {
+      "in": "3022a07a78efcb884642eeb587c524545053c569b64690370a8d01034a52b85a",
+      "out": "dd9067546f60294c405c35052465e37a405de5a77dcaf43ec8a5562f2bbacece"
+    },
+    "books/ai-infra/ch11-batch_and_continuous_batching/pages/002.webp": {
+      "in": "f2c6c72a591abd823a56e739643e8de5f8342a79fd1d88b510d2d7665d64e8f3",
+      "out": "99839e8d6067953ce12f216db3360c805892db97e7a2e09bb394d7b8f39c004b"
+    },
+    "books/ai-infra/ch11-batch_and_continuous_batching/pages/003.jpg": {
+      "in": "1a8924f842a767bdbf52814cd4a938df125a244c0923deeec0c8f1feb35edcf9",
+      "out": "7dd9c3aabfa4ab4a3ef592da52ebaca6c3445ddfa5c56fe5a8f4861865b3743d"
+    },
+    "books/ai-infra/ch11-batch_and_continuous_batching/pages/003.webp": {
+      "in": "b2626101e1b35027c0c30d8012084752c3d714ad46e23c637c1a2d9bb10d3500",
+      "out": "f9b8feba9c56562981cdb527cb7ed7d0cf431be694bcc3be55094a6decb76574"
+    },
+    "books/ai-infra/ch11-batch_and_continuous_batching/pages/004.jpg": {
+      "in": "8437dc4e8eddcf31e818968ebfe40e40757fd10205451e58ad9f2c22fd9dea60",
+      "out": "500fdac6556feb9d40c4def780181d76ca64b622051a3866ec34441cfdf0bb88"
+    },
+    "books/ai-infra/ch11-batch_and_continuous_batching/pages/004.webp": {
+      "in": "fa8aa0c19fcfe4f96a231dd5db53dfa882113c9570454fcbc57b704c9cf1972c",
+      "out": "52ffb5a9a6495ebf3f472f7824982403501409a02cd38905e288abf5ba1fd458"
+    },
+    "books/ai-infra/ch11-batch_and_continuous_batching/pages/005.jpg": {
+      "in": "ced2bd4ef886bbd4da6be3775654865fd1e1bf6f5e00e7e03909860f0dea80ee",
+      "out": "e93fff9fef3a45e7f76d91a7c5afbb2bd5271d94c5baeee91d9702ecd31e0b3f"
+    },
+    "books/ai-infra/ch11-batch_and_continuous_batching/pages/005.webp": {
+      "in": "168a6312e3cc60b8514ecc41e9f463067ee2bd9f81cc885305307fc03a83c9b0",
+      "out": "285e1c98afcdab6f0770a9f8f0fa1bf56ddd2aec0d63a463e82f241221158612"
+    },
+    "books/ai-infra/ch11-batch_and_continuous_batching/pages/006.jpg": {
+      "in": "52cdf40382147416db4a76d12453852a0f877969a2c0e1341b80ea1019882abc",
+      "out": "3d6ced7bb6d1ac87106376865ef6d04259d0b2c2fb0dd217401079d8d1108098"
+    },
+    "books/ai-infra/ch11-batch_and_continuous_batching/pages/006.webp": {
+      "in": "9cebb6987e436211aa8b58e97c7491302a1ecb468a7eba9038ac65cb7387a6c7",
+      "out": "40f6c9ebbbb877634d6aa3a6212e9285d7f142e8b98b694530f836f65381553a"
+    },
+    "books/ai-infra/ch11-batch_and_continuous_batching/pages/007.jpg": {
+      "in": "119750f66595921d6fb3aed445feea8d754c9e27abf80ef0744720c20baf88ce",
+      "out": "b9195726d25d5a658fc55baf27bb9cbc7bda072cd8dd68bae4515a5ccd00dcbc"
+    },
+    "books/ai-infra/ch11-batch_and_continuous_batching/pages/007.webp": {
+      "in": "3136654a2cdab7cde29e9e04fce17ff13033d687e47c2a8dce935d9250f3f4ee",
+      "out": "237dc0cd9ec1f5b079a1f9742e575f6207a00dddc0e3d28cc0a0829a5300999e"
+    },
+    "books/ai-infra/ch11-batch_and_continuous_batching/pages/008.jpg": {
+      "in": "ffae9dc8f3649c4af113c3c949a4d897ffb5a136a1aba3a59f0fd86e33033aba",
+      "out": "5e49405b253c28789ed97fc673b2f4a2b650903b3433a8e82bd4d6244fac987f"
+    },
+    "books/ai-infra/ch11-batch_and_continuous_batching/pages/008.webp": {
+      "in": "cf4b5ae53706198fcff1a64df4a451edaa914512845c388db4727c149a02f46a",
+      "out": "7a3ccb6f6516d50e3b6a32157507cb017a458698695fbed160ef31d6b081f317"
+    },
+    "books/ai-infra/ch11-batch_and_continuous_batching/pages/009.jpg": {
+      "in": "e36e2fed554b3ed70cec631899bf634f9990fbfbb22a799cf9088565a44dbe48",
+      "out": "150ade15b4f695bb9306816001d79ccb861de10bd3c2d9e782a6cbcdcc508279"
+    },
+    "books/ai-infra/ch11-batch_and_continuous_batching/pages/009.webp": {
+      "in": "0d5bc8cf3f1c1d195296bcdb3bf0ad254ce089493d54dd28d456c41f1e2c340c",
+      "out": "7e5646e768c7962196ec845c3419793ce3a74e38623bb2ac84baeb1291a59667"
+    },
+    "books/ai-infra/ch11-batch_and_continuous_batching/pages/010.jpg": {
+      "in": "e4eba9b621b08193305535b5ebeef842e4fe748afbf9c93c1c6d405661c54578",
+      "out": "b172e690cf694fa82357af90eb180f8f10b5875b1919b777e888195f63cbcea5"
+    },
+    "books/ai-infra/ch11-batch_and_continuous_batching/pages/010.webp": {
+      "in": "8057ff4f2474fe4a35d36fa300eee7e0e752b94a13d22f7f3671d93b968331d8",
+      "out": "5cad8d51560935d1059c15b0e7d278ab1c158b7f3e5a257068e7667af2813469"
+    },
+    "books/ai-infra/ch11-batch_and_continuous_batching/pages/011.jpg": {
+      "in": "ab0404dc505e1aa3add6d08db20b614c2928abab4160af19eca20a852e891e6e",
+      "out": "f22ddb58050e94bf48ae84dc99ff6aba252d98347b098a0e5dc82427fbb2f2ed"
+    },
+    "books/ai-infra/ch11-batch_and_continuous_batching/pages/011.webp": {
+      "in": "e3e7e9e5ca1c77b71de27fd03e98215419fbd55b701318192916cf360a3811cb",
+      "out": "c7bfeed3c2db8af674c6c0905b4090e65975dd01f81b823884451c026e4ed3b2"
+    },
+    "books/ai-infra/ch11-batch_and_continuous_batching/pages/012.jpg": {
+      "in": "87b6d8beb0187748b66ad29a55deb1123da54599ab3f00ca5f3443ff054b927e",
+      "out": "9d335cb5ecb9a46133f8173dd8422a0b18a14dce8f789114da967e76abd7830b"
+    },
+    "books/ai-infra/ch11-batch_and_continuous_batching/pages/012.webp": {
+      "in": "68ceff2467f0884098426429ec236d5de7f51c1e78f8c368c3bdf3ad6fb90cba",
+      "out": "738ae7d196e5acc6b75913feb6b77da4da63e0c9ca67521bc88a618171a8849d"
+    },
+    "books/ai-infra/ch2-vram_residents/pages/001.jpg": {
+      "in": "9032d3c3d4c2461dc1d1d979358d40feb7e291bc4b328b8992b6fcf0d015049d",
+      "out": "95fd28dc4d8d9a30c5c91081c97a196d5d01da89f09a394911e2df92b31d08c2"
+    },
+    "books/ai-infra/ch2-vram_residents/pages/001.webp": {
+      "in": "d7b6e9e3e7dac19a374193a9291905a8f3358dd55c123c62b655fb7de0b7e0a2",
+      "out": "b90d8c671b1bc82f260ce5568fbc35db2de45bf43d8f912bcb9d19d8945fd7b0"
+    },
+    "books/ai-infra/ch2-vram_residents/pages/002.jpg": {
+      "in": "438a72df81230953928229b1d7f066272b8205c7e1ca1dfddd869dbcae9320f8",
+      "out": "fa3f959b4bd1f76edea54db80e89ec43630d2ed9eaf3655a229e9385805f6bb7"
+    },
+    "books/ai-infra/ch2-vram_residents/pages/002.webp": {
+      "in": "aa609d36f97777268406de5027bc20e7255a35046212333f690f4f6cd61a49de",
+      "out": "6c8de57aea23b2104019f1ed21735cc057521c355bd6cdcda35c24470cfc8484"
+    },
+    "books/ai-infra/ch2-vram_residents/pages/003.jpg": {
+      "in": "299f108b55b6ed2b314a8adf47f46fa78bcae585d42b7c1550b8f1bc1c00e8ce",
+      "out": "4207e8cbbe05565bbea9d572f2ee9f58acb3da63ff4223698ae079ec0714bf67"
+    },
+    "books/ai-infra/ch2-vram_residents/pages/003.webp": {
+      "in": "65ae795a3e4946252f704808e1da8ed14696aa82f6c9611a56b59a91cb3ff84b",
+      "out": "0b602c0423ad6263f2b6c48e939429d54a640d0a095dfd37d09ba9819d90ffcf"
+    },
+    "books/ai-infra/ch2-vram_residents/pages/004.jpg": {
+      "in": "992dd7f07ddb1aaedfcf91e856b8f4515e9ce5e098f3e996337ae011024d73e6",
+      "out": "3a46551d5161a20e7192e3453e23e2848dcbca7663024a444ea764837f07d3d0"
+    },
+    "books/ai-infra/ch2-vram_residents/pages/004.webp": {
+      "in": "9a38d6613254958378e8a5266e43c3d6a5e6b032e94548d292cd0cec3ca3c23a",
+      "out": "7b3be346940ca354d2d2197abcc2fabb3311f8cfa746f1cac3d0733968c279d8"
+    },
+    "books/ai-infra/ch2-vram_residents/pages/005.jpg": {
+      "in": "554255c7f0b74babf812cf667d1142d9c512053be0db3484c92644f907f15a98",
+      "out": "a80a0ccb4e73ac832af511c155a1a1c596ae7037787eb7e7ae2a0d0f03a20c72"
+    },
+    "books/ai-infra/ch2-vram_residents/pages/005.webp": {
+      "in": "8a7fe98e56d80d53987fd337419dc2e190ca710a0daeba20d92c32e36e64ab3c",
+      "out": "7800de4205825764aff336d397a44c41ebe46a158f62470a1d8be4c08a9fcf7f"
+    },
+    "books/ai-infra/ch2-vram_residents/pages/006.jpg": {
+      "in": "06e1b56ea4da0eb6831e6898f9abf2465aad24080ec7e3afa54231785ce48b82",
+      "out": "23e3fa6b7de5f11298239ed2c90b0b0b7b25f3b2db93bed974a725e77da44eb5"
+    },
+    "books/ai-infra/ch2-vram_residents/pages/006.webp": {
+      "in": "f6c864f79448dbe3b6e2ff0855926fc353dd53d121e2a5dd8a654ba304820805",
+      "out": "332143f1ccb00bc356f9e2752c26c5d9b21add2a2fb8cd661bea1a27df12cbff"
+    },
+    "books/ai-infra/ch2-vram_residents/pages/007.jpg": {
+      "in": "b5452bf51ebf4c8b3b4aa5e45f62e51d273c415208fff7f51d1d80c8d9afeb93",
+      "out": "8b6c15f6efdb8fa7f9c9b1956442d1d3be985815ade85180af91e454d73e4e03"
+    },
+    "books/ai-infra/ch2-vram_residents/pages/007.webp": {
+      "in": "df7cc1c06013a975ba93aaedf67e7611b91225336a2f343d900afdc5fe9b0799",
+      "out": "3a5ca78c79b6c197eb2a71719e79a873a5314270770a6d9deac6a20a847c6207"
+    },
+    "books/ai-infra/ch2-vram_residents/pages/008.jpg": {
+      "in": "e688b9b9b183bb56ef8fd4152bd2e171a6d595b99bdb2c7abf5368e6936ba349",
+      "out": "278bac4c28100eda624effdc2c14183cf674d09b4c9fdf2d8b7d2a364db4283a"
+    },
+    "books/ai-infra/ch2-vram_residents/pages/008.webp": {
+      "in": "0fd281c8a1c79470990c3be4110c78cf90092c37a80f358369f9559b2099d365",
+      "out": "fe70ba847f02d1452fe658ac6b317f82ac8c8e1bb009736a1951b47b2b38ca74"
+    },
+    "books/ai-infra/ch3-parameters/pages/001.jpg": {
+      "in": "a4421a650e84e80be179199e7f06e807f569a780684365173808b8bd546225b3",
+      "out": "f9304b407840e27778d2b2a5ee3a442c66a908d95ab0567fb658818821f3a465"
+    },
+    "books/ai-infra/ch3-parameters/pages/001.webp": {
+      "in": "e9c60cfe55718605dd7ab6435745bc5fa7cbae19f86e3928cf1e9d3e66b763ae",
+      "out": "126abeb0867aebc4fb82eb42a03694f337619c4169502eccb7879cb02fc1d9bb"
+    },
+    "books/ai-infra/ch3-parameters/pages/002.jpg": {
+      "in": "8beae518e856d401fc8d264914ad01736ef4db4d26346124b1f51d91e2e680f5",
+      "out": "beaf641a590ba51c47082f991dec5021574e1055ab472c7f95ac4cf3ff3a6b20"
+    },
+    "books/ai-infra/ch3-parameters/pages/002.webp": {
+      "in": "2801bdb40157585ffffcc6567eddd2b5956b82ad91763fe7b958e4f41cd323c6",
+      "out": "057b5b41e8b8d50ccd123a28e6580f1a348aab4c95e28a553324192136dd7313"
+    },
+    "books/ai-infra/ch3-parameters/pages/003.jpg": {
+      "in": "ecc44a4677877e5e7a5c70c0d63abfd43147dd47696d6620408bd4da2b2df772",
+      "out": "68ca0c5bcaa6efdcadb0d3e446a236d148317c69790c28c5cb5aefb3d304f7e6"
+    },
+    "books/ai-infra/ch3-parameters/pages/003.webp": {
+      "in": "13adda2a0f8329b843d7ad870eee23371e273408edcfb87aca7f9dd451f2ea51",
+      "out": "c672bed78755e2d42d3105821f1d664512304e02c3afa353dea44c3155a3a97f"
+    },
+    "books/ai-infra/ch3-parameters/pages/004.jpg": {
+      "in": "c692209c395e2f8b6156b8d3fb8fa1465b184b0451c006bc314debb955e555aa",
+      "out": "07d20e311590e1d24af4bfc72e1ba4c4aaab11208fd83ca054eed413fc456412"
+    },
+    "books/ai-infra/ch3-parameters/pages/004.webp": {
+      "in": "e5016f7ce5b3a5a918bb2eb22dd840676297fe4a8e23c381b8e699a6e0f2fa3c",
+      "out": "891b348a15c40f96452538713e6bbc824cdebed34185d4a8f69c71c8dc05a085"
+    },
+    "books/ai-infra/ch3-parameters/pages/005.jpg": {
+      "in": "3a6fd98d930b28c618dac69374ea3cced16ed075773f30e7ec4d01c3a498df42",
+      "out": "86c531f0eb451583a54db155b2516ceb31ae6dd5861007c1283bc338180ccc74"
+    },
+    "books/ai-infra/ch3-parameters/pages/005.webp": {
+      "in": "a49ba0cd5e62376e21b7af1422888a5b2d76e0b3d73b7a222f722051bee8c7d9",
+      "out": "b21c64ffdadc9d306df64597117a9986ffabe77385c7d9179693307a7710ba43"
+    },
+    "books/ai-infra/ch3-parameters/pages/006.jpg": {
+      "in": "13ccdb532ea0502f90e21e4b4b2675e3d4f63b6b315e53f7393a9b3ae09102a9",
+      "out": "f94d0c930098ce29a25f93b0eada837bd93b8c7e6557c1b5c08cb939a184d67f"
+    },
+    "books/ai-infra/ch3-parameters/pages/006.webp": {
+      "in": "0c71ea61912e591df605e89f10e67407c93e9a560adb0a3084cf95c2c0367683",
+      "out": "d5750aaaf2f226c61ef105377bcc153ed0fabbab2b9a997d1516921b4769e409"
+    },
+    "books/ai-infra/ch3-parameters/pages/007.jpg": {
+      "in": "9fb5af55e1953dc107f6316d2d5ae28ec5456c12b3c70e59f6ebaad9036b73c8",
+      "out": "2e27dea09501e408685e22476e595ae90751df46f8e3c763e764d5c75ab620f6"
+    },
+    "books/ai-infra/ch3-parameters/pages/007.webp": {
+      "in": "e8bd06bcb558cb3bbc05adedc6de53c8a1c9b401f9c9a0cff5c63793ef5b9487",
+      "out": "f1df1e4fc61672a7f8e8b1a1b6de0e80561455b917a84d53fbca930159012480"
+    },
+    "books/ai-infra/ch3-parameters/pages/008.jpg": {
+      "in": "a253826bc0d09a17d8d3d633163121ebfcccdee15331887c0f4e9e73d5ed40d8",
+      "out": "9a01cceca85ab937f663ef78d926d513aa4874d768cd8e6ab84099082599ea43"
+    },
+    "books/ai-infra/ch3-parameters/pages/008.webp": {
+      "in": "00388bb442917dfdfdf21c0799d8bbb65f6dcc59034a396dddb3d88d4504bc8b",
+      "out": "4929dcae3f61e41a7ffc64235fde42ece98f1a77fe622619347405d82b5c17b4"
+    },
+    "books/ai-infra/ch4-quantization/pages/001.jpg": {
+      "in": "3c90dad189051dad600a74173eefd0e40ed7aaf5c41c5780c22d66047e3784a6",
+      "out": "6863f66aeb8315896e02213eea13a9ed8271765d7b6bbba8faac2e3bcf5ff34b"
+    },
+    "books/ai-infra/ch4-quantization/pages/001.webp": {
+      "in": "d2ceede9661dbed62c21c4ff10382ab139f4fe946dcc3e94be7b9cc1e7e5b166",
+      "out": "aeb31f4ef17f20f8754ce3987089c8ca774ba2b3b2ff7974aabf6ffdcff365e7"
+    },
+    "books/ai-infra/ch4-quantization/pages/002.jpg": {
+      "in": "2e05cd9efbd5a5c06d07ac0ec6093e35beb9bdd56cb4b6240632bb802a93a759",
+      "out": "cc527c4c1fc16a361300af0636c1c7eec6cbaf25e92a51c48c565af5d7a1215a"
+    },
+    "books/ai-infra/ch4-quantization/pages/002.webp": {
+      "in": "d2d006dd54ced0633600afbde8389c81122679d43888404f7e417e3f71aaa604",
+      "out": "bf1d818e12856e60efdb1257211531015052ebbda4fcfe4d7784bcda9c6eb808"
+    },
+    "books/ai-infra/ch4-quantization/pages/003.jpg": {
+      "in": "54255554c17ba3a2ddb29e499e9d3ae1c37359fd0551fa4756f627bb72fb42d1",
+      "out": "852cecd92a65cfa562ffb0a92f8524871d217293f2dab9f0e61be432e2e339e8"
+    },
+    "books/ai-infra/ch4-quantization/pages/003.webp": {
+      "in": "78d6273457abf820c2c31189322e1569a595d7fa26e9455b4307c06e97ba19a2",
+      "out": "2b6f7e713a9e09d13d36b5a7f02499b8c6926dbfb0e865584286f25527529b28"
+    },
+    "books/ai-infra/ch4-quantization/pages/004.jpg": {
+      "in": "1ae52ffd4136492fcca94b9f333a1811adcc89db49d180d793cf76094a9af072",
+      "out": "2245fca93d23430b02583c1679122a71d85d7e8cf00330713d4cc04cea5b8ecc"
+    },
+    "books/ai-infra/ch4-quantization/pages/004.webp": {
+      "in": "61e02d4ed0e5dc191bbe226402052e4892f06d5146e4502538655f607d81352f",
+      "out": "ba7e1fa5d1d2ea2420b25505b7492abfd73bdd51c311f4380f968cae2d773ed5"
+    },
+    "books/ai-infra/ch4-quantization/pages/005.jpg": {
+      "in": "4f67ee87df3eaaf7d3f28cc5e1c6e4a48d041391082b75cbf8809f676a3a49e7",
+      "out": "6f705ff77a95c74147e17a9e386fbb470f11a6f447502e9bdf0756eb1128797d"
+    },
+    "books/ai-infra/ch4-quantization/pages/005.webp": {
+      "in": "5ea739d361389828a69c318bcb5b3b8349595211883718ab6a60e59e40c17e56",
+      "out": "286a5d776ddc843c980437a924535b7874903a6f4ae5ca3e19044376bf31cf53"
+    },
+    "books/ai-infra/ch4-quantization/pages/006.jpg": {
+      "in": "3fd1faadb83c39015048b775defe7265cf678d3b6171bac7cb094fbb0bd91d93",
+      "out": "00106396f0277a150ad2a4e2fd2c082c8cd359c8265a26ff086c4ca15579c735"
+    },
+    "books/ai-infra/ch4-quantization/pages/006.webp": {
+      "in": "0620826789fb0f39674cb5d53400930e404117bf80c72e696aee442f38ec4a04",
+      "out": "15bd9f49258d08e6856efb04dc3f2811a97f69824f347875cc2c3b955b18625f"
+    },
+    "books/ai-infra/ch4-quantization/pages/007.jpg": {
+      "in": "87832015e9a348a29c957f7e7a581c0c3ecec5cbc1af459da4d8d6af19b81f47",
+      "out": "d3c27f355c46a2500bbe402a645d3131184bb72aaf5aeb9363695cf4d0e4cda9"
+    },
+    "books/ai-infra/ch4-quantization/pages/007.webp": {
+      "in": "535937621fd3171bcca2d34378a1a83b82e2d73e02833cf55bf03fb14ae2000b",
+      "out": "6aab597fca2ece48ec301bba7090d62698a9444312364ffe2ef854461ebd1086"
+    },
+    "books/ai-infra/ch4-quantization/pages/008.jpg": {
+      "in": "2ec5184e1e235dccb74f890c1d54bf1c7e0bf6de9f541da06befe134636aa251",
+      "out": "34eb6ddac6969e88ea426b7d278e1cbfbc45aa5593ab4df25520af20ad887f97"
+    },
+    "books/ai-infra/ch4-quantization/pages/008.webp": {
+      "in": "5f7d298d0942665974e4d6e9f3a16c48f2e871ae3d3ae15f83cba14a59a42b92",
+      "out": "1dce8a25e743bc03b113af05e525dbbee3728622eb9dc8a3377ae9314a848827"
+    },
+    "books/ai-infra/ch4-quantization/pages/009.jpg": {
+      "in": "cf3ce17f47635b82ececd851764e141ddc1c644f19baecb3a11edafd6c54e61e",
+      "out": "02aaecbe3f889304a633c8ef58f5d2acfa4bb4d60ea767aefd12aea8c71afe40"
+    },
+    "books/ai-infra/ch4-quantization/pages/009.webp": {
+      "in": "ff1151422a8bd34b28a5c034af7406a8ff8ac2eaf9b058d1f8967f057617262e",
+      "out": "8fe239780e45010e8bff59cf4961957205110b2082017b6dad7585d616d5b785"
+    },
+    "books/ai-infra/ch5-token_context_kv_cache/pages/001.jpg": {
+      "in": "e0194e29b6ee621d5923733bb939045b8832ee4fe8b96103fc07583503719582",
+      "out": "f890718f082ca80385951e72f31b4e43a1699af9d20cbad8319ca650e90bd5a7"
+    },
+    "books/ai-infra/ch5-token_context_kv_cache/pages/001.webp": {
+      "in": "17b39d9324a4aee5ebf0e8817924f9a5630f07845f48eb3006cb0f6020c969ab",
+      "out": "4a01e11124fa48efb74800afa46ce52d2a9444c99931f1cfbe3ac2d67c48f977"
+    },
+    "books/ai-infra/ch5-token_context_kv_cache/pages/002.jpg": {
+      "in": "b6a83eb21b7517993a98a6db4b6a359ca187fe9c3013cd7212e2b5b35a188eac",
+      "out": "e18c857b3e4518d3a2f61267de49c120a2fe2c43569f374e49b115f95143c470"
+    },
+    "books/ai-infra/ch5-token_context_kv_cache/pages/002.webp": {
+      "in": "2e704ef4fe8277c78c9007e3811b4cfeca3a26722f6c9042d6c6bf4e2ee5f092",
+      "out": "a97e192974afd2eaa93bb3e3400e76b243f769905e828ec64a0dc5d2e3dadf27"
+    },
+    "books/ai-infra/ch5-token_context_kv_cache/pages/003.jpg": {
+      "in": "f381f79ff093a777968ba82c9e69cb78cf11cdf781e40db7caf4badb16ec9ac1",
+      "out": "bf5cf6a9993657344f28775febae0f4dc269a1f67e6c6afc7bf206381c8f0442"
+    },
+    "books/ai-infra/ch5-token_context_kv_cache/pages/003.webp": {
+      "in": "9ec28582bf68518e346f64e96617069fcd0b19c55a3a39a885d23118d1ace184",
+      "out": "c011ec50a3a574b313c8000732a05fb06ea36e372d19d8f07e3ef33aa91c059c"
+    },
+    "books/ai-infra/ch5-token_context_kv_cache/pages/004.jpg": {
+      "in": "16381bceef5779312757875babd072370431019cd85f9b132d8d2668ed004188",
+      "out": "0ca371abc719971ed52067c312ade2fad97d9a8591e8d7077e92812708e7b226"
+    },
+    "books/ai-infra/ch5-token_context_kv_cache/pages/004.webp": {
+      "in": "87096fa06aec3e014ac7cccff3c106ec693d48f24cd895de04488927784eac83",
+      "out": "523974229f25abf2d75d5bdf54da06bdc2288ee15d43f3b13c38d0fd5a6f4da4"
+    },
+    "books/ai-infra/ch5-token_context_kv_cache/pages/005.jpg": {
+      "in": "5727c8af4611f54cb65892fa869da86d74b982831f5e2b2b46fbc01213a94aeb",
+      "out": "74d31f6b9a0afe3371cc2e258846e4a1de30ff67fe4e07e20bbcdca436feeb57"
+    },
+    "books/ai-infra/ch5-token_context_kv_cache/pages/005.webp": {
+      "in": "450d9158c80ad406ff3141b7f88e9eda83800c81d46c2b92ce0cb0a27fb18a91",
+      "out": "faecaed856084c5b14a4fb9887bb9155fb9a1e1a49230de7dd3e0653737c4f70"
+    },
+    "books/ai-infra/ch5-token_context_kv_cache/pages/006.jpg": {
+      "in": "1513fbf74a9315461be1a848a86c443b51b5e42c5ad473d2fd832cf3f6cde6cd",
+      "out": "5580d686cc37d6497c395342a066e22c5cdb78dde6f9c3f5835638501c2a37e2"
+    },
+    "books/ai-infra/ch5-token_context_kv_cache/pages/006.webp": {
+      "in": "59c831a933e44d7f6074c4132b408093e65e8f80b6848e2d9d6de1cb86fcea6e",
+      "out": "c15fdd043955cfe5849b6d320df703ac3737ee087a48757cab08cc578a5bc679"
+    },
+    "books/ai-infra/ch5-token_context_kv_cache/pages/007.jpg": {
+      "in": "cf7b2091cc9951bd6a793ada760fb25474163dfef7baed134c0d08c6b403c68f",
+      "out": "065ba1f62ba3de023bc38ff4a8849b02ee205a50c9208c6f21782f7a1486e14c"
+    },
+    "books/ai-infra/ch5-token_context_kv_cache/pages/007.webp": {
+      "in": "c8f124be68d072d74790addf038ec3df798374f7bf65664987b1a94dd51602af",
+      "out": "454b39df1097b2b63aa122c2e4f617bb6e24611648240188c829e2485dc3cdaf"
+    },
+    "books/ai-infra/ch5-token_context_kv_cache/pages/008.jpg": {
+      "in": "51dec1a2b59197fda989d71351e4452554e6bcfc95175b107efad7c3ed744589",
+      "out": "97192d71c1ec4e837cc32e744096004f9793c654e0592c586ed3201b9c461a20"
+    },
+    "books/ai-infra/ch5-token_context_kv_cache/pages/008.webp": {
+      "in": "bb93d0e7a46d5a9060a37db4d2ca0221e134f1548519e7ccb36e088b360fc138",
+      "out": "ad540f9e9d49c3944630b9835350002af18566fedae356781905bb49f00b2d23"
+    },
+    "books/ai-infra/ch5-token_context_kv_cache/pages/009.jpg": {
+      "in": "ee5caf3577ac0f08a5a25c00713b0adae6647ffdc9e617cb6744d46ab50d169d",
+      "out": "baf326cf750091c20790e7f29adc8ff2a625733833cfbdc24b79217588f8ffdd"
+    },
+    "books/ai-infra/ch5-token_context_kv_cache/pages/009.webp": {
+      "in": "922397eb5445633d320382d61c9638c2f5d0969279630092fde61c2fe094d744",
+      "out": "2da07799c883f6927de8eaf06a91dd8b05998dfe417da0a57c5100c4c4b59dd4"
+    },
+    "books/ai-infra/ch6-compute_is_not_everything/pages/001.jpg": {
+      "in": "ee905cce3a3d8618404bbb49259dd4f8a8174dbd032d46609f2c476260583988",
+      "out": "fb6b6d6c6965e755406b78036aed5c46862779bff376b0dfd782ea727a53e84c"
+    },
+    "books/ai-infra/ch6-compute_is_not_everything/pages/001.webp": {
+      "in": "24dd1ca181a61a71961dbaa6e79c3f6d3e0a6c0cbc6c309e617b889a419cd5a9",
+      "out": "fefe00c7f2b3c7f8a2d8c07021c9a76311d44fc6594acd1f7e705e1dc2f854b1"
+    },
+    "books/ai-infra/ch6-compute_is_not_everything/pages/002.jpg": {
+      "in": "9e498778e9bdf639f78a046152748ef148739cc1a41b9aaf94047ab9843bda85",
+      "out": "f83e7420ddeba0444e99e210a83ef6632b2b850c858111413ddb4edcd3f23dea"
+    },
+    "books/ai-infra/ch6-compute_is_not_everything/pages/002.webp": {
+      "in": "1f9f542233bd624665ecfe61f4c947fb59590296a96fa9b7608118d515192d7f",
+      "out": "e9928411f7fb36ba2b1cb422e88ca294f6990e4411d756d3bbb4553ae224cdbe"
+    },
+    "books/ai-infra/ch6-compute_is_not_everything/pages/003.jpg": {
+      "in": "20073fc42433dbc1888dc03b335beb0304fddb888ffe52348d1315389462ad53",
+      "out": "564b1974a83d61139924ec14da1b2126bce06c546e5d0f4d503c1708b8fc0c3f"
+    },
+    "books/ai-infra/ch6-compute_is_not_everything/pages/003.webp": {
+      "in": "caf188e362fd2171437fcaf4352e3c1b20d426d80ea8fbb2a95c449d42928226",
+      "out": "5910f9db6852de48edc81842c06e500eac00d74be567976f3e43c17ce05b43b4"
+    },
+    "books/ai-infra/ch6-compute_is_not_everything/pages/004.jpg": {
+      "in": "808c5117a0f414e4d39430e2989cc01f6bced203f328d1f7a00f7818bd78dadd",
+      "out": "4a9097ec7cd51bb09742e27d9187a8e670f68a572a356f44eed072d38b6ed117"
+    },
+    "books/ai-infra/ch6-compute_is_not_everything/pages/004.webp": {
+      "in": "092f53051ddc3aa57087a2bfc21466d040f09679298d6f97adb64b4d9e8a0e6f",
+      "out": "304a6c80553ee25fdf2bf2c856ed22c94e29d9d2a53c0c69bc19f39724d89bce"
+    },
+    "books/ai-infra/ch6-compute_is_not_everything/pages/005.jpg": {
+      "in": "b698cd8d7b4bb72a5646374fc62d3cc3b082679682e4b67ffe4dcbc0f37cf547",
+      "out": "29a69e2b050e9e53cc5cda6c4c7004a8a96c2e751965d8fee7bcc850ac5421bd"
+    },
+    "books/ai-infra/ch6-compute_is_not_everything/pages/005.webp": {
+      "in": "846917abee65527b7da7089ff8b0ec3389331872d24e21075d9b60cfc8d27f89",
+      "out": "2e82d44890e324750223af6db84d841a89d264126d4482ee67902d8c1e47a16b"
+    },
+    "books/ai-infra/ch6-compute_is_not_everything/pages/006.jpg": {
+      "in": "032b7ba3c090da5f1915efbc16b86a9c1d250a732249396566f235bd14cd8814",
+      "out": "066cb46212c0c1dfe46220ab48234c416122223572943f625fb203d73af6374f"
+    },
+    "books/ai-infra/ch6-compute_is_not_everything/pages/006.webp": {
+      "in": "cb4ca8a1cdb238d750be77c3a099bc3a5f91b371940f7f05067916dd0e8f95fa",
+      "out": "32768c2cd5d344f551a25412ca45c33d8e6fd326c72f97f87c9d104952904c93"
+    },
+    "books/ai-infra/ch6-compute_is_not_everything/pages/007.jpg": {
+      "in": "f7163405d930718aec125994b7fbad2b7b1f8b76b7e14326f361f8b38e8cbbbc",
+      "out": "523e86f079b91dcb59e47225d09bf38a323885d80193a915af13272e4230e21f"
+    },
+    "books/ai-infra/ch6-compute_is_not_everything/pages/007.webp": {
+      "in": "f4addfaeff9e2dc7ddc02d2158bcb44f7ab49d35fab30e8711cdc10d7c2c4d5c",
+      "out": "9544468b64bf8b68a4005adc1935b7ca407e2b70892276e1511b6c327c93b943"
+    },
+    "books/ai-infra/ch6-compute_is_not_everything/pages/008.jpg": {
+      "in": "a772c8d014f29ca0a5ae13b296323ae70904be178fd05b3b83203fa03fc5aaf1",
+      "out": "79aa20351c1ed67cd493d01b90e13c61741b14b0495cf3b2c0a28fc9c23fd7e1"
+    },
+    "books/ai-infra/ch6-compute_is_not_everything/pages/008.webp": {
+      "in": "431fe2e09a458e0b7f1138ff65bd664b25f2d522408602c449ed77cebb73684e",
+      "out": "20e418c5847d475c5624779d41919753ed6f329d5687311b3c6a3b4aa9420435"
+    },
+    "books/ai-infra/ch7-vram_capacity_and_bandwidth/pages/001.jpg": {
+      "in": "1a14b685568a09a68120242507129625daa51f3f570b3a2307c91a6f52934117",
+      "out": "73d240b95e82c74f884f741599109679a93d8ad5b8a8f410fdcade119d7a7de8"
+    },
+    "books/ai-infra/ch7-vram_capacity_and_bandwidth/pages/001.webp": {
+      "in": "64354c2d855ce08ac900956ba5f5c95bcdc70d6ff238f943721d1e6b6ce9aafa",
+      "out": "933d08eb937cbdb7e223689ab10af14e5bc4d929d8df17fb013d9073c58bcb84"
+    },
+    "books/ai-infra/ch7-vram_capacity_and_bandwidth/pages/002.jpg": {
+      "in": "c80eae2e6db7a259b3e0ae549adb2cbf3934e33fd612b4a4287fcc7d5f6ce413",
+      "out": "47d2c48968a349365c991702f7f9a5fee25e1b74017b10953a898fc7fe1a9212"
+    },
+    "books/ai-infra/ch7-vram_capacity_and_bandwidth/pages/002.webp": {
+      "in": "348729364d08f843664c0ec9b23ef41a0bb3ee25a6599cce64e1e85a369a9451",
+      "out": "95678ef372ccfe9ed66fe011442fa25725d7e8cd259ccf4996cdb17e77acb8d4"
+    },
+    "books/ai-infra/ch7-vram_capacity_and_bandwidth/pages/003.jpg": {
+      "in": "faa56422684897557ef18490aeacb847f20f5e0f3bd13a512c30280b825214a4",
+      "out": "024e644b271acde3cd1bbc61dc07f8897a8a1c71336783dd4ed26bd8d5f268be"
+    },
+    "books/ai-infra/ch7-vram_capacity_and_bandwidth/pages/003.webp": {
+      "in": "3f7e27c252881bd7d9661221cee5ac8ea04d4445845da8d6fbdb09010fc8d227",
+      "out": "c937023ad286fd757dceb2003a66bba9723aae10246909d9153d751c1566a312"
+    },
+    "books/ai-infra/ch7-vram_capacity_and_bandwidth/pages/004.jpg": {
+      "in": "79205e43e19c6b09a5484fff1179c25467dea07d8314d08b45d5c6d932c11c12",
+      "out": "9636d10b93547ed0169ed8751fcf837cb8e823e8856ed11bbf6a10748c9a991b"
+    },
+    "books/ai-infra/ch7-vram_capacity_and_bandwidth/pages/004.webp": {
+      "in": "1ab618a974869a4c8359bf627c746001b188cbf1f56bc628d9431165a17cb0a0",
+      "out": "7bced7c0e1db79dfa8e87e7b97f9d41d0525171b9aeef7ff5c67f6db43a03895"
+    },
+    "books/ai-infra/ch7-vram_capacity_and_bandwidth/pages/005.jpg": {
+      "in": "cbde83f38838f55e8a5d60ee4088b5869a2e2f1fe1c8dbacb36b20a88248c0ad",
+      "out": "7728d25e8a922fc63038b7ecc3f960ef292d9e1c53e81299a49c40b1929c29f5"
+    },
+    "books/ai-infra/ch7-vram_capacity_and_bandwidth/pages/005.webp": {
+      "in": "f4c7eb6e721c2bf1f07e9ef627da3daf698fcf7a92782a36033626fa7fced1df",
+      "out": "4d7130a97f353f273f019da383a7b3d66962100ddc7820b66415eef216587b63"
+    },
+    "books/ai-infra/ch7-vram_capacity_and_bandwidth/pages/006.jpg": {
+      "in": "1772e51b55f1ad0fdcc3ed1d902f57c38398d6b2a2985ca9ef7edc10a2cbc8a7",
+      "out": "b42901167177dcd88e7f47db2d4cf4145b652b75a48a9219326ef665c044cef0"
+    },
+    "books/ai-infra/ch7-vram_capacity_and_bandwidth/pages/006.webp": {
+      "in": "4a2ae4cf411810ee9c72425d5ab2c3f4eb434782de3710ec6a290e165a48959f",
+      "out": "2f5fe7e4d839b852697798d23aba2a40e1d64185ee833dc7ceba63c36e4fff93"
+    },
+    "books/ai-infra/ch7-vram_capacity_and_bandwidth/pages/007.jpg": {
+      "in": "298ed7bac63e1ca5b71e9fc6d402e69cff4a7f741357cf551efeeb23b785cd98",
+      "out": "8c3374f204da2bb02b5b102d8463808486c64b5087d5f5d3d6b8e59e5f6bcd5f"
+    },
+    "books/ai-infra/ch7-vram_capacity_and_bandwidth/pages/007.webp": {
+      "in": "34b5f0d3ec065ebc34f79f9b8eccee1f1f44b389aaae1039426b760c14c142a6",
+      "out": "3609dabc59d10ba6142228009ce5b2a070c92da0516d7df82edef56c7b578dc3"
+    },
+    "books/ai-infra/ch7-vram_capacity_and_bandwidth/pages/008.jpg": {
+      "in": "12d9df2fa85033aac06701d53489e20adaf6f84de8f4d76ad16435a961281c6a",
+      "out": "3cd6918817f4900e971a64f25b448869758c6aa4d5d37a83ffc9bef78b9be2c6"
+    },
+    "books/ai-infra/ch7-vram_capacity_and_bandwidth/pages/008.webp": {
+      "in": "c411ec70d3adeda390eb8732ec0268023704a307a5d1051458d48f15d75373d7",
+      "out": "e8282de50df7245b4a64647dbc1b9121e3d38eaa65c89e48d6ada0a1e3ba6d5a"
+    },
+    "books/ai-infra/ch8-prefill_and_decode/pages/001.jpg": {
+      "in": "254f6a148cfa5433069adb29e5640a37d93f93b29130d4182874339998d3e86c",
+      "out": "aa9f5aacd4b63812bc8cd2f86545037c977dcaa9fc58fd051dd9d0d784e8d53f"
+    },
+    "books/ai-infra/ch8-prefill_and_decode/pages/001.webp": {
+      "in": "b90085a22a9d7e2b51fd8002a9cdce1e6b60bd0e93920eadf34dd3bcfe95c137",
+      "out": "c5b9fafb0076bdd5e61271de1f436cf2dfa61783760e3899b48960296dbd7ebb"
+    },
+    "books/ai-infra/ch8-prefill_and_decode/pages/002.jpg": {
+      "in": "f88e471fa37290bebc71669c2c82a9b719c8d104dd93136159fe2fceb7299bb4",
+      "out": "1c71c3da433b8295af25aec703b5bf6e0d41303ee84768b4ef0854a355dd5c8c"
+    },
+    "books/ai-infra/ch8-prefill_and_decode/pages/002.webp": {
+      "in": "86d5d5fe04b8708fbbb4fb44e5f720917c036648c1952f1c9e60d2230d391d4c",
+      "out": "808ab642a2ef2ddedf745c3686681695487bdda8b00386436829d2fa9eaff884"
+    },
+    "books/ai-infra/ch8-prefill_and_decode/pages/003.jpg": {
+      "in": "a4dddf9b0546bc1cb7c84abd36d0c4a06a5e362bdb2a12e6eca0c16f8abf7d21",
+      "out": "755f02ca365b7a14aaf4bd39d0e791e3cf56f1ee507459e814d712e8b8470260"
+    },
+    "books/ai-infra/ch8-prefill_and_decode/pages/003.webp": {
+      "in": "44fffbc93e05c8d3142c1246ffba94fc753521425b9b7b4b9c377653d6130a13",
+      "out": "d75deb1fc2afdd8c0ff577195cd43c7be7209919cb5c1fb77070edb795342e2c"
+    },
+    "books/ai-infra/ch8-prefill_and_decode/pages/004.jpg": {
+      "in": "2b21fab6a1edec506512aae459dc46adfda991d5f8ed9b629d8f7b4e831b193e",
+      "out": "30e3e595064dd215108ee533e4b8ad41799188285b6bc24e5ee4196bfd17a254"
+    },
+    "books/ai-infra/ch8-prefill_and_decode/pages/004.webp": {
+      "in": "9dd76533c6d50c5e7ad8c6ab0139af9857137e34372100052b92844ce64ab999",
+      "out": "17d25493ca11a2bf781c1ca53a35548d555d75ff78632d2d0410cada55c700b6"
+    },
+    "books/ai-infra/ch8-prefill_and_decode/pages/005.jpg": {
+      "in": "324ab431718b2632febfcd8de1beb56368db3b857bc1fbea8dc33ea143db0b2b",
+      "out": "54695bc9d538bef085a7ac4c71ee458a607898535d7fbee77e2bd27f63f8e1f0"
+    },
+    "books/ai-infra/ch8-prefill_and_decode/pages/005.webp": {
+      "in": "0126e368526524619bfc50d5a59759ccc46500f3ccbd6df03d6d60309919454c",
+      "out": "917c515dbbc48b7759b127143befe704499aa3645a3befc1ec5e905639a9130f"
+    },
+    "books/ai-infra/ch8-prefill_and_decode/pages/006.jpg": {
+      "in": "42a1b2900eb6ff9055fa7f1f32796a9175557c007330d66617293d2ee86d3595",
+      "out": "24af93e0a05b7ba9c94f362cee3ea761b8e29800ad14f5777b5e8f3bdfd7349e"
+    },
+    "books/ai-infra/ch8-prefill_and_decode/pages/006.webp": {
+      "in": "0a9ee080b92f26abd3cfd2139c028087da2437b03c586ecc6c6c835906050194",
+      "out": "29b825080fde06b16fb34410656c099d665236a6959a2443f3a01be610d276f0"
+    },
+    "books/ai-infra/ch8-prefill_and_decode/pages/007.jpg": {
+      "in": "fa97953e6b3116ddd5259fc991c90e17f6a059922962d475e70d280fd3d3f1f1",
+      "out": "0015f44dfbd8b66f1d3742f926e3762b8aa49aa3ea25f010a2d14586aff9d9e3"
+    },
+    "books/ai-infra/ch8-prefill_and_decode/pages/007.webp": {
+      "in": "b04e89055112ebeaebef4b640e5e20d1998cfbb3b3d5379a9a46a9da2ae2212a",
+      "out": "abdf33ff7acbb755aaa920f02adab6bfa85f4c6cb629289e3f43994a14feec76"
+    },
+    "books/ai-infra/ch8-prefill_and_decode/pages/008.jpg": {
+      "in": "d64a48da5bbf8b049e1324085fd77382eadfdcb01e22db6ed2a6d55b9489006d",
+      "out": "4d0ba4819908adabf3a6971518e451b6e666ecde47268849cc0e677e190190e0"
+    },
+    "books/ai-infra/ch8-prefill_and_decode/pages/008.webp": {
+      "in": "40c917ca17f11d6d319edc9099a3bbd93762ef9c1c85eb507694b2d82eacf9b9",
+      "out": "33cebdad4a4941f49d8534ec5555ff554b2f6fc9a2e24109efac94eae43c8586"
+    },
+    "books/ai-infra/ch8-prefill_and_decode/pages/009.jpg": {
+      "in": "e1ca5bc8ed78f306ca704c8d3ec3e7e20f49c1133a882ffa4d84909d66d2451a",
+      "out": "12508e6722a620a245ed5e9ed124bc9903e1c1276f8459e45344732ec3f4a752"
+    },
+    "books/ai-infra/ch8-prefill_and_decode/pages/009.webp": {
+      "in": "88603e81439e909c16696ddecdb8e343523d42c05e878a6f845d71752e9993ae",
+      "out": "cb2f8b06570203a70de33b27786d4542ae9eb2ca4b5a61cd89d6530eb274c5e7"
+    },
+    "books/ai-infra/ch8-prefill_and_decode/pages/010.jpg": {
+      "in": "a6b879cbd750231d5bba11872e7c293743d046b3f61683e0aa680697e3b5f1b0",
+      "out": "b212bfd62e4e92e00d2e2f64297643661112d8aa0bdb1accb56caa6a6b88bedf"
+    },
+    "books/ai-infra/ch8-prefill_and_decode/pages/010.webp": {
+      "in": "743bda2294a63267c67a6ab92fff5c803eca424c33a7f944ba40f3117b4967e4",
+      "out": "84b5bcea11e4985e6d0e7a8e57c878e9d4d385aa554f65a4376bad944732f875"
+    },
+    "books/ai-infra/ch8-prefill_and_decode/pages/011.jpg": {
+      "in": "d2471637f5ab4c59ff8f9aff72add3f028e797eac9324637ff09145e7576929b",
+      "out": "9577ac4b8e6c38b658d5f59ad0079430b878d29f95f2282bc3f70f4b12a1d30e"
+    },
+    "books/ai-infra/ch8-prefill_and_decode/pages/011.webp": {
+      "in": "c8611d2af05e48e0810b6fab53e5994eb0432323a7f19638a5a757c4a289b7c6",
+      "out": "fb21a5034dcd99cfec20c1f9f36e98b35004d35acceffa2f822564570f55e55e"
+    },
+    "books/ai-infra/ch9-compute_bound_vs_memory_bound/pages/001.jpg": {
+      "in": "7ee9c5d93abe5c3b7098fc86892602cb903b73b3c49ddd913a398ed3dfb42bb1",
+      "out": "2b61342163d482fecf392b845b5a103c7e889daf0ea98de7c9f0c7facd03b52e"
+    },
+    "books/ai-infra/ch9-compute_bound_vs_memory_bound/pages/001.webp": {
+      "in": "44f5e5b8fa11b86eaeb27fa0c9bf8c7421a28449c7b6c16385ddbe53027dacb2",
+      "out": "9bbcc28225d4c9db57da451b72a886dbf030b640c5974c2945af1640a4bcc96c"
+    },
+    "books/ai-infra/ch9-compute_bound_vs_memory_bound/pages/002.jpg": {
+      "in": "49527acf36ee2c098c76539d432d3246eed31da3bb61451891afbdb6e84adad6",
+      "out": "3e2482c93031f67acd5eaddf3298266cbaf7f6f5739650ede7cdb9fb9e486d03"
+    },
+    "books/ai-infra/ch9-compute_bound_vs_memory_bound/pages/002.webp": {
+      "in": "050941139064abfdf1cb5923fc4b3608273233c89d0b54774e683c9a6ea17c05",
+      "out": "3ed999a9d5e24fca2f5225d36eacab2091b33224122666d0ffdf3e6f90bbd723"
+    },
+    "books/ai-infra/ch9-compute_bound_vs_memory_bound/pages/003.jpg": {
+      "in": "4b43e2e4be81d90f3228b54dc69edff800acae15956342bbc78294d26daf4241",
+      "out": "0701ca05cae32ab268ff0055d2bb38220a67b8646e3466393f09884d26512335"
+    },
+    "books/ai-infra/ch9-compute_bound_vs_memory_bound/pages/003.webp": {
+      "in": "a5b7604ab634988adc371cc55baccfaf445b81d7f32e8035af0410cc465254aa",
+      "out": "c13667df0e77446914249e5f2a219ea16e9f2bb3f4e949d2aa474bb8fccfbc86"
+    },
+    "books/ai-infra/ch9-compute_bound_vs_memory_bound/pages/004.jpg": {
+      "in": "9a8b3a941b41a5fe3aef009a24eeb1e3f357fed6753882b2f643e966a518dc8b",
+      "out": "05e4d5e16b01e0f7a5b8375b2cd5a416e0757a8a35fed2c9cc6426adbe516014"
+    },
+    "books/ai-infra/ch9-compute_bound_vs_memory_bound/pages/004.webp": {
+      "in": "19a470a67fd41c7832a775e310bdb90cd5997c3d7f0db29f0b411c5dd2281326",
+      "out": "a3e4dc7f0b6e1176fd03e12cb2bb71b6e9b19fd690b1f543fa3dfff3eb0988be"
+    },
+    "books/ai-infra/ch9-compute_bound_vs_memory_bound/pages/005.jpg": {
+      "in": "6e1cc3ccf9f1c69dba0ed5c1a9a00a9e1f0de6c4d734c9841d2aaf8bc7beb89f",
+      "out": "236c7712eaae0a2fb1a455e2b42912b3c5964fda96539d2618c4f54215c69e60"
+    },
+    "books/ai-infra/ch9-compute_bound_vs_memory_bound/pages/005.webp": {
+      "in": "9aaede970bf7f6980f62dcb6a5274cdd9242268c430aebf3a2513d2743317624",
+      "out": "66779cb86a38877df9273e61114586aab4f4e35ff80bc9f3a2734b253fa8411f"
+    },
+    "books/ai-infra/ch9-compute_bound_vs_memory_bound/pages/006.jpg": {
+      "in": "9b314c653c16c34e05c6225326cecf641b7df38fa0b149d4ed3553da5797b9df",
+      "out": "6c04023d4d05904d03583ced709690e0df8b03901638f7fb7be6e70714a95af9"
+    },
+    "books/ai-infra/ch9-compute_bound_vs_memory_bound/pages/006.webp": {
+      "in": "6ff0c3e195ef9c6717aaa6cb0ec4ccea0ff13704e4ca7fc0f63d6ce8693c8f2e",
+      "out": "e397b98d47641479752261a1ea3d36453ad185b08bcf183a59007f8db20947eb"
+    },
+    "books/ai-infra/ch9-compute_bound_vs_memory_bound/pages/007.jpg": {
+      "in": "7ff2d789d1908024d7cc95b783e862795c395293632b4d97cdcaaec22e9fc372",
+      "out": "0781aa150f5cbf6a79c6c155ba723fcf4827ff18adee22fb4d7640fdfa7cb4f5"
+    },
+    "books/ai-infra/ch9-compute_bound_vs_memory_bound/pages/007.webp": {
+      "in": "adf82d907a5c321630a13726ccafe80eb6b6911bf889bb1aa31d34721985a195",
+      "out": "9254625178bbba252c9597021a0c5a7e764309abdc542b9b0c27e32c6799df89"
+    },
+    "books/ai-infra/ch9-compute_bound_vs_memory_bound/pages/008.jpg": {
+      "in": "8f88b15310de4bd0544e175c8386e99d877fe171bd4b62b139e3a3d05b05ca57",
+      "out": "e5837cecf0e115e291e8a210e5647625d98b5ad94298c7952c38449d1161f9cd"
+    },
+    "books/ai-infra/ch9-compute_bound_vs_memory_bound/pages/008.webp": {
+      "in": "2cf2fb054995d8792b90e4c48e2688cc4bc52e80ea81de59d2044eda4510be08",
+      "out": "3647b2b5d2aa5f7f0168d5a238a538fad7af93364ee8eccb529f67070f43dc42"
+    },
+    "books/ai-infra/ch9-compute_bound_vs_memory_bound/pages/009.jpg": {
+      "in": "97f3c4f3d1b8f11abe673feb5b7e1078fc8a129cd5b105176c03710f53aaf474",
+      "out": "407af00899409bccf41093db73ce5bb72a32101853c18a912c957074bdf2c027"
+    },
+    "books/ai-infra/ch9-compute_bound_vs_memory_bound/pages/009.webp": {
+      "in": "39e949b58fbac49c4bf8de55c8559b4bde7b46b43062f69aefa63b63e768af09",
+      "out": "6c9a2241284db96b84c21ab5a3012f766aa2c0b54c6037b8609b5e849571b006"
+    },
+    "books/ai-infra/ch9-compute_bound_vs_memory_bound/pages/010.jpg": {
+      "in": "8800343566e4b7505447f8edfbfc730139f98261c92ac176f63ecb670d84ffb4",
+      "out": "94be073218696f397492293e00b92bafe84710a43eb8f2b6fa96cc2c4b801405"
+    },
+    "books/ai-infra/ch9-compute_bound_vs_memory_bound/pages/010.webp": {
+      "in": "2b15902ae2eadc523325a7d5d1e042f96495f033540db3ad44a6ef3479018109",
+      "out": "46b9a0220c5a967674f4a16d78259ae272a0f2fba2591310cf8ba831517060bd"
+    },
+    "books/ai-infra/ch9-compute_bound_vs_memory_bound/pages/011.jpg": {
+      "in": "d88990e5473132bf72581a14554763541a85ba58a82103f9c24773cb43d5c402",
+      "out": "3970f6c50a30c6cfd59a1310f7e21bf43a61d87402415d77f2cd507fffa358d5"
+    },
+    "books/ai-infra/ch9-compute_bound_vs_memory_bound/pages/011.webp": {
+      "in": "e31a6dc97257f0b24c35a5743f1ae137460589bb86fbacd200e0bcc28a292b33",
+      "out": "d3e29d980e695faa18eb44131dcc0c347eb7f2c40d34b598ce21568487a30a16"
+    },
+    "books/ai-infra/characters/pages/001.jpg": {
+      "in": "a72f11b893d9dafd45d5682bdd6a580c3bca4839d941d34a089909377474b00d",
+      "out": "16b6d155e13a2c401cbc454dd3eaa5be478375ff71b8dec1da227b8cfa5e1808"
+    },
+    "books/ai-infra/characters/pages/001.webp": {
+      "in": "d4558cef6f46c9f0f121c77921d769cfdf5931eace3ad69ac3c106ce8969b38e",
+      "out": "bb1673d4042636c4f59c9e1d05da9236e133322a898a3e142f9cc44123e52539"
+    },
+    "books/ai-infra/characters/pages/002.jpg": {
+      "in": "b5c640c02236d5a78e54e276477dc22a35a058dbc5b1531345d88053bd5721a9",
+      "out": "86791dc7346d02ca10bf5691b01c0d0bdbe9dab9536691cdacf4e4176862b789"
+    },
+    "books/ai-infra/characters/pages/002.webp": {
+      "in": "760862cfb56efb5abc8d89458200e7c68a5e1802595df82dba72744450d8f3e0",
+      "out": "53ca09f0735c44e77acf071aaecba80af9a61011b807c224e7b377ddb5bdd2bf"
+    },
+    "books/ai-infra-stick-figure/01/pages/001.webp": {
+      "in": "9f0a76da28393d3d86da1bb559fe4f9680245ce56f6e377edbb71a0446ce0946",
+      "out": "3615dafea4add6c13e804f3ab0a10ec68f818a4fc28d89d0f2a92bdc34a30914"
+    },
+    "books/ai-infra-stick-figure/01/pages/002.webp": {
+      "in": "4852bab223650d8d42db3bb6fa0a783f5f19f7549cb0df3ca0f0a988f4c262e2",
+      "out": "03dbc9c0c698f3e816df0750131d12244645b0cd732637445f02d95bafe763a5"
+    },
+    "books/ai-infra-stick-figure/01/pages/003.webp": {
+      "in": "2cf119314f021ef6d506378f905099efef3a1f3168d3328aba7572c35577d42f",
+      "out": "d67471c1e95b1b2fac8e3f64e1c5c568482a67d0f67997df12bf84f1a5fbfc1c"
+    },
+    "books/ai-infra-stick-figure/01/pages/004.webp": {
+      "in": "a24e8ac922a4311ed8424fa41a9e49e8a25dd090e200888acfdd69a3e96c6056",
+      "out": "e18a0f14528d56eea39a2bdea2ffa63c51cf58461ff16a72c5d65037f3556b7c"
+    },
+    "books/ai-infra-stick-figure/01/pages/005.webp": {
+      "in": "cf85067972dab3046e6f2eb1199acd919c8c1bfe87e8f4e81b7465132a4ed09b",
+      "out": "115791366ff702ea67d9bb7e0c6408c7435793081bc290e9991643f5d0e3a9c4"
+    },
+    "books/ai-infra-stick-figure/01/pages/006.webp": {
+      "in": "b83f0568cdf9a2107feb19f9a11dd31d2a20108347e9c5aa39ceb408efca72e5",
+      "out": "d7381b20536c92fad8e502dbf4d036dc5db6353624850a8f30f4d35f82ecdf7b"
+    },
+    "books/ai-infra-stick-figure/01/pages/007.webp": {
+      "in": "19e669c55802e663328c1c076a569252d2eb5c4f97b6dbbef0bf7c02ec9619f5",
+      "out": "91190a4e56c7dcef8d729e94bb2feddd4caae0fa230897af4aab013ab1d603e5"
+    },
+    "books/ai-infra-stick-figure/01/pages/008.webp": {
+      "in": "1ee126b17201f65939b8baa287dd04007a14ef505a1dc3ce1e5b01b798df6eb9",
+      "out": "372ef3dfb68a477c02361ed8d3f9572cb2d23bf066fd35d5fcd4ae65c2f58a8c"
+    },
+    "books/ai-infra-stick-figure/01/pages/009.webp": {
+      "in": "bc986c15623ca2111a3217ab478e37ee32b5ace16deb6c914d7c85631f41550a",
+      "out": "efb7e09e1f5f9d03b3101a546ae8caa5a6e9cf814ec9c5f6588aea7b1eb13a70"
+    },
+    "books/ai-weekly-2026-w40/01/pages/001.webp": {
+      "in": "af5c55e2ed1cd9ccb86a85a3619a02f1ce66e16103e84557e7993976e5c04cc7",
+      "out": "7847a1893817b5b3d4394a618ce349b36f56b4bd90c1f6b1f276afd29f8b37fd"
+    },
+    "books/ai-weekly-2026-w40/01/pages/002.webp": {
+      "in": "d717e31885e2bf46cc78f092d3001b5f8b3b6ddd4a303ab45a2725a8a2afa217",
+      "out": "01b4c752d4b985b9a539a99241ebd4e3e3d785b8c6d30121a1b0f7270956cf40"
+    },
+    "books/ai-weekly-2026-w40/01/pages/003.webp": {
+      "in": "c9dd38ec18bdfa3cbd21e962e34fe6e8fe410ff95d07171069a32a57fd73dee9",
+      "out": "60a79270421ba82d58ee9ff1b6a84441642ec8063afef51b1b27fbeb94ef9437"
+    },
+    "books/ai-weekly-2026-w40/01/pages/004.webp": {
+      "in": "b54f0a14866205f9b5126deb1202a081e5a63a2fb085ad0846abbe70b826d81f",
+      "out": "4cf5ea47c8a6db8160d642336c5b662418813c468444e8ad6b8053f53237700e"
+    },
+    "books/ai-weekly-2026-w40/01/pages/005.webp": {
+      "in": "aca0eb9bccd3f4351241114a2f51f2d46de30805d71583ae4c7106135346ec6d",
+      "out": "62442d81db7a0a39b8acf040778698b364e8bd5b6747cb2b594e9134c43e0be1"
+    },
+    "books/ai-weekly-2026-w40/01/pages/006.webp": {
+      "in": "efaf39494c456354b3d23b31693eb1a14555d9f9dd75b5e65f7ff2011838628b",
+      "out": "99c197c72bbe6bc1b4a3eee141e6395e9ebce8eb876414b5898124b7a4aa1800"
+    },
+    "books/ai-weekly-2026-w40/01/pages/007.webp": {
+      "in": "1815861d40683dae58ab9ccf907f96c254227af7511a7674a420c5ea2e7bdf1f",
+      "out": "e23a9ff2817e283573407f438daa776079ac1ea3fe95cb70ae9fd8a077f2fb99"
+    },
+    "books/ai-weekly-2026-w40/01/pages/008.webp": {
+      "in": "a5bd022d8a9223d2730c87dc0418cdfcef8a5bbc5f339fdd603c3cdbf9ad78c2",
+      "out": "15a4c05fcf1aa8b2e0962ef09cb0fed61778bd0ef6e4d08fde3353456062eac4"
+    },
+    "books/ai-weekly-2026-w40/01/pages/009.webp": {
+      "in": "c96311ac66972a72319f5e6b709ec075705b3bc5ef65fa728e88ed0275364e7e",
+      "out": "f2cc8a8e863651b841a0cf8cfff2ec154b7fe88a522857aeb9480f2bf4d5275e"
+    },
+    "books/ai-weekly-2026-w40/01/pages/010.webp": {
+      "in": "3f25f1e40907879faf4b1ce40801e3bbbac7011effae40fb83f174e2b75a42b4",
+      "out": "1454d733d487bb576a07d6622031669a634de4ac4e8897af90b5fd65e9d841e5"
+    },
+    "books/bench/01/pages/001.jpg": {
+      "in": "57c494a7d7b799bcddc7124441f3b72b939c337cb3e3bee2d8151d31555912f5",
+      "out": "eae04f54cc657238b65c43da138dbcf86c0afdbb9c91b5f3480892f84d8762c8"
+    },
+    "books/bench/01/pages/001.webp": {
+      "in": "6abd33b87e33432b787d79962094de7870b34f7316916a62756de38f3fdc7522",
+      "out": "901fa4ff8e86db2d81a4df23f74b532db275915687628f05ed0c542c8fdd52b2"
+    },
+    "books/bench/01/pages/002.jpg": {
+      "in": "52461f556539fb25d172b8a6596c5f972f1612e356ef7b0aaab9c7eefa37d553",
+      "out": "77d3d2bf8616ae710a82188c3133ed0ff8461f00a2bcf540d56be3ebea441a23"
+    },
+    "books/bench/01/pages/002.webp": {
+      "in": "edc4d6ddafebb4bb137552b011a0c42ef357c73175ad23e460efb788f48d3717",
+      "out": "966ec0baddc14b1e1997570a35c6ea145b0a2e3a2948fcace236f41c04b4890b"
+    },
+    "books/bench/01/pages/003.jpg": {
+      "in": "882e49fb1b1e917db87d5f91adc34fcb47b852fe4106d5bdd580b7f4d334ffcd",
+      "out": "bd149aad5313098cf02d7dc92667d876908d57736956779f6a1031673ec82e54"
+    },
+    "books/bench/01/pages/003.webp": {
+      "in": "be6f0b9e4303f33ca4bd2fcdb00326c3334a53e384546d7982b80e7501360568",
+      "out": "85fb302e6bfe13fd015ad74ab24621f235f616100b5188c63633673ea55e97d1"
+    },
+    "books/bench/01/pages/004.jpg": {
+      "in": "b01ad7c611dcf99a834ef4ae9b851502fd20ba8fd301fbd274ec110cf7bc8db8",
+      "out": "bd38eba93ec07969268249843d33f2609157145b0d609eade7840ab5c332dda8"
+    },
+    "books/bench/01/pages/004.webp": {
+      "in": "aba975c8432a845426f0745ed0172c0131f0ca5df418e7bacee49a518baf1e36",
+      "out": "628c04ae74ce9cd3b6e1d02244f262ecb4246f8ba3787706212c91cb2144759b"
+    },
+    "books/bench/01/pages/005.jpg": {
+      "in": "fa4fa9c38683e9e9f677c6486cfd0f9161e0f9701d08b77f7ee84832d1bd706e",
+      "out": "3f0064cfeebd0b7fecd933347274a50d9de4301a6ea4da76f7fb68f427f641c6"
+    },
+    "books/bench/01/pages/005.webp": {
+      "in": "a237902f3ff696eda90c0437252426592945e38b22543187cdcf54c1d8d1d48e",
+      "out": "327134bacb824e49aa88722f8c09fe29218cb5baa0b51223fee4a703176cc386"
+    },
+    "books/bloom/01/pages/001.jpg": {
+      "in": "49e018a2a68b61aeaf07a7d6d6a28cec6ec757593c2ce7c7c1ea9b9332d0c99e",
+      "out": "d541eb7c7d046bf1fc3f415920a1de98b2e4ef21e77dcd563147b21b9318fc24"
+    },
+    "books/bloom/01/pages/001.webp": {
+      "in": "e6d192914500d662c0c68305bc2b65a0bf687a1a0d2c0c9cca1be49f901917af",
+      "out": "8ee96441762a46f6093e1f7c323257effd871bed7661278d9b0e92bd0b6e8dcb"
+    },
+    "books/bloom/01/pages/002.jpg": {
+      "in": "5f5d2b135719c98cdaa76b434e6a0e2dabd6765775aaf36458761a28a54c40f8",
+      "out": "2cda153febc104ec68292b66583b728b5097c6ecae8701ecba57388d7c0a3474"
+    },
+    "books/bloom/01/pages/002.webp": {
+      "in": "3484e71eb0cd9098402792de38610310048b27e56b85ea40ca5eeb6af4491bb7",
+      "out": "953cf020f0dc22a66208365915eb7eee24a8f739d2709e8662f0b8bbd10cfdfd"
+    },
+    "books/bloom/01/pages/003.jpg": {
+      "in": "baee985f24562a753d4f2454c6c56a99bb3cef09bdb3bfecdef0f14583ff7579",
+      "out": "2c6b3e4b3be8551adf73dd0a33c860457860cf4d90555c23a757c9df0749faf4"
+    },
+    "books/bloom/01/pages/003.webp": {
+      "in": "a56004fd20b1c9633820eb6f1340b60361b9d9f5dbb35ff70666fc8e84c46107",
+      "out": "7db63baf2f8389d67ce0ebc76736e21f1861e350e37f10bd0970ee5629db9128"
+    },
+    "books/bloom/01/pages/004.jpg": {
+      "in": "b826c8295c35dae67984c278ef9382e2496770782335554cb1dc22500aecf7e6",
+      "out": "4c67982b22c253f43924677074eca0c273803509da8fbf62e81bf9d6afdc9c11"
+    },
+    "books/bloom/01/pages/004.webp": {
+      "in": "41f1904f498f404ec35c5fcde59b7607310d066da9e03facb5ff49180ad9ddac",
+      "out": "38f709452865659a5ca36a58adde67ee24eef3551b830d912f3859e7cab9e000"
+    },
+    "books/bloom/01/pages/005.jpg": {
+      "in": "bfd68e133deb7c44180c953cfe055c3f2006a1cf492bd1c1a22b36da8ae3de82",
+      "out": "acd69a38fa98b9edaf46a26d02963d5917be2046b3d187c14c3e1303a6f1e09b"
+    },
+    "books/bloom/01/pages/005.webp": {
+      "in": "51e391f0b9c9d7a079f2abbd99e1424904ee61b3e0f64c739a08482ecda368ec",
+      "out": "0f9d53c4433b9835956f77c8523a4440edbc6573c661cbb4c490333bb1e86fef"
+    },
+    "books/bloom/01/pages/006.jpg": {
+      "in": "f4339329a694cdc2c32a57a5335a648b965e7eacadf3c2b294dfec3a043d08fc",
+      "out": "6c3945e86a7cf34790e1fb8daf15c8322b0c7ca8c5b28de6499b555ebc3cebe0"
+    },
+    "books/bloom/01/pages/006.webp": {
+      "in": "c2eca81f41ac4e55117367e9c3f7e59f0cd185d1ff4867c5f30ea5865e6d0a6b",
+      "out": "a99eee4a1fd5c5645774a387a2857eb49c395ce270acdc06a35eb2d580fbe20d"
+    },
+    "books/chibifu/01/pages/001.jpg": {
+      "in": "cdc686f0bb009838bd43ed60a68519ed4576aa543dc8484b95f65fe201835dd3",
+      "out": "388b68ef66b81526954b94dee21a488f77ab507bd8aa68cb24875c9c71f9be7e"
+    },
+    "books/chibifu/01/pages/001.webp": {
+      "in": "9901cc6e9113f45708367c30de38317975a6f24330711849ad8d8671dfc40008",
+      "out": "eae796d55a07f1c5636f1ead9c3b7dac35b36776390f5c6f0ef65f8020fe4e20"
+    },
+    "books/chibifu/01/pages/002.jpg": {
+      "in": "2783bc08b04818e2e56a2787f5e5d5e3b041d343fcae4620b4183aa78ceb2d08",
+      "out": "a983608cbd9576c0ab552edfaf3b2c7b2fffd63d7951d206d6cc99a34790ac77"
+    },
+    "books/chibifu/01/pages/002.webp": {
+      "in": "6ae4f8dc24b3a66f72465898cd893d1dd6372d5e05eb23cf523c30966e872d16",
+      "out": "a84f41e12c858d3b833bd8c0278bb8b0e6fe2aa2c31f0a323e4d057c92de7972"
+    },
+    "books/chibifu/01/pages/003.jpg": {
+      "in": "a8990ac88bd8ebc18f7288ea5a9cea587ea8369514c79aa5282f8ec643ee8101",
+      "out": "6c5425651b362afa546a9a42bd43e1cc3557917858e9dab112d76112e4ac8cfc"
+    },
+    "books/chibifu/01/pages/003.webp": {
+      "in": "160f3c6e4fa542694dfc0816739e225b7c0ba7e72eacfeb7773eadbd5a591fea",
+      "out": "1c4d407bcd1217cf03a6f6ad71b4a30a0c923e8330f750a452cd4fc700840d7a"
+    },
+    "books/chibifu/01/pages/004.jpg": {
+      "in": "09b8347b521d5e3cc633f1cd07d68b2c87392daaee075ab0bf772ddc61dac560",
+      "out": "ccd65d642dedb23b205ba45068be25287a4f02eecab4feff79a3d30600fe6c23"
+    },
+    "books/chibifu/01/pages/004.webp": {
+      "in": "c07518c3a033a3cb9c767a458c09a303719a495e539bb0652cfb2240c3b86ca1",
+      "out": "5e2b4dec63d8ffe4550fb6e71f7d4549fee9ff7ca5c637cbeaf6fb88c40c7876"
+    },
+    "books/chibifu/01/pages/005.jpg": {
+      "in": "74501630783130fdd4ad54948d6a02beee2c274f419c671cbb73074f03c753cc",
+      "out": "892f5cc27147611e0a9fa9005479676eaca1286e74d0828046efe2b2f7181314"
+    },
+    "books/chibifu/01/pages/005.webp": {
+      "in": "9304767db121273683a1c82f588e16be84a5e0e61cd02f33cb297fab59b8e5c4",
+      "out": "a14227517dc10a0140b60b85a65c1de189c5ebaf35c28feb2af3b00288956f2d"
+    },
+    "books/chibifu/01/pages/006.jpg": {
+      "in": "e0da5a747c58ec4d51941e40d1fab8d976a351a6e201a15f40492528b6e26ea5",
+      "out": "6672813b888c8d473b3aeef0b87d53a18f285744b985a971908f5f75d60b7494"
+    },
+    "books/chibifu/01/pages/006.webp": {
+      "in": "b90ee649f241f975d2ff76dbf1d6594174cda801f030fc60f34c26cb5edcbb2f",
+      "out": "8a2887f11ecb2f74381b5b645ecab7b82e5fb9bc18213356038a3f948e394203"
+    },
+    "books/goodnight-wren/01/pages/001.jpg": {
+      "in": "cdb9b8c9dce6b7f8b6b841273542daeaeddd366c3783087576cc3a1ec732017b",
+      "out": "9ce98d25d3889dd5cbc31cba7801a0dc9db95e6c17544873b469c987179c2f99"
+    },
+    "books/goodnight-wren/01/pages/001.webp": {
+      "in": "280ffdebd5771c2b42655cb21407aa7c002db86bfbeff77bd0a65ff2ffc7637d",
+      "out": "582688ad5d61ca67b4a4f5e8d2ef37099a3d3e3d5f2aa7658ddaf98097061a0f"
+    },
+    "books/goodnight-wren/01/pages/002.jpg": {
+      "in": "57bbaeb4388a221230b0805baa4fb76303c1a21e510f2f5766d43626f99575fc",
+      "out": "3cbed81686867d3902732095374f657dfc59ca7891b885b636e862f52bf63cdb"
+    },
+    "books/goodnight-wren/01/pages/002.webp": {
+      "in": "f39e065cfc0dff0d06e5650209134d3e0e1c48db9310540e1302d0ee84f3e2d5",
+      "out": "800a85ba0a838f34d74840572b287702bf6175272e0b174784312a8c461045f7"
+    },
+    "books/goodnight-wren/01/pages/003.jpg": {
+      "in": "b59c3efded5f208d33b4137a68deb852f24bf61a88c385f7ab26448cc1aab956",
+      "out": "b2bbf5eed298b8b41b482ebda39aa2555546862fe29f07326c966a26b5fda01a"
+    },
+    "books/goodnight-wren/01/pages/003.webp": {
+      "in": "0f2366aed1560610cdb51ba67fc314bbabb2a1fe0f3e7c6aa3e07158ed1de563",
+      "out": "55b57e441e8dafc3073abc4c010f3bef6df7c49c98e623e2988b7a125fb80af8"
+    },
+    "books/goodnight-wren/01/pages/004.jpg": {
+      "in": "2d0809be074b3106c849a7bcc89041dff50b688b08deaa3a451057a4a9ce1a97",
+      "out": "b49e1f9adbb281cccc063a9bf02dc532952ea6a96bcbe290752b5c91138ec2ba"
+    },
+    "books/goodnight-wren/01/pages/004.webp": {
+      "in": "2d4c3ac870cf2a40389575a73e672d97efc914143bb6610df4c34cc4a85a9291",
+      "out": "72c2ac1cbe1cea2ebfd54ce81f75b11f02d553b716a4509b726151a987160fed"
+    },
+    "books/goodnight-wren/01/pages/005.jpg": {
+      "in": "b9cd943b5c0562206506154e5768bdcf2f3a0c11c00f9cacc64b4906d7d64773",
+      "out": "3edfc66494fc4544dfd38730ac1dc9a3a8cd8043a154526b2a78e5b0c783a9e2"
+    },
+    "books/goodnight-wren/01/pages/005.webp": {
+      "in": "5e37ad4132a0eefbcd203824040ca9c84cdf7359301a576c1bca8e395a89facf",
+      "out": "4a7e8e73dfcc3e4f192ae7a1060d8a6998a6da240b65e168416cf85c35cc25ff"
+    },
+    "books/harness-engineering-lecture/01/pages/001.webp": {
+      "in": "7e0df135a69c385a96eb28b1af5e93e01b81e04ac476fda2779ef2766ba2e152",
+      "out": "fbbabcb0fabe2df290a76e0e47a6722b462550543dcf917e7b0f4883a8b416cb"
+    },
+    "books/harness-engineering-lecture/01/pages/002.webp": {
+      "in": "7db85e7c77a46f1a5690bc0a8e7ddc8b9b68fd255ea523f9f6b9b2dd369061e3",
+      "out": "cec946bee8f24b2bb75ee5ff60d8d10cf86c2f179089b1f1ae565357d8901463"
+    },
+    "books/harness-engineering-lecture/01/pages/003.webp": {
+      "in": "95e3dda07e331ee2ef5a715d40c4b77965096ad526fbdb8678bc00d6b31a5869",
+      "out": "43d82734cb6cafde15137a86ce7e5d2bde055b667825d0d4551e08d99894c1e0"
+    },
+    "books/harness-engineering-lecture/01/pages/004.webp": {
+      "in": "8c19a40fc908bba23945dd21391e95ecec0e7f3366f4baf0fb7ff06badc6dbf0",
+      "out": "e6533087b691d3f32c2396238ca0745e51db5fd26e7e53b57c407463d73f1a13"
+    },
+    "books/harness-engineering-lecture/01/pages/005.webp": {
+      "in": "575c73a3395a4768899be600ae1f5beb12a0c83d514dad03866325e430d8ab8a",
+      "out": "358a75988a1f06ad856889e27e576fcc9327bb86d30e7376adb2cd10c5043588"
+    },
+    "books/harness-engineering-lecture/01/pages/006.webp": {
+      "in": "0f79e291b0b4fbf6c951356e6b95147b6dcfe64c260327119012295d493c334c",
+      "out": "132dfd604d59c72a4029a8603f82a5ea47de557aa1c00aba26de1e7dcf1d2fbf"
+    },
+    "books/harness-engineering-lecture/01/pages/007.webp": {
+      "in": "0d6ed456e0e5837110ec7e98a58227b7a8555aa578b47f75d3b67a5f0211af98",
+      "out": "afc25d69afa994c3f5929e806f38e231ac3779433a9d97248b8b8c44649ad2ff"
+    },
+    "books/last-round/01/pages/001.jpg": {
+      "in": "d712f848309278caad50981a0d85c764e8746665dfd701f986a5f5fffd1382bb",
+      "out": "e48d4052ae2b2204cfffde3ae37124f1d5430a43d5c1501bbbce7eedcaa0e5c1"
+    },
+    "books/last-round/01/pages/001.webp": {
+      "in": "4db269c25dc81e691efb4c341cd37e7224fbc8865f67092fc2b42149795fc324",
+      "out": "f3d3823e694f925b0fd6035ff092fcd22c393c1badd64895f070553ec91d730e"
+    },
+    "books/last-round/01/pages/002.jpg": {
+      "in": "ee741f852fcc266d9b9828b6c9466c3e074c366f80312e7e92fbff24beb61c60",
+      "out": "11e6af19fcc0189e09b32666a8080bd86b9dd3793bcc6a049740d4f4c04e6d38"
+    },
+    "books/last-round/01/pages/002.webp": {
+      "in": "5971f7340a35bd36cbdea53ab467c02d1712f8f915254cd0967bef42f0fbcdb1",
+      "out": "be6dfdf09c28e1869e119fcb4a2661beb704baf2d5b71c4a307b26d93ae4789b"
+    },
+    "books/last-round/01/pages/003.jpg": {
+      "in": "b87e7f4241122c4a88f68618827d1ebced8db9210f5d77cb84fd39be2817e8a7",
+      "out": "a0316fbe4a09b40f22160e6b858a5d7b1cb6021421cead747b08e497f139f5bd"
+    },
+    "books/last-round/01/pages/003.webp": {
+      "in": "b499d5529fc41fac8188e26287836a3b95c412128e364214c1a93968ee451150",
+      "out": "7042198ec284524ce71dca48da76c0348e318fdb72b89725673321099665b69d"
+    },
+    "books/last-round/01/pages/004.jpg": {
+      "in": "bcc924eb2fb56c5e382e6969d234ce6eba55b2a49a97835544ed50184a6ca0f7",
+      "out": "73549bb78042dcf770a3307d4a5f8bbadd850b13db6efdd148e885c3be8783e5"
+    },
+    "books/last-round/01/pages/004.webp": {
+      "in": "790839f38eae7f88cac3de196963b8b9b9dce30a84f36e548d36c63b6bd797b8",
+      "out": "cfce314b0a93f2019a176041719ce9ca9f49d2badd99d614cdceb8df3e240b4d"
+    },
+    "books/last-round/01/pages/005.jpg": {
+      "in": "0ce0fe8dd16099622bae21f93dfa2ca270b2a5efef1df46fdd1fe4d5e8a24021",
+      "out": "660be9fd5864b59087c9ef92fbefa28f236620cf51d55320cdf9a982d4c107e0"
+    },
+    "books/last-round/01/pages/005.webp": {
+      "in": "d2bbe4155f98d20faa9a09c587d89aad4d71bfb46a7fb8eb276d22b7c12725c2",
+      "out": "377486dd89fdb62203d886b4ac73cc0613b893c854d89798cd13ba4fc872f9c4"
+    },
+    "books/last-round/01/pages/006.jpg": {
+      "in": "a03fa33dd15a310524b1ae1f26e8be40eaf46c2d5bc706bffeaf51abcc0d12cb",
+      "out": "9205fc59bca114ae50f7fe755e55cf03a801b8215c81a7ac5a8c89ed417131e8"
+    },
+    "books/last-round/01/pages/006.webp": {
+      "in": "335fa905681b8e3bb1bbad6c2f9ce84b36f4c4ba511b7cf7a02dd8f3bf6f7919",
+      "out": "840f3b4251904cedcfdd26741c2c8836674399b20f66cb3ce7f88af0e1ba831a"
+    },
+    "books/last-round/01/pages/007.jpg": {
+      "in": "16b62b6f78951be6a010f68b6f6fdcf2cd7171aedbd0c0c6696e818548dfd134",
+      "out": "56dce3e27a8a4fbe99a81a11f6c430a6af14d4b360525052713d1c1444bd44a9"
+    },
+    "books/last-round/01/pages/007.webp": {
+      "in": "3598a1976afbe3e62fd666d38ccefd7b57c7685ebad2e3e7eb5507f4c359facf",
+      "out": "0bf47d1bb1b627c61b2a50e4340a80e65d912404d09a49b14946b3e614e6f2ea"
+    },
+    "books/last-round/01/pages/008.jpg": {
+      "in": "56ecaca6440f3b2603681016b3796c2ec88fbe5cce167128c6e1ff03ea0193cf",
+      "out": "c83f0ab77fbb3f4052d62eb0dd1a5d4992e7c36429bdb4295e9dd6b2f87f2e9d"
+    },
+    "books/last-round/01/pages/008.webp": {
+      "in": "e1f1fa6642c552c258b4724339d6a5cd26da1a9f91882c14cf11f10d0909cd98",
+      "out": "7bcfce024d6309d49d40d6ac3de7e8207e3a41d728f8555f6e4d15c594b1a5d2"
+    },
+    "books/last-round/01/pages/009.jpg": {
+      "in": "cac509058d035d4509c18e2d2186a71f2a5861fd9f45a469fce3a78e540eb077",
+      "out": "bb4054472a783a2e0b083459fe08581c4d5412268c19e709f37e31b95bbec496"
+    },
+    "books/last-round/01/pages/009.webp": {
+      "in": "065536e19f583302379970acb4ae634f6af1dfbfc50fc1dafab697093a6abea4",
+      "out": "c6b4dc44f51c0b6e00e3af4265afe938a4720380bf56a9e52f16d86829353512"
+    },
+    "books/last-round/01/pages/010.jpg": {
+      "in": "93a4eaedab85266be83602b3c059dc3429fb033b1bba9ae4622fbbd0fbd7c8f1",
+      "out": "df02f5b6fc1bc3f3f8b793ce7f105d8201079c5f1e599b68d4ed60ab1712d9c1"
+    },
+    "books/last-round/01/pages/010.webp": {
+      "in": "07182a13058b87546766f43fe140e58c99839af3179a23c0bfa2d005b6ee90a9",
+      "out": "ec03b3e718f86f52f3607100206a742f862c24a8233083d6403db906c3bbc0ae"
+    },
+    "books/mars-odyssey/01/pages/001.jpg": {
+      "in": "7758bb451c146b6d89c5e19834ebacd970a34214416279788c1f7fbce739f46a",
+      "out": "523d639821ab681c7586f2c56e3fb328c035f906fef384d567b8ab02d9ac163d"
+    },
+    "books/mars-odyssey/01/pages/001.webp": {
+      "in": "a30b5d758b281bac9b9acf01e7f5edc5f239d2a2e808f4761e5cbabd2a760d96",
+      "out": "3b32748c8ccf865382fee7ddfed8e2fed762a0f1c4e784649c2bc0790ff02176"
+    },
+    "books/mars-odyssey/01/pages/002.jpg": {
+      "in": "6d023b21935a99968c4d564572cdd2c1e83baefef11f6f189b4a89181f1d5a97",
+      "out": "c509be5eb5df502fcd30c10c9f0ae3e7d2871a655b803a3ddefc5a1fb120fd4a"
+    },
+    "books/mars-odyssey/01/pages/002.webp": {
+      "in": "6e1557dba36ba3515cd3cfe8be60a97dd8580f508522f6a8c7400635982f8fad",
+      "out": "f695dd8fa5a18a43f14caa3fb4c414929541d0e0ef2ce87e326f7282a87c4ec0"
+    },
+    "books/mars-odyssey/01/pages/003.jpg": {
+      "in": "e8c3fff15c765374b756e539c8b25a6bb2850166d798b9a1e18d42f860b32ad1",
+      "out": "1d29d959752faea2f91fd7c9c680773b0865e3eb4de631962a3395f3036a28c7"
+    },
+    "books/mars-odyssey/01/pages/003.webp": {
+      "in": "e60e7d3f22af8f346b5e7118b20d7f1e3c383b363aedeafa1eaca92352592d78",
+      "out": "3df653e55862136d2712c865612121cab46d06b0e77d28efb8cf0e7a65d84ada"
+    },
+    "books/mars-odyssey/01/pages/004.jpg": {
+      "in": "2908a7be433f9d9a77a6ca80a032db882b4f39650efa649c9a70f77115f7d893",
+      "out": "75bfd60c9a94e38cd5ec29f5beb78219c8fc3445543f4750ee4ea17508a5ec7c"
+    },
+    "books/mars-odyssey/01/pages/004.webp": {
+      "in": "93c615e3af8963fa731bf916833631152eebc799cfaf02f0c89585bc02b0275d",
+      "out": "11dfbb577e6240fcd22ddb9797e11c9452afc294178b9f90d818450c0d41ce17"
+    },
+    "books/mars-odyssey/01/pages/005.jpg": {
+      "in": "03e90a0b2fd8fb1c7cb3e88d99dec542e271a0fd9faf81e9fa8fb86cc5910ad0",
+      "out": "e0207149336cc1a51f62974fbf7c72db3d63b3ba4e4b9fd3afb2adec859279d8"
+    },
+    "books/mars-odyssey/01/pages/005.webp": {
+      "in": "a9f60b14947979696861c5f2bef71bf9a13902e484c3f4862785d74b2fe4f092",
+      "out": "a02070c56edc77bd37e716b7b4df8b402a32570bfc3759d38d176db3be5f3cc4"
+    },
+    "books/mars-odyssey/01/pages/006.jpg": {
+      "in": "89ac7edbe95ce8d4c3a6046673d1ee13f981eedd9300ae4a9ea5e01d722309c9",
+      "out": "d5c6ebb9208fbbd3ffac289ee74683f21f41e3bb853454e968f0ca467e2f18bd"
+    },
+    "books/mars-odyssey/01/pages/006.webp": {
+      "in": "142bed189b718315f6887cbbe0e70abc0cf37783b04850745c3a5edf7c695924",
+      "out": "c5dcca24a3145118df7a49e11682066ae54e2464c1b883486b3f317cada98a56"
+    },
+    "books/mars-odyssey/01/pages/007.jpg": {
+      "in": "88f877a4ecba2a431da85a4234a38aad0cb840173f0c6c4ddc862b4ae55f0251",
+      "out": "430a41c3196bf519b96a80275e2595163bf29d04583f52ef1df554c01d799876"
+    },
+    "books/mars-odyssey/01/pages/007.webp": {
+      "in": "66c828073f6a6ce5fadfba529cabc5cb7401307c519f4fca6bb00b0fdd6e4298",
+      "out": "0638c594a50e660fe0a43ae3a82e1de5165da34173a4439fd7bdda61e60d1b44"
+    },
+    "books/mars-odyssey/01/pages/008.jpg": {
+      "in": "83b4fd2e4fb295d9c02b07a5445c4b6fa3ba0fb65b75f56c1aecb5799bfc535e",
+      "out": "addcb386d7113c6d57d96601870461a969322d8066d83057d35ce75002268444"
+    },
+    "books/mars-odyssey/01/pages/008.webp": {
+      "in": "204f5873de211c0c650c13fdabd2e7aa62fffe6b8eb3290d9a2d83106de3d30e",
+      "out": "5627cbdd4443c26cbbd53d800bd99d90304bcd85344011cafd3ca8a75de12348"
+    },
+    "books/mars-odyssey/01/pages/009.jpg": {
+      "in": "6e9ae60869e581d7df3e43753a75a859834f8e7241d221666c996538bbe4a78c",
+      "out": "217e6d917a1b7d80158908437e1dd4896056f6a6b6f8755b81b19ad0669c7cd6"
+    },
+    "books/mars-odyssey/01/pages/009.webp": {
+      "in": "eefa1b9f7d16076a81bdb4a4603e00bf97047eb6d5773bd2a16f5ed91fa2ef43",
+      "out": "b2f728624f985ce7ae829c0e0068c440ce823b9799b2325aae32f1fc8f97b581"
+    },
+    "books/mars-odyssey/01/pages/010.jpg": {
+      "in": "b6ab710b4c722f4219e7717e1a3115813f2cb9481b1ac94aed2d74f41052085d",
+      "out": "aec92e179f1a73740874f571613d0519b1ce4586c3fd4aed281fad482dc13f13"
+    },
+    "books/mars-odyssey/01/pages/010.webp": {
+      "in": "e53a5f39609f90c317cf7ca8a39c691521ff364aad11b82e87d6d58d956518d4",
+      "out": "42da35b5913c8bed0a56e83c452a6500b77ca844b598b1b5d3d0ccb1966e49c5"
+    },
+    "books/mars-odyssey/01/pages/011.jpg": {
+      "in": "b464ee79725b4571f4640bda2486a296923cf64657ade050dac7be41954b2d08",
+      "out": "44627371b27ff7ddfca425599be66cb56844eb2ed7e4d8ab0eea0494b4b4a173"
+    },
+    "books/mars-odyssey/01/pages/011.webp": {
+      "in": "d9649c1d4f3d3deb0ed18d80dfe1ccecda8e50cb9f55b638b555e316b42cae9f",
+      "out": "e2cb7391d9f9e2cc48ccb9266b67cde77b722add72ccf1100e1f8cd64dfc1d50"
+    },
+    "books/mars-odyssey/01/pages/012.jpg": {
+      "in": "b84b0fbf88250b977389b5e5bf9a285e9640e10085742cc72d74aa3eae91b8cd",
+      "out": "73089d45d5966c78b31c9df784ba33ee460f4e6f40bdded7d4aedb1a024c37b8"
+    },
+    "books/mars-odyssey/01/pages/012.webp": {
+      "in": "71a13e498402e821ccbdc4e2138648b13a21d4c3d745e36b6a8894afe66e54db",
+      "out": "28a65119a62149bacb9800528618d1d9de8e9e8ed0baf0db6d426b87dabc0cdd"
+    },
+    "books/mars-odyssey/01/pages/013.jpg": {
+      "in": "9b6e98236f42f8b6d059bbcf9f7bf9e46dcc581e7548e4ba983f9ff135eff4f2",
+      "out": "68b58bdf3dff17d2bc502caab62a7c709aa5cd305e1a62cc10701f29e32bd1c2"
+    },
+    "books/mars-odyssey/01/pages/013.webp": {
+      "in": "644a733760f911f00df72b37143246fc12d334ce34c7239c9facb296dfc9cb41",
+      "out": "b6ea00d16e608a73273274c170e99d2ffec8f2b6925e4e2cf99b4fa4fef028fb"
+    },
+    "books/mars-odyssey/01/pages/014.jpg": {
+      "in": "3b7fdfdd219cc7b6d8611333d784a3c257c5e4f0a8c3a3a223437f7091065873",
+      "out": "4bf3989cfe401990315646c17482cc32fed4c9dc11ae65f79d377c6a45b4619d"
+    },
+    "books/mars-odyssey/01/pages/014.webp": {
+      "in": "54735b0b8c9e0ac0f42af8406e02b133590b350d664bdd627920d5e1a31966da",
+      "out": "bd389b8a71a859727116e64cf393f915179a561eac664065cabd57b16d11ad88"
+    },
+    "books/mars-odyssey/01/pages/015.jpg": {
+      "in": "36ab79901af574b7bc88cc132dcae6230738e11932a86022dadf7f694c2014cc",
+      "out": "e0331f9c6a713406e1b15874af936f06fe333c0994639db23e34d5adcb2d3417"
+    },
+    "books/mars-odyssey/01/pages/015.webp": {
+      "in": "46b695f6e97fedd3caf2b3b231d2a327e5091568d6c65a64ccac0de6a48481a8",
+      "out": "6afec32e1189723a2a0b58ef3298e69bc4204d2c47993c8aef41def026f96a33"
+    },
+    "books/mars-odyssey/01/pages/016.jpg": {
+      "in": "a02429f68ea400dc50424b7acbc30b4d02db06eff8360b166c09b5c77c364b3a",
+      "out": "604c9cb820679e387573f7b5cbef12391c5a9f0daf8fdd248199840b9c183da8"
+    },
+    "books/mars-odyssey/01/pages/016.webp": {
+      "in": "4dfe93b225f86fbde2a595552477153c6af2b8257455a36b4388318a0ca8fb12",
+      "out": "57dbd7be6ee0513f671dba9381a37d917d877af701eeef64cfffb30c43d1cd5f"
+    },
+    "books/mars-odyssey/01/pages/017.jpg": {
+      "in": "22165ccf78ae4a2d5eb546a34da3baf2ad5623c70f0394ba62c76a517453538a",
+      "out": "e76ac0eb03f2cc112c27c26ed00b588c9413b9e2d2a9cc2feb5bbd23b6d06607"
+    },
+    "books/mars-odyssey/01/pages/017.webp": {
+      "in": "1a3b38f0b686da5856136d920a437318e162e34143b3f1688a3458b33404d861",
+      "out": "36282519839d36aeb6238325c66a9814d787d69dd754311915bcee5f2e1e8fa5"
+    },
+    "books/mars-odyssey/01/pages/018.jpg": {
+      "in": "d4cb5250874078c961b535616842f03f91d34cc735845d23c787c23f040a04d6",
+      "out": "b846a11749bef30ab585bf6f444cc7c387c8c081644dcfc19fa5523bb9bae473"
+    },
+    "books/mars-odyssey/01/pages/018.webp": {
+      "in": "69c3a49d48422c412e77b0c8fc7d3335941055300f2dcd50e7f34f365ec44645",
+      "out": "104884bd7b41dd77de08dcd0777ff802fd6ac00be7aa3fe172dc3b714c7aaa14"
+    },
+    "books/mars-odyssey/01/pages/019.jpg": {
+      "in": "54cdfe53174aa013a58058196a037cee028cc094a7185091cfb4c5dfc57f3019",
+      "out": "fbea6e478e136d5bcdbe42cc5166001865fc4bb78d9556f6b3ce91d8f658ebfc"
+    },
+    "books/mars-odyssey/01/pages/019.webp": {
+      "in": "3384d6e993cfb81315a1a53bdbaa120c0b8bbc889f0690557c32aaf786c50e28",
+      "out": "cd0e94c8c375f082dfcdf78f226b19a1c86628bf9f30650f10c9862cfbbde703"
+    },
+    "books/mars-odyssey/01/pages/020.jpg": {
+      "in": "153fe7a9728d64392e038e01a2d8877d8a751093cea8bc6936e7579c900d1ca6",
+      "out": "f356b8e4998a87b4ab01bbccc7cd273ab0363baa45a06b50e66504a4ad1ba50c"
+    },
+    "books/mars-odyssey/01/pages/020.webp": {
+      "in": "e8e07f849c5c37cdf8985931bdee52305e4699e35cc70e3c9a125b5250ea2abf",
+      "out": "cb8c76998c7f194420a25ec488cae6a09c02860aab81eb4815a42864cd58f5f0"
+    },
+    "books/miso-and-the-moon-market/01/pages/001.jpg": {
+      "in": "326dbf46972d5a06054b264d976b59a81cbc73bcbfacd33776a73b08a1722865",
+      "out": "475fa8724aa82d6d87173ed8a24c69abb5d5f25653871b0a3e6750876ce28b49"
+    },
+    "books/miso-and-the-moon-market/01/pages/001.webp": {
+      "in": "7c1b498439093c3192e9b6b711be510ed6283c0244f217636f4400dc3bebfb68",
+      "out": "59db54fd365d0c1355e8db70269e3dc05f69f5f6ab973dc50b747d68b3888adb"
+    },
+    "books/miso-and-the-moon-market/01/pages/002.jpg": {
+      "in": "c398185de5dba295acc667ef6b59a1a054c0352108cfb8a68a063444ecc2f1bf",
+      "out": "40847f8c5c32f9f4c0c8a2a4accad1fafd19608187f43659c93f7498d9c854b0"
+    },
+    "books/miso-and-the-moon-market/01/pages/002.webp": {
+      "in": "837c0afbcdbba8ea48e64017e206f2980ce7f0d41541d19edb001aef467cc8c1",
+      "out": "4f545f5361aefa946e685c92ec33bc341692cbf80463eef1386ee74706bfecaf"
+    },
+    "books/miso-and-the-moon-market/01/pages/003.jpg": {
+      "in": "5162d2c8c9b9e3eec9b126ca132823223ea3e1634a69adc8ca83411a5e4e591d",
+      "out": "342d8fb13e88267673e0c918ea9dcbd0e344367da37fa64e94ed69ef7d4255ae"
+    },
+    "books/miso-and-the-moon-market/01/pages/003.webp": {
+      "in": "bf80e5b6ad50d4cf88cfaae81338eac9237a3047a7bb2330649822dd2296d7d1",
+      "out": "84f256a398835ade370531d7a1eb76a03c3d8a3d5b9c679f10971f770e30071a"
+    },
+    "books/miso-and-the-moon-market/01/pages/004.jpg": {
+      "in": "ad673670212906c6bfdc2a3d83f35b0a7323037ebd523260a908b0d6897f5a9b",
+      "out": "69252603e8cc887fc83da59e438cfc1a5762a8b1e8c024bbd9de56c82f440ee8"
+    },
+    "books/miso-and-the-moon-market/01/pages/004.webp": {
+      "in": "73ac1a9553aa5b3ed55094397ff4e013b13044079528f9133c01e3609f971bfd",
+      "out": "7066a04b7a50954ea87445a0010c31a7b1e23064c2afcf0d487afb9c452121c0"
+    },
+    "books/miso-and-the-moon-market/01/pages/005.jpg": {
+      "in": "dbfdaaa35e689e7074f23f7db4f95f586baa053fb8bc32001ad6021e849109fb",
+      "out": "a0ffe0eac096c750090b1f81efe48409121cd5b9d3db5e5502b08aefe2e8b52a"
+    },
+    "books/miso-and-the-moon-market/01/pages/005.webp": {
+      "in": "d11afdfe85f760b7d1286fbaa2bfa896b0967c97e053275f36594ad499122c95",
+      "out": "97329d7b4b1671f1cb375e10e18be07de6f287cad9fbc2e7c9a7de3764f2b1ea"
+    },
+    "books/miso-and-the-moon-market/01/pages/006.jpg": {
+      "in": "cdefe5e3ec9c171a847bd3fdc7d609c1cbd8c511c9457998ee9c9e45cff33123",
+      "out": "3617a43991be8bb3b9ebda05850103bfc299731e74d037dffae43ef8e6fbd261"
+    },
+    "books/miso-and-the-moon-market/01/pages/006.webp": {
+      "in": "fbc58fa63d2f62c5ab13dd70cb28e0afa178d6bb58c3f370f5aeded0fc361423",
+      "out": "b3dc683e294bb6f8ea46ccab66c6e175791c10de07b9cd268784cf71beefa5bf"
+    },
+    "books/miso-and-the-moon-market/01/pages/007.jpg": {
+      "in": "bb33b2f672415b524795f3efe6d6fae821515b7f5fe7ec245d4e66d4814339f9",
+      "out": "c55aac2297da5fe495a9cd1e7f121738abcdf99a96bf0a7b1d9c1475d7822f4b"
+    },
+    "books/miso-and-the-moon-market/01/pages/007.webp": {
+      "in": "db881213b2070065c912682ea6407ea3eb704b91c9546cdd117c990776531ad7",
+      "out": "fb81605b4e508e13170348edba9226f4b1a4056385324df3cac7fd0afcf20407"
+    },
+    "books/miso-and-the-moon-market/01/pages/008.jpg": {
+      "in": "b2b1718f3560d602fc0b839f2a6cb576019473447436eec537c2f58cde7f1912",
+      "out": "a94b111e22d52fb665deb951b22da2ef2126cab9eb7e0ed03f66d4b5ce5bb052"
+    },
+    "books/miso-and-the-moon-market/01/pages/008.webp": {
+      "in": "2b3c6c93fd7a3e25367a6b7b642aace27576c7fa5d5bc65851f5a063d6007623",
+      "out": "eca862302e5c7fc77ff8fae0e34098146709bf38c23be71adcc5a34457269965"
+    },
+    "books/one-umbrella/01/pages/001.jpg": {
+      "in": "e006db98cecd33b47db269a66a1baf39db29547ce807c8e2929264aac0f44a34",
+      "out": "e5fb1b157e1119b8c0aa30d53694de808ba9cf7e62b8d33b85cf09e654f194e1"
+    },
+    "books/one-umbrella/01/pages/001.webp": {
+      "in": "f2cf43d6d8fe94d453e63f7580041257df8226434884ae3fdcb23cde47a4bba9",
+      "out": "4273acfdf8b14c9cd2cc092056cd032b817794798a9559d30d6b1508705725c2"
+    },
+    "books/one-umbrella/01/pages/002.jpg": {
+      "in": "13f6757b1be7e6e4e5d29db4ac75f220bfba104cc49f14b6348b295ca820bf71",
+      "out": "ac7b9a3ea5a1c0249e279ea998617204cc50dab3670f2dc547ef9542a1ebcd2c"
+    },
+    "books/one-umbrella/01/pages/002.webp": {
+      "in": "64ea6822a9b5fd0cfd1b9335e7800e42985b20982ff442153992329be7580e93",
+      "out": "89acaefe7ca17f9b7b0cde3eb9c4b775bf785ba8d36c8645fa3852d338ef8bc5"
+    },
+    "books/one-umbrella/01/pages/003.jpg": {
+      "in": "3dc4b1da0d1e431a7b2022499467e83cc481a7b7348fa93d3eda9a8e6a541381",
+      "out": "45d4cee4f06b9e8ac530cd2da6297d9b0c5ac84d61ea86841ecbae1bceec7226"
+    },
+    "books/one-umbrella/01/pages/003.webp": {
+      "in": "e624f2c70b9c762ac47bfae691152d10fc69a4a77b19b2b9d6b2e256ef468bba",
+      "out": "6404b135cb3348f298e01f989b4a074ff0eddd1d3de29ff8e58e9679ca98b10f"
+    },
+    "books/one-umbrella/01/pages/004.jpg": {
+      "in": "fddd9906c0d72ee0d4c640ca012e7051c0b61540b46304fa28dd21c1d76887ac",
+      "out": "242d4025070c198690c66ad9904990040017e992cb15066955ff2c4f94e23cfd"
+    },
+    "books/one-umbrella/01/pages/004.webp": {
+      "in": "f84d4e273cda322d7af49f5ea83200e321c7b5d867099ca00bd2eec14b4d74a9",
+      "out": "440466a5d7de0459b2bf5f6801011c5d46965fd7517543da57026c233ecc6828"
+    },
+    "books/one-umbrella/01/pages/005.jpg": {
+      "in": "8a42121a6679e69f8cb5ab16b720331884a6d8622750842631870cb8f8317414",
+      "out": "3a3f6d39901296bede21114b083eb554d099394b92fe0b748ad5ef2781467e2c"
+    },
+    "books/one-umbrella/01/pages/005.webp": {
+      "in": "29a0a6fb209189125d17bb457a12a326b85b32841e3e843991ebd5f209f07757",
+      "out": "2472b19d03349e718042e66f905cf5976a7721fd848eaa3cc9f54120d6b1a571"
+    },
+    "books/reflection/01/pages/001.jpg": {
+      "in": "db3e41f029377471317f7df8b99ea4d42c501fb8926b65f4313d335a17242796",
+      "out": "829d342b7826489273b79ec9d77ce6e0e33584631b1f66af724612f4cee60ef7"
+    },
+    "books/reflection/01/pages/001.webp": {
+      "in": "55eaef3ee0055f7b48771f9109e0ca4e4afa009439b873a46d2230a738636d26",
+      "out": "42f8f8239c1068b98651fa79ef8870dbaf2433ad3ddd34f14de3bb954a01c83b"
+    },
+    "books/reflection/01/pages/002.jpg": {
+      "in": "48cf7765e5ce8f26846c40e210a72b74595871a30359dc5839a991561b6fef79",
+      "out": "dfddf9b45649ec30a729c8707151900c4e085b46d932d040cb971495f2a0a29d"
+    },
+    "books/reflection/01/pages/002.webp": {
+      "in": "17c024e9210838152488c3e1f13800c169b44d979518a20a713fbe54c04e59c3",
+      "out": "96167baade1d4f5854e0d325d7eba76dbb895a3460164c77aeed9925d93fc018"
+    },
+    "books/reflection/01/pages/003.jpg": {
+      "in": "db8886bb093191a4143e3008746cc2683efcd37c806145e88015fafffe3f40af",
+      "out": "7cdce600f9bac986853f08f9eeef47d50f94436243aa7abc69b6a24d3f879ae8"
+    },
+    "books/reflection/01/pages/003.webp": {
+      "in": "73d8ca406ede050c9eef41767d2d074867c6786193f181b3ffc209b36784c86d",
+      "out": "b876adc553019fb2d663a6d56f58511638b7e97dd7bf574a692485c4222bf7e3"
+    },
+    "books/reflection/01/pages/004.jpg": {
+      "in": "23b66bbcc1ddfec023053afefbc81db8471a31270f812f2a0e124849be5feb0f",
+      "out": "4c3d5015db68a2b50ab34a8aed3cf07bfbb8c87da2e680a298e0e2b4b19ffe0f"
+    },
+    "books/reflection/01/pages/004.webp": {
+      "in": "561ff97fbd177a3a75834fa14953051fc79d66a15778d14cb2c21777a1594438",
+      "out": "311a2b58ddccf7a7a827fa098ecc6f72bd362bba77a392beb040824721db8f35"
+    },
+    "books/stick-figure-ancient-egypt/01/pages/001.webp": {
+      "in": "37c4a89943b2cc651c0f7d48263fb813dac168be5a6092f066a3136c0f12a847",
+      "out": "63b9ce6c8d8ce700d8dc74f6a99ec78382568deaa142510126e29180e4aaa787"
+    },
+    "books/stick-figure-ancient-egypt/01/pages/002.webp": {
+      "in": "008616c86efaea47356d8a1ee877bb1087f14c095a14944a8808bd15a8b00e3c",
+      "out": "3f66ec03ec5956eaff4720fbc73d1ab085a0c879fd4cbcdf5bb32606953cbb06"
+    },
+    "books/stick-figure-ancient-egypt/01/pages/003.webp": {
+      "in": "a5ddab2ffbe25511b5c6492ff8303c0d003ad39856def7871bec614a3ff49eae",
+      "out": "322d47c4c255ebf6390f8a0d93622611aa178320f5680efd80ecd65f6fbe391c"
+    },
+    "books/stick-figure-ancient-egypt/01/pages/004.webp": {
+      "in": "ce139e1c00ecbcf65b8d4665fefddd72fed88dd6baf173f6afc4cbec65faf886",
+      "out": "f3fbac2940d1a0161e0e32b3d539d94aa83593f31a71649c10a34793f66686c9"
+    },
+    "books/stick-figure-ancient-egypt/01/pages/005.webp": {
+      "in": "9f8da448aeb94fd9a788a7500bcb83af3cecb30fa030723a2b2b360bcbb166bc",
+      "out": "a7918666f4af7cc43a4ec500543d07c825afb43a626498c51868dfddb5b74c6a"
+    },
+    "books/stick-figure-ancient-egypt/01/pages/006.webp": {
+      "in": "c7cf6081f0a6cd6d7586b010736623e4babbe88f1e9760ccd5d8c6724090b93a",
+      "out": "b0c19dd1d361aaa89194b6f41b19ea617ed1a77a26a10143c29fdee526fc1707"
+    },
+    "books/stick-figure-ancient-egypt/01/pages/007.webp": {
+      "in": "c29df54623777b11ce0386b9948144bc0dce65325668de71fbcf196f71c8e8e2",
+      "out": "996195c64b996d76daa11c2de1ba0bffbbff9e1f7c6433f94d053b46ad981ee6"
+    },
+    "books/stick-figure-ancient-egypt/01/pages/008.webp": {
+      "in": "d1c66f2fafc042e4e514de15d8af68586d0527b0c9502c03d46106ac50007858",
+      "out": "1ba3a92c1caeecd997c60d522ed264f67d2ed86b787420f6556687b447688084"
+    },
+    "books/stick-figure-ancient-egypt/01/pages/009.webp": {
+      "in": "e115c76c2e8b2e3f0bcf93f5d25da528dc0588520b3d5cd53626f830e6b7aa93",
+      "out": "f743232ee52a7c1f7ca0f3f2ff5eaf18056c64abde1121f9f4a6ba2d3fe6a3ee"
+    },
+    "books/stick-figure-ancient-egypt/01/pages/010.webp": {
+      "in": "3bfc6c757d433121b1c550c91243b42eb09fe7a37ad7deca65f133616adaab35",
+      "out": "01f1b931d7e4adf26c43aed9da8db21e2c11c51813812888e2869d230eab51a4"
+    },
+    "books/stick-figure-ancient-egypt/01/pages/011.webp": {
+      "in": "facf86e3864bab24fb89f915de3ff3d69552cebd90ac62cd1279e20734b717b1",
+      "out": "16a86d8e9a856db1442e7e95641e466ba975dbad8067ee1fa3806286c3f2ab34"
+    },
+    "books/stick-figure-ancient-egypt/01/pages/012.webp": {
+      "in": "6134c97ae3558c1e633b7c87eb0ea842e0fec368621b2cc8b758e630169141ad",
+      "out": "95293e8aabe99ae56f7c703e369ab0bdf31f534996d641c4facb08189e23a592"
+    },
+    "books/stick-figure-ancient-egypt/01/pages/013.webp": {
+      "in": "81ae80d044cb320676805af03adbb6ff227d91ec8f319c12fcccfde2a097b4af",
+      "out": "afcf3513ae96c75b01341672fbfa8409830f0ba0cd1fed2e6f2597a3ca2988eb"
+    },
+    "books/stick-figure-ancient-egypt/01/pages/014.webp": {
+      "in": "25c6f2968e94083d4939ec3181738adc793619ac500d204141c05ed18ab39ca7",
+      "out": "83b3a5a4d40a0c230361bce452a5135ec5998eaff800342008e6ef1353380216"
+    },
+    "books/stick-figure-ancient-egypt/01/pages/015.webp": {
+      "in": "7fd717617759d008a5e6a44dad8046d88fe7053f21975ef989ad01e7095c3b29",
+      "out": "7f583719b5c3d69e73a598752f8a97ce18b0721999300ae19e099208b5fb7cfa"
+    },
+    "books/stick-figure-ancient-egypt/01/pages/016.webp": {
+      "in": "8e448bd3b95d5489332b173f59b99b8750f44daa6acbcb2e76dbff9ac11d4bce",
+      "out": "2f2b95ed2043ed5b78a5f2b9bdc7e02cfd7d0a1860c9ee19a387cfeef007f866"
+    },
+    "books/stick-figure-ancient-egypt/01/pages/017.webp": {
+      "in": "971a4bbc32de31477cf2e48d978d8494e506b8edc850b9ea7977798a9e4e7d03",
+      "out": "c701f4713f2b98c6a22e2abdf27da12ee88345a9d67194e9f5a584a3e41261f7"
+    },
+    "books/stick-figure-ancient-egypt/01/pages/018.webp": {
+      "in": "b555b29cf7356a14046c84feb9b5d89dbead7e2f4e022ea0511868337ff59a76",
+      "out": "081ef7bfd71a826a67b8c4adee187618ad6436ac82a80709d5f4bd4bf90d3b0a"
+    },
+    "books/stick-figure-ancient-egypt/01/pages/019.webp": {
+      "in": "670bbe2a8e8764c87f7822eb962edddb7e139232d39f4442ec5cdad2c7038b08",
+      "out": "2ef99ea40680e3e2b86447decae37c6fd8fa17cc930f277e4fc241f8e29ef454"
+    },
+    "books/stick-figure-ancient-egypt/01/pages/020.webp": {
+      "in": "700fefdffc712f8b3e9de6c55caced2d231d5025afd046321276508ddd8b2975",
+      "out": "fbd4e14cf5a84c242ea8c48bb493714f5747211f995003655c8af7f4de3169dc"
+    },
+    "books/sundays/01/pages/001.jpg": {
+      "in": "628b22935cab22f77f62a10c4958899b9bed25e331bac481d05c80cf7ff7e581",
+      "out": "5cc074f4c0130bde8201bbe690e0de6ed936037e2d07972c639be6d42499ee7b"
+    },
+    "books/sundays/01/pages/001.webp": {
+      "in": "b0a0d0ad250d9a6aedc5176a92943c930666ad9d31ad0b02bd6157c8a08161b8",
+      "out": "e88bf25f79416635532829ce45f01f1bc9015ca4c8bb0a507c307bac24771f62"
+    },
+    "books/sundays/01/pages/002.jpg": {
+      "in": "b63fdaf2c96478bacbdf4ffe82764e96c5f745ea4a89e2342fdc5078a9c42f78",
+      "out": "7641f6050898e15e167eba616d7c5a4461064b5ce0d2bf4c37861abf7392a855"
+    },
+    "books/sundays/01/pages/002.webp": {
+      "in": "5c7c2a46750b63ae811d27d32092e8c0170b5e66cf78b4c734d55ea7cc07ca34",
+      "out": "6fb7f8db705a141fd7f08380b17c7cd08a591d8bd89cff0e8df733d42ba37f70"
+    },
+    "books/sundays/01/pages/003.jpg": {
+      "in": "93e569eea1f08620f3f69d7cdebb55788a50bc28d20d8115838ba6ae51c3f693",
+      "out": "35e4732bf5be98f2bb5e94ffe09eb0529fd6755ab4beea3bf4f721e581ca22ec"
+    },
+    "books/sundays/01/pages/003.webp": {
+      "in": "9bd7a9ad1d84cf319564963fd22ca4b734c4c3993cd72ded57b5c1527889eb77",
+      "out": "fca1f98f3e06bc2d96cbfb705da6453cefbce2c3d89070b3a378a66c59f5805f"
+    },
+    "books/sundays/01/pages/004.jpg": {
+      "in": "6e806f2c03cb71ad70357252c894e4903019271667d10e0aa636e264404163c0",
+      "out": "7b6f85842cbd84645d0504eed1738cfa5a513e36eaa706cbd9f2d5f23a8ddef6"
+    },
+    "books/sundays/01/pages/004.webp": {
+      "in": "296de698c9ea25b9a5b313e81b998eb37409fbfc4b3d735cd81ac6d2e7407c7b",
+      "out": "f7eebe5e433f910ccd24eac51ce18120b544ec70e44c8da6a692584a4de16e64"
+    },
+    "books/sundays/01/pages/005.jpg": {
+      "in": "e01b84093d4370f36f3fed11cf39784af33e4db8b6f460bcd18736a98644a5b5",
+      "out": "496cb85087762a097aa03d0ebc817266287afcf237b159951039b8ad607fb133"
+    },
+    "books/sundays/01/pages/005.webp": {
+      "in": "e21c5700f1ab109df90618c286b9d323aaf51b4d98c7891b16ff2df9dcc9358f",
+      "out": "6d74530dab84f4cb3d4bb246d58dc86b043b9feccc95462f876f6261d841632c"
+    },
+    "books/sundays/01/pages/006.jpg": {
+      "in": "bd856cc977996c944ff11655be16fcc610edb80402f5ebe04bd378a374866847",
+      "out": "56d1a6e187697a109f32d33c1ae258acb58757043a2f11466632f30488e3b05b"
+    },
+    "books/sundays/01/pages/006.webp": {
+      "in": "9165296fa0cf32ba0f2e3068765ce5d0362629b0d3c963fd84db4ee19d4f3ca3",
+      "out": "76652da0b2d39e886624e6ccb1a6c2d2e64067a7610397d9ecfdbb27f5d86d33"
+    },
+    "books/sundays/01/pages/007.jpg": {
+      "in": "edc238c004a5a7912c53b61793c7b7b79cefc8d7198bb126c2a6c1a41d526255",
+      "out": "5d1669d770cd275fe86f4381c17e74bd80327632330b036baddb61b1683dad5a"
+    },
+    "books/sundays/01/pages/007.webp": {
+      "in": "1bfdb3c724ef24a2b49660eb913e2b25a1fcfedee4f697d738610f3e0f585ce9",
+      "out": "420982c85daacd5257fe41079cfee10eeeb787f9e55091ef454c24504d9b175a"
+    },
+    "books/sundays/01/pages/008.jpg": {
+      "in": "ff634c752042a1a2f01d9a3d4f7c78b497832041ce19bdef62d10ace08eb6b30",
+      "out": "922a78504bce1746af2b9704aeb316433ff1e21e1e0616f8a7ab0aea0eb1d4dc"
+    },
+    "books/sundays/01/pages/008.webp": {
+      "in": "18a6e75e457bc810983669be7349921c643e3494380a9ee677a720da8e8dbdab",
+      "out": "e138b37af11939455afdfbad137fe1592ec944b9d6f46255c9af43f11beceecc"
+    },
+    "books/sundays/01/pages/009.jpg": {
+      "in": "f8ab349f1801299c37b14e8ab4bb8e242e90088dd1adbaa3936a89dac73721df",
+      "out": "d1502c7373b1b173e3f81e80ec92939043254f35071829f1d7bcd59cebb63113"
+    },
+    "books/sundays/01/pages/009.webp": {
+      "in": "4b8da057cf11b47645af93b8d7cb095ef718e39330f4e9bbbb8a6bc21081f86b",
+      "out": "b1af91554e50d8e65b9c6aacbcafb7a9726eb2fadbd9efa9e00ca6448a0aa55b"
+    },
+    "books/sundays/01/pages/010.jpg": {
+      "in": "49bd630813f16b1020142215f1db6df4cb60c03d58271d09f94fc2f98e477037",
+      "out": "a39b8b5126331b9fb1739ef84e758da12143d942d2282b00ae61386df91d92f3"
+    },
+    "books/sundays/01/pages/010.webp": {
+      "in": "cfdbcf52a1cd0bf0ac13f6577e57fddbd9b11e0b2e2491713e231c43a647ff01",
+      "out": "0ad933d9ed07bef76c3186b466cff142300dd2f5aab85ed42565e01babbc67ed"
+    },
+    "books/sundays/01/pages/011.jpg": {
+      "in": "6a99bc79e01864b51d15d730093330c0e1559d6896601862b6ceaba043423b30",
+      "out": "421bcda71479256fec6b528a7d2aa325ab1f90de99239643485094f68608e65e"
+    },
+    "books/sundays/01/pages/011.webp": {
+      "in": "d59daf54a58542a89264eb24b169a9e724fd4949b44e6d2430bbfd4e21ca8b6d",
+      "out": "6c581b8ce6576359c63879ce1fb9cb6c1846ef5e17295d48ecef65d9a1b6855c"
+    },
+    "books/sundays/01/pages/012.jpg": {
+      "in": "0df4db96d1306e2cff9cb81054c0f6cf42009805b492b0510f921d782e77a6c2",
+      "out": "576e7684b99d8ae043b944b04b2aa50530859f22916284ba689eccfbf98f3374"
+    },
+    "books/sundays/01/pages/012.webp": {
+      "in": "65edd9e37fa514aff7b977f7aa1f390eb543070fc3efe3744314481d19d31939",
+      "out": "6c5ba970714bce5eb53321714bf8d353f3101da38324f2ce7f0260f748bb78da"
+    },
+    "books/th-charted-dark/01/pages/001.jpg": {
+      "in": "06304433a1bcd7a57b164f31e946cce3b60b69c4d0e5933a17f3568b8451957e",
+      "out": "0a3f6bec9fd974ca631ac6385aaa7283330c9a3a89596bec75f61b9e3a17f616"
+    },
+    "books/th-charted-dark/01/pages/001.webp": {
+      "in": "6e62e9bff4b3689f9afb1e378066bb2ce9f9f8cda21a7ec951af9e064e6cf87a",
+      "out": "e2a37c9b709e2d17aed3b631c173efbae4cbedaddefd4bb5794832d7bbe610c9"
+    },
+    "books/th-charted-dark/01/pages/002.jpg": {
+      "in": "d421b3330c90808cbc2e012f0630b0bbf95e635705d11e7cd1215cbf46ad2c02",
+      "out": "6ad1586e3aec8e989c4d13d1c70d587f340b4637f81a498d71412e8b5ffdf46b"
+    },
+    "books/th-charted-dark/01/pages/002.webp": {
+      "in": "12fbe8522cea55e339e3c7b739d460014d9261f7a0f0287c45e72f159a81fe9d",
+      "out": "b6e58d318f93b5bd5b6e8d0ae85f22cb98c413f5013bbcbc2d18e5a6be2e6f5a"
+    },
+    "books/th-charted-dark/01/pages/003.jpg": {
+      "in": "8bc0711c1a77bab5aac449cadaa2ea6148d7d519e532a458f43e5c8f20290f69",
+      "out": "28051c02c6a2f0181ef8c5ca82617ee32ca371ad2fc011fa9028217ae7e83240"
+    },
+    "books/th-charted-dark/01/pages/003.webp": {
+      "in": "f9d5571f2cdbfca4e052ead613f1464591d89c9e0cb0b1691be7a7d59939ce32",
+      "out": "8b618b770ed948d511453f7ce474e048ce0e7815865152dfb5afc05b512066c6"
+    },
+    "books/th-charted-dark/01/pages/004.jpg": {
+      "in": "2866962fe7d56c5e87331a7bda220b6e9a934cf6dfbe2bbec148392154c29a95",
+      "out": "5387d809222975e63dfa54dea5a21e3c1661dd362fcd2d7f202f1a2484c3cc26"
+    },
+    "books/th-charted-dark/01/pages/004.webp": {
+      "in": "8cf5cf1e8fae37333748b7f4b1900797eaae3cd42de50a48f82dbba2db6f361a",
+      "out": "bd34eab7aa39d8e5df203a50cd3994f9253de52ce3a1190ef42b8eb5a8083b49"
+    },
+    "books/th-charted-dark/01/pages/005.jpg": {
+      "in": "3bd77e92a7f5b1346e66531c646b23801d389345a53a2b82014b86ca3f7b7d64",
+      "out": "7cbbdc853aa83f07d7d523fc1d1109c52c295d2f955d1e881045fdd82099204a"
+    },
+    "books/th-charted-dark/01/pages/005.webp": {
+      "in": "0076dd5f1430ad85f7c4f8a9c677d638aa2b1d07da0e87408eb8047ef82292fe",
+      "out": "f4ef881363ba94cc158d63fcf3643a629253685a6c3ffb45773e8cbbc2cc4354"
+    },
+    "books/th-charted-dark/01/pages/006.jpg": {
+      "in": "1731c3ae8ba03e79e387b77eea7927e327c6f5fe303c93f96d1de754548921ab",
+      "out": "805d8c84f5a27386adb5c1eb7d943d994590c3b749f27ca1f33a596e6257e625"
+    },
+    "books/th-charted-dark/01/pages/006.webp": {
+      "in": "852273155bb383931c476dec74975dcbef5385cf61f304337a342a6d89670227",
+      "out": "23041158254d8728a5f75f0316b4a84fb67fca8aa4c78680ec7735f6958d7f32"
+    },
+    "books/th-charted-dark/01/pages/007.jpg": {
+      "in": "f141c9b6cce48f7199e8d7caec15b639a351dd47357a2812a31d3c9af296d100",
+      "out": "9bd1fe3b021702b644d972d18014fb78d2bd753ce8cb9d515a14ae6e163abfbf"
+    },
+    "books/th-charted-dark/01/pages/007.webp": {
+      "in": "07756ff3b8cd8fa249743a6a2b4f077b352a627a7844aa382a54e8c0756363be",
+      "out": "e528dbe8880da1559949ff90d12ef6dffbd2a032b6c50f48d557caabf6bccb24"
+    },
+    "books/th-charted-dark/01/pages/008.jpg": {
+      "in": "10d6960d2d54afe329161377c0ec57573c696beed8354bf3c1907b3ad7ca37ff",
+      "out": "2de3383a38a7fe5932dd225612503f0d8ede47c3a1ce932d62045b1e80551c4e"
+    },
+    "books/th-charted-dark/01/pages/008.webp": {
+      "in": "5acce81b06ab757e3d744beb729fc05b4c284d98f0403871791625e72ebed422",
+      "out": "f0dddae465e61f3f566fefbb8672bd1e95aa3aeef6321eea84913c9cfd8f0577"
+    },
+    "books/th-charted-dark/01/pages/009.jpg": {
+      "in": "b2b2a94cca1ca06ed3c0b59e55fe113d697342381c60ca4fca1eddef138f6257",
+      "out": "059e448fd0650a5afc05a2b25cfb8a1ca05ed1e0c2d0fe9754a40e990ed0fbb9"
+    },
+    "books/th-charted-dark/01/pages/009.webp": {
+      "in": "bd2235a08d29cbf45961645c9b430579730b0cf1518c8c7315b159c96bfb7bee",
+      "out": "475ae544755c6c6d3301a54522b483533ae8027f9fa52282849bdd4fd074d801"
+    },
+    "books/your-life-is-a-video-game/01/pages/001.webp": {
+      "in": "0ca82d1dd856c0fd6dd5eb3f7b83d294f399c4c7b97a85f0174c3cdba64a3f04",
+      "out": "96c205925a31698f5351d3086454e7111d4efcc0ba2a52588ab604758ff75174"
+    },
+    "books/your-life-is-a-video-game/01/pages/002.webp": {
+      "in": "404765a440d529e1406a357fcdd5d7c313649d412a97222bb3bf1f0202157bb3",
+      "out": "5c17468d02e430856e022ea172fa7981d482cf2d8057ec4d20f1f853c60d8846"
+    },
+    "books/your-life-is-a-video-game/01/pages/003.webp": {
+      "in": "a31000d0d16c246124cbd4e48adc413ca2c9c40054facf073080296a4269700f",
+      "out": "9cffd3680ef755fc87648d24e0855419092a64363c8d41f0a1e42bd21b17f573"
+    },
+    "books/your-life-is-a-video-game/01/pages/004.webp": {
+      "in": "17940197dd7eda232ac997cda9d20faf6af83a32da5f9e5a063369ca10bb4b17",
+      "out": "e53d0bf1347e0af8573229c35df9275b851015686d487d91a76b07e9bda77ed5"
+    },
+    "books/your-life-is-a-video-game/01/pages/005.webp": {
+      "in": "458bbce2ce26df5462c787bd9afaa9f9037b7b1680ec23e4ec8b0417b43537d2",
+      "out": "6f64b018656358f9f325abc36b2ff47624c0dfaac44d4ed7daa84e88332a4cf9"
+    },
+    "books/your-life-is-a-video-game/01/pages/006.webp": {
+      "in": "4afacb2abb104394cb377881e9f27ebf78f4c3ff05e647590fea97ff3b9368da",
+      "out": "93e38dd90cc842a277a525a1afa74338d3cd86e7cd79728498e1d8ed0b02a97d"
+    },
+    "books/your-life-is-a-video-game/01/pages/007.webp": {
+      "in": "1bb538b3ab07d7543782412d078df07de11fd4baadaa99408ed088f3ba629e4a",
+      "out": "65b87a924e24f2a9c7267e52c4ece5791018ac0a3174ece1ab2d201ac4cc6b20"
+    },
+    "books/your-life-is-a-video-game/01/pages/008.webp": {
+      "in": "859ac6a138260d8c168dd4ebd792562b4861b7428f9a099d79ba5b0dcbab0442",
+      "out": "83e900f2da2b7625a239065ad80b4bdc21e81540bb5880114c98c9e4ad484f1a"
+    }
+  },
+  "stampedAt": "2026-10-05T00:14:57.363Z"
+}
