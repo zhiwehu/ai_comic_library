@@ -242,6 +242,14 @@ const pageAlt = (i: number) => `${bookTitle(book, lang)} · ${t(lang, 'reader.pa
   };
   const key = `cl:progress:${bookSlug}:${chapterSlug}`;
 
+  /* ---------- 防下载（抬门槛，非绝对）：阅读区内禁右键菜单、禁拖图片出页面 ----------
+     图片本体已在发布时烧录平铺水印（下载/截屏都带 comic.getaiti.com 标记），
+     这里挡的是「右键另存为 / 拖到桌面」这类零成本下载路径。giscus 在 iframe 里，不受影响。 */
+  root.addEventListener('contextmenu', (e) => e.preventDefault());
+  root.addEventListener('dragstart', (e) => {
+    if ((e.target as Element | null)?.tagName === 'IMG') e.preventDefault();
+  });
+
   const chrome = document.getElementById('chrome')!;
   const scrollbook = document.getElementById('scrollbook')!;
   const flipStage = document.getElementById('flip-stage')!;
@@ -916,6 +924,28 @@ const pageAlt = (i: number) => `${bookTitle(book, lang)} · ${t(lang, 'reader.pa
   .edge-strip.bottom { bottom: 0; }
 
   #reader { position: fixed; inset: 0; }
+
+  /* ---- 防下载（配合发布时烧录的图片水印，双层） ---- */
+  /* 全屏隐形水印层：截屏/屏摄也带站点标记。pointer-events:none 不挡任何交互；
+     层级 32 压在页面图上、低于 edge-strip(35)/chrome(40)/读完页(45)/endcard(50)/缩略图(60)/提示条(70)
+     —— 阅读画面永远带标，评论区与工具栏保持干净 */
+  #reader::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: 32;
+    pointer-events: none;
+    background-repeat: repeat;
+    opacity: 0.055;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='176'%3E%3Ctext x='121' y='93' transform='rotate(-24 120 92)' text-anchor='middle' font-family='Helvetica,Arial,sans-serif' font-size='12' letter-spacing='1.5' fill='%23000'%3Ecomic.getaiti.com%3C/text%3E%3Ctext x='120' y='92' transform='rotate(-24 120 92)' text-anchor='middle' font-family='Helvetica,Arial,sans-serif' font-size='12' letter-spacing='1.5' fill='%23fff'%3Ecomic.getaiti.com%3C/text%3E%3C/svg%3E");
+  }
+  /* 长按不弹「存储图像」菜单（iOS/安卓），图片不可选中、不可拖 */
+  #reader img {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-user-drag: none;
+  }
 
   .chrome {
     position: fixed;
