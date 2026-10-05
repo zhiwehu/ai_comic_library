@@ -93,6 +93,11 @@ scripts/exam-fixtures.mjs     # 书架压力考试：--make 200 生成 books/_te
   大陆创作者做海外读者的首选）、`store` Lemon Squeezy 或 Gumroad（无水印 PDF；
   LS 为 MoR 代缴全球销售税，Gumroad 小额商品全费用 ≈22% 但有 Discovery 市场流量）、`contact`
 
+**按书卖 PDF**：`book.yml` 加可选 `store_url: <商品页>`，书详情页立即多一枚
+「完整版 PDF · 无水印」按钮（双语）；不填不显示。免费在线版带水印、付费 PDF 干净，
+天然分层——已有的干净 PDF 直接上架即可，**注意不要把干净 PDF 提交进仓库**（红线：原始大图不进 repo）。
+销售平台开启 PDF 盖章（Gumroad/LS 都支持按买家邮箱在每页打水印），付费版也有追溯能力。
+
 ## 版权防护（防下载 / 防剽窃）
 
 网页图片没有绝对防下载（截屏、开发者工具总能拿到图），本站做的是**多层抬门槛**，

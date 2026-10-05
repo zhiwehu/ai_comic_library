@@ -97,6 +97,11 @@ const title = bookTitle(book, lang);
               </a>
             )
           }
+          {book.storeUrl && (
+            <a class="btn btn-ghost" href={book.storeUrl} target="_blank" rel="noopener" data-store-cta>
+              {t(lang, 'detail.store')}
+            </a>
+          )}
         </div>
       </div>
     </header>

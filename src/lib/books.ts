@@ -27,6 +27,8 @@ export interface BookView {
   description: string;
   descriptionEn: string | null;
   tags: string[];
+  /** 完整版（无水印 PDF）商品页，来自 book.yml 的 store_url；null = 不展示购买入口 */
+  storeUrl: string | null;
   coverUrl: string | null;
   chapters: ChapterView[];
   latest: ChapterView;
@@ -107,6 +109,7 @@ export async function getShelf(): Promise<BookView[]> {
       description: book.data.description,
       descriptionEn: book.data.description_en ?? null,
       tags: book.data.tags,
+      storeUrl: book.data.store_url ?? null,
       coverUrl,
       chapters,
       latest: chapters[chapters.length - 1],
