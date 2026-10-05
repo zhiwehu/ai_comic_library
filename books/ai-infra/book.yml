@@ -7,3 +7,6 @@ cover: cover.webp
 tags: ["AI Infra", "大模型", "显存", "科普漫画"]
 title_en: "Why Won't the Model Run? — Understanding AI Infra in Comics"
 description_en: "Letian hits Run and the screen only answers: Out of Memory. Follow Letian, Azhe, Xiaoya and Keke into the inner world of large models — the city of parameters, the quantization pipeline, the VRAM workbench, the KV Cache archive — and learn, in comics, what actually decides whether a model can run."
+store_url: "https://ko-fi.com/zhiwehu/memberships"
+store_label: "会员免费 · 持续更新的合订 PDF"
+store_label_en: "Members get the growing PDF"

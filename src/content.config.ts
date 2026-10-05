@@ -21,6 +21,9 @@ const books = defineCollection({
     tags: z.array(z.string()).default([]),
     /** 该书完整版（无水印 PDF）商品页；不填则详情页不显示购买按钮 */
     store_url: z.string().optional(),
+    /** 购买按钮自定义文案（如连载书挂会员页时），缺省「完整版 PDF · 无水印」 */
+    store_label: z.string().optional(),
+    store_label_en: z.string().optional(),
   }),
 });
 

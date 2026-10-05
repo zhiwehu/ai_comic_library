@@ -98,8 +98,14 @@ const title = bookTitle(book, lang);
             )
           }
           {book.storeUrl && (
-            <a class="btn btn-ghost" href={book.storeUrl} target="_blank" rel="noopener" data-store-cta>
-              {t(lang, 'detail.store')}
+            <a
+              class="btn btn-ghost"
+              href={book.storeUrl}
+              target={book.storeUrl.startsWith('http') ? '_blank' : undefined}
+              rel="noopener"
+              data-store-cta
+            >
+              {(lang === 'en' ? book.storeLabelEn : book.storeLabel) ?? t(lang, 'detail.store')}
             </a>
           )}
         </div>
