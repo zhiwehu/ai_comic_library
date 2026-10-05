@@ -26,7 +26,11 @@ function booksSync() {
     hooks: {
       'astro:build:done'({ dir, logger }) {
         const dest = path.resolve(fileURLToPath(dir), BOOKS_DIR);
-        fs.cpSync(path.resolve(BOOKS_DIR), dest, { recursive: true });
+        fs.cpSync(path.resolve(BOOKS_DIR), dest, {
+          recursive: true,
+          // 水印清单是构建元数据，不对外发布
+          filter: (src) => path.basename(src) !== '.wm-manifest.json',
+        });
         logger.info(`copied ${BOOKS_DIR}/ -> dist/${BOOKS_DIR}/`);
       },
     },

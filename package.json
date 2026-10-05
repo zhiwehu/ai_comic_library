@@ -12,6 +12,7 @@
     "build": "astro build",
     "preview": "astro preview",
     "check": "astro check",
+    "watermark": "node scripts/watermark.mjs",
     "publish": "node scripts/publish.mjs"
   },
   "dependencies": {
