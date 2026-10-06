@@ -1,0 +1,10 @@
+title: "How AI Draws: Noise to Art"
+type: picture-book
+status: completed
+language: en
+description: "AI 生图到底是怎么工作的？BUILDER 和他的机器人助手用八页火柴人漫画讲明白：从纯噪点开始 → 一步步去噪（denoising）→ 提示词变成数学引导 → PROMPT→TEXT ENCODER→DENOISER→VAE 四站流水线 → SDXL/FLUX/DALL-E/MIDJOURNEY 不同模型不同风格 → 潜空间压缩省算力 → 步数换质量的取舍。XKCD 风白底黑线，BUILDER 的代码 T 恤写着 while(alive){learn();build();}。"
+cover: cover.webp
+tags: ["火柴人", "AI生图", "科普", "英文绘本", "XKCD风格", "扩散模型"]
+title_en: "How AI Draws: Noise to Art"
+description_en: "How does AI image generation actually work? BUILDER and his robot assistant explain it in eight pages of stick figures: start from pure noise, denoise step by step, prompts become math guidance, the PROMPT to TEXT ENCODER to DENOISER to VAE assembly line, why SDXL / FLUX / DALL-E / MIDJOURNEY have different styles, latent-space compression, and the steps-for-quality tradeoff. XKCD-style black ink on white, with BUILDER wearing while(alive) { learn(); build(); }."
+store_url: ""
